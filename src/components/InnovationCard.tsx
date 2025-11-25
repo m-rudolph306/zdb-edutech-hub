@@ -9,6 +9,13 @@ interface InnovationCardProps {
   imageUrl?: string;
 }
 
+const categoryColors: Record<string, string> = {
+  AI: "bg-badge-ai text-white",
+  VR: "bg-badge-vr text-white",
+  Assessment: "bg-badge-assessment text-white",
+  Management: "bg-badge-management text-white",
+};
+
 const InnovationCard = ({
   name,
   description,
@@ -17,7 +24,7 @@ const InnovationCard = ({
   imageUrl,
 }: InnovationCardProps) => {
   return (
-    <div className="bg-card rounded-lg shadow-md hover:shadow-hover transition-all duration-300 overflow-hidden flex flex-col h-full">
+    <div className="bg-card rounded-lg shadow-md hover:shadow-hover hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full">
       {/* Image */}
       <div className="w-full h-48 bg-muted flex items-center justify-center">
         {imageUrl ? (
@@ -37,7 +44,10 @@ const InnovationCard = ({
         {/* Categories */}
         <div className="flex flex-wrap gap-2 mb-4">
           {categories.map((category, index) => (
-            <Badge key={index} variant="secondary" className="text-xs">
+            <Badge 
+              key={index} 
+              className={`text-xs ${categoryColors[category] || "bg-muted text-muted-foreground"}`}
+            >
               {category}
             </Badge>
           ))}

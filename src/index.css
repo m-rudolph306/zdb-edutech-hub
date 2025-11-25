@@ -48,6 +48,12 @@ All colors MUST be HSL.
     --shadow-hover: 0 20px 25px -5px hsl(200 20% 20% / 0.15), 0 8px 10px -6px hsl(200 20% 20% / 0.1);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Category badge colors */
+    --badge-ai: 217 91% 60%;
+    --badge-vr: 258 90% 66%;
+    --badge-assessment: 38 92% 50%;
+    --badge-management: 142 71% 45%;
 
     --sidebar-background: 0 0% 98%;
 

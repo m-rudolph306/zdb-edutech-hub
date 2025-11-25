@@ -18,29 +18,27 @@ const Home = () => {
       <main className="flex-1">
         {/* Hero Section */}
         <section
-          className="relative bg-hero-gradient py-20 md:py-32"
+          className="relative min-h-[500px] flex items-center py-20 md:py-32"
           style={{
-            backgroundImage: `linear-gradient(rgba(247, 250, 252, 0.95), rgba(255, 255, 255, 0.95)), url(${heroBg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background: "linear-gradient(to bottom, hsl(200, 45%, 96%), hsl(0, 0%, 100%))",
           }}
         >
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
               Discover the Future of Digital Education
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto">
               Explore curated innovations transforming education in Germany
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/innovations">
-                <Button size="lg" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto px-8 py-4 rounded-lg text-base hover:opacity-90 transition-opacity">
                   Browse Innovations
                 </Button>
               </Link>
               <Link to="/how-to-apply">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 py-4 rounded-lg text-base hover:bg-primary/10 transition-colors">
                   Apply as Startup
                 </Button>
               </Link>
@@ -112,7 +110,7 @@ const Home = () => {
         </section>
 
         {/* Featured Innovations */}
-        <section className="py-16 bg-background">
+        <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
               Featured Innovations
