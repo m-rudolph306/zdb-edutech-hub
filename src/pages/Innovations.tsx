@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import InnovationCard from "@/components/InnovationCard";
@@ -16,6 +17,7 @@ import { Search } from "lucide-react";
 import { innovations } from "@/data/innovations";
 
 const Innovations = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [regionFilter, setRegionFilter] = useState("All");
@@ -55,7 +57,7 @@ const Innovations = () => {
   };
 
   const handleInnovationClick = (id: number) => {
-    console.log("Innovation clicked:", id);
+    navigate(`/innovations/${id}`);
   };
 
   return (

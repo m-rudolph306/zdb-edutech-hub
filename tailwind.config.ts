@@ -65,6 +65,7 @@ export default {
           vr: "hsl(var(--badge-vr))",
           assessment: "hsl(var(--badge-assessment))",
           management: "hsl(var(--badge-management))",
+          content: "hsl(var(--badge-content))",
         },
       },
       borderRadius: {
