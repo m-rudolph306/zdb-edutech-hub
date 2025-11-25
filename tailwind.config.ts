@@ -60,6 +60,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        badge: {
+          ai: "hsl(var(--badge-ai))",
+          vr: "hsl(var(--badge-vr))",
+          assessment: "hsl(var(--badge-assessment))",
+          management: "hsl(var(--badge-management))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
