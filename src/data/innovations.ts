@@ -69,4 +69,64 @@ export const innovations: Innovation[] = [
     technology: "Platform",
     event: "Magdeburg 2025",
   },
+  {
+    id: 7,
+    name: "LanguageBridge AI",
+    description:
+      "Multilingual learning assistant that provides real-time translation and language support for international classrooms. Breaks down language barriers and enables inclusive education for diverse student populations.",
+    categories: ["AI", "Content Creation"],
+    region: "International",
+    technology: "Software",
+    event: "Berlin 2025",
+  },
+  {
+    id: 8,
+    name: "ClassroomVR Explorer",
+    description:
+      "Virtual field trips platform offering immersive experiences to historical sites, museums, and natural wonders worldwide. Students can explore ancient civilizations and distant planets without leaving the classroom.",
+    categories: ["VR", "Content Creation"],
+    region: "National",
+    technology: "Hardware",
+    event: "Erfurt 2025",
+  },
+  {
+    id: 9,
+    name: "StudyFlow Manager",
+    description:
+      "Intelligent scheduling and productivity tool designed specifically for students and teachers. Optimizes study time, tracks assignments, and provides smart reminders to improve academic performance.",
+    categories: ["Management", "AI"],
+    region: "National",
+    technology: "Platform",
+    event: "Magdeburg 2025",
+  },
+  {
+    id: 10,
+    name: "QuizMaster Pro",
+    description:
+      "Interactive assessment creation tool with automatic question generation, peer review features, and instant feedback mechanisms. Supports multiple question types and adaptive difficulty levels.",
+    categories: ["Assessment", "Content Creation"],
+    region: "International",
+    technology: "Software",
+    event: "Berlin 2025",
+  },
+  {
+    id: 11,
+    name: "RoboTeach Assistant",
+    description:
+      "Physical classroom robot that assists teachers with demonstrations, student engagement activities, and personalized tutoring. Equipped with AI to answer student questions and provide supplementary explanations.",
+    categories: ["Hardware", "AI"],
+    region: "International",
+    technology: "Hardware",
+    event: "Magdeburg 2025",
+  },
+  {
+    id: 12,
+    name: "CollabSpace Platform",
+    description:
+      "Digital collaboration workspace designed for group projects and peer learning. Features real-time editing, video conferencing, resource sharing, and integrated project management tools for student teams.",
+    categories: ["Management", "Content Creation"],
+    region: "National",
+    technology: "Platform",
+    event: "Erfurt 2025",
+  },
 ];

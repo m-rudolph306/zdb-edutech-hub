@@ -7,6 +7,7 @@ interface InnovationCardProps {
   categories: string[];
   event?: string;
   imageUrl?: string;
+  onClick?: () => void;
 }
 
 const categoryColors: Record<string, string> = {
@@ -22,9 +23,13 @@ const InnovationCard = ({
   categories,
   event,
   imageUrl,
+  onClick,
 }: InnovationCardProps) => {
   return (
-    <div className="bg-card rounded-lg shadow-md hover:shadow-hover hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full">
+    <div 
+      className="bg-card rounded-lg shadow-md hover:shadow-hover hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer"
+      onClick={onClick}
+    >
       {/* Image */}
       <div className="w-full h-48 bg-muted flex items-center justify-center">
         {imageUrl ? (
@@ -61,7 +66,14 @@ const InnovationCard = ({
         )}
 
         {/* Button */}
-        <Button variant="outline" className="w-full mt-auto">
+        <Button 
+          variant="outline" 
+          className="w-full mt-auto"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick?.();
+          }}
+        >
           Learn More
         </Button>
       </div>

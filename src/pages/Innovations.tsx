@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import InnovationCard from "@/components/InnovationCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
@@ -19,6 +20,15 @@ const Innovations = () => {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [regionFilter, setRegionFilter] = useState("All");
   const [technologyFilter, setTechnologyFilter] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredInnovations = innovations.filter((innovation) => {
     const matchesSearch =
@@ -42,6 +52,10 @@ const Innovations = () => {
     setCategoryFilter("All");
     setRegionFilter("All");
     setTechnologyFilter("All");
+  };
+
+  const handleInnovationClick = (id: number) => {
+    console.log("Innovation clicked:", id);
   };
 
   return (
@@ -127,11 +141,42 @@ const Innovations = () => {
         {/* Innovation Cards Grid */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            {filteredInnovations.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-xl text-muted-foreground">
-                  No innovations found matching your criteria.
+            {/* Results Count */}
+            {!isLoading && (
+              <div className="mb-6">
+                <p className="text-muted-foreground">
+                  Showing {filteredInnovations.length} innovation{filteredInnovations.length !== 1 ? 's' : ''}
                 </p>
+              </div>
+            )}
+
+            {isLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[...Array(6)].map((_, index) => (
+                  <div key={index} className="bg-card rounded-lg shadow-md overflow-hidden">
+                    <Skeleton className="w-full h-48" />
+                    <div className="p-6">
+                      <Skeleton className="h-6 w-3/4 mb-2" />
+                      <Skeleton className="h-4 w-full mb-2" />
+                      <Skeleton className="h-4 w-full mb-2" />
+                      <Skeleton className="h-4 w-2/3 mb-4" />
+                      <div className="flex gap-2 mb-4">
+                        <Skeleton className="h-6 w-16" />
+                        <Skeleton className="h-6 w-20" />
+                      </div>
+                      <Skeleton className="h-10 w-full" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : filteredInnovations.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-xl text-muted-foreground mb-4">
+                  No innovations found. Try adjusting your filters.
+                </p>
+                <Button onClick={handleClearFilters} variant="outline">
+                  Clear Filters
+                </Button>
               </div>
             ) : (
               <>
@@ -143,6 +188,7 @@ const Innovations = () => {
                       description={innovation.description}
                       categories={innovation.categories}
                       event={innovation.event}
+                      onClick={() => handleInnovationClick(innovation.id)}
                     />
                   ))}
                 </div>
