@@ -1,175 +1,164 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Search, GraduationCap, Rocket } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import InnovationCard from "@/components/InnovationCard";
 import EventCard from "@/components/EventCard";
 import { innovations } from "@/data/innovations";
-import heroBg from "@/assets/hero-bg.jpg";
 
 const Home = () => {
-  const featuredInnovations = innovations.slice(0, 3);
+  const navigate = useNavigate();
+  const featuredInnovations = innovations.slice(0, 6);
+  const upcomingEvents = [
+    { id: 1, title: "Innovation Area Magdeburg 2025" },
+    { id: 2, title: "Innovation Area Erfurt 2025" }
+  ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       <Navigation />
 
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section
-          className="relative min-h-[500px] flex items-center py-20 md:py-32"
-          style={{
-            background: "linear-gradient(to bottom, hsl(200, 45%, 96%), hsl(0, 0%, 100%))",
-          }}
-        >
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
-              Discover the Future of Digital Education
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto">
-              Explore curated innovations transforming education in Germany
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/innovations">
-                <Button size="lg" className="w-full sm:w-auto px-8 py-4 rounded-lg text-base hover:opacity-90 transition-opacity">
-                  Browse Innovations
-                </Button>
-              </Link>
-              <Link to="/how-to-apply">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 py-4 rounded-lg text-base hover:bg-primary/10 transition-colors">
-                  Apply as Startup
-                </Button>
-              </Link>
-            </div>
+      {/* Hero Section */}
+      <section
+        className="relative min-h-[400px] md:min-h-[500px] flex items-center justify-center text-center px-4 md:px-6 py-12 md:py-20 mt-[72px]"
+        style={{
+          background: "linear-gradient(to bottom, hsl(200, 45%, 96%), hsl(0, 0%, 100%))",
+        }}
+      >
+        <div className="container mx-auto max-w-4xl animate-fade-in">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-12 text-foreground">
+            Discover Digital Innovations in Education
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-12">
+            Explore cutting-edge solutions transforming learning experiences across Germany and beyond
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" asChild className="px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all">
+              <Link to="/innovations">Browse Innovations</Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild className="px-8 py-4 rounded-lg hover:bg-primary/10 hover:scale-105 transition-all">
+              <Link to="/how-to-apply">Apply as Startup</Link>
+            </Button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* What is Innovation Area Section */}
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4 max-w-4xl text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              What is Innovation Area?
-            </h2>
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>
-                The ZDB Innovation Area is a curated showcase of cutting-edge educational
-                technology solutions from leading companies across Germany and beyond. We
-                bring together innovators, educators, and decision-makers to accelerate
-                the digital transformation of education.
-              </p>
-              <p>
-                Our platform provides a centralized hub where stakeholders can discover
-                vetted EdTech solutions, connect with innovators, and stay informed about
-                the latest developments in digital education. Join us in shaping the
-                future of learning.
+      {/* Innovation Area Explanation */}
+      <section className="py-12 md:py-16 px-4 md:px-6 bg-background">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground animate-fade-in">
+            What is the Innovation Area?
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+            <div className="text-center animate-fade-in">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">🎯</span>
+              </div>
+              <h3 className="text-lg md:text-xl font-semibold mb-3 text-foreground">For Decision Makers</h3>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Discover proven solutions that address real educational challenges and see innovations in action
               </p>
             </div>
-          </div>
-        </section>
-
-        {/* Value Propositions */}
-        <section className="py-16 bg-muted">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* For Decision-Makers */}
-              <div className="bg-card rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow">
-                <div className="text-4xl mb-4">
-                  <Search className="h-12 w-12 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">For Decision-Makers</h3>
-                <p className="text-muted-foreground">
-                  Discover vetted solutions for digital education challenges
-                </p>
+            <div className="text-center animate-fade-in animate-delay-100">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">👩‍🏫</span>
               </div>
-
-              {/* For Educators */}
-              <div className="bg-card rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow">
-                <div className="text-4xl mb-4">
-                  <GraduationCap className="h-12 w-12 text-secondary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">For Educators</h3>
-                <p className="text-muted-foreground">
-                  Explore innovative tools transforming teaching and learning
-                </p>
+              <h3 className="text-lg md:text-xl font-semibold mb-3 text-foreground">For Educators</h3>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Explore tools that can enhance your teaching and engage directly with innovators
+              </p>
+            </div>
+            <div className="text-center animate-fade-in animate-delay-200">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">💡</span>
               </div>
-
-              {/* For Innovators */}
-              <div className="bg-card rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow">
-                <div className="text-4xl mb-4">
-                  <Rocket className="h-12 w-12 text-accent" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">For Innovators</h3>
-                <p className="text-muted-foreground">
-                  Get noticed by policy-makers and education leaders
-                </p>
-              </div>
+              <h3 className="text-lg md:text-xl font-semibold mb-3 text-foreground">For Innovators</h3>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Present your solutions to key stakeholders and connect with potential partners
+              </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Featured Innovations */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
-              Featured Innovations
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-              {featuredInnovations.map((innovation) => (
-                <InnovationCard
-                  key={innovation.id}
-                  name={innovation.name}
-                  description={innovation.description}
-                  categories={innovation.categories}
-                  event={innovation.event}
-                />
-              ))}
-            </div>
-
-            <div className="text-center">
-              <Link to="/innovations">
-                <Button size="lg" variant="outline">
-                  View All Innovations
+      {/* Featured Innovations */}
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-muted/30">
+        <div className="container mx-auto max-w-7xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground animate-fade-in">
+            Featured Innovations
+          </h2>
+          {featuredInnovations.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {featuredInnovations.map((innovation, index) => (
+                  <div 
+                    key={innovation.id} 
+                    className="animate-fade-in"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <InnovationCard
+                      name={innovation.name}
+                      description={innovation.description}
+                      categories={innovation.categories}
+                      event={innovation.event}
+                      onClick={() => navigate(`/innovations/${innovation.id}`)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="text-center mt-8 md:mt-12">
+                <Button asChild size="lg" variant="outline" className="hover:scale-105 transition-transform">
+                  <Link to="/innovations">View All Innovations</Link>
                 </Button>
-              </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">Featured innovations coming soon</p>
             </div>
-          </div>
-        </section>
+          )}
+        </div>
+      </section>
 
-        {/* Upcoming Events */}
-        <section className="py-16 bg-muted">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
-              Upcoming Events
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-8">
-              <EventCard
-                name="EdTech Innovation Summit"
-                date="March 15, 2025"
-                location="Magdeburg"
-                description="Join leading educators and innovators to explore the latest trends in educational technology."
-              />
-              <EventCard
-                name="Digital Learning Conference"
-                date="April 22, 2025"
-                location="Erfurt"
-                description="A comprehensive conference focused on implementing digital solutions in educational institutions."
-              />
-            </div>
-
-            <div className="text-center">
-              <Link to="/events">
-                <Button size="lg" variant="outline">
-                  See All Events
+      {/* Upcoming Events */}
+      <section className="py-12 md:py-16 px-4 md:px-6 bg-background">
+        <div className="container mx-auto max-w-7xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground animate-fade-in">
+            Upcoming Events
+          </h2>
+          {upcomingEvents.length > 0 ? (
+            <>
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                <div className="animate-fade-in">
+                  <EventCard
+                    name="Innovation Area Magdeburg 2025"
+                    date="March 15-17, 2025"
+                    location="Magdeburg, Germany"
+                    description="Join us at didacta 2025 to explore the latest educational innovations and connect with leading startups."
+                  />
+                </div>
+                <div className="animate-fade-in animate-delay-100">
+                  <EventCard
+                    name="Innovation Area Erfurt 2025"
+                    date="June 8-10, 2025"
+                    location="Erfurt, Germany"
+                    description="Discover digital solutions at the Education Innovation Summit."
+                  />
+                </div>
+              </div>
+              <div className="text-center mt-8 md:mt-12">
+                <Button asChild size="lg" variant="outline" className="hover:scale-105 transition-transform">
+                  <Link to="/events">View All Events</Link>
                 </Button>
-              </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">No upcoming events scheduled</p>
             </div>
-          </div>
-        </section>
-      </main>
+          )}
+        </div>
+      </section>
 
       <Footer />
     </div>

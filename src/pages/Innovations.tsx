@@ -6,6 +6,7 @@ import InnovationCard from "@/components/InnovationCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -13,211 +14,165 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search } from "lucide-react";
 import { innovations } from "@/data/innovations";
 
 const Innovations = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All");
-  const [regionFilter, setRegionFilter] = useState("All");
-  const [technologyFilter, setTechnologyFilter] = useState("All");
-  const [isLoading, setIsLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedRegion, setSelectedRegion] = useState("all");
+  const [selectedTechnology, setSelectedTechnology] = useState("all");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
+    const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
   const filteredInnovations = innovations.filter((innovation) => {
     const matchesSearch =
+      searchQuery === "" ||
       innovation.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       innovation.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesCategory =
-      categoryFilter === "All" || innovation.categories.includes(categoryFilter);
+    const matchesCategory = 
+      selectedCategory === "all" || innovation.categories.includes(selectedCategory);
 
-    const matchesRegion =
-      regionFilter === "All" || innovation.region === regionFilter;
+    const matchesRegion = 
+      selectedRegion === "all" || innovation.region === selectedRegion;
 
-    const matchesTechnology =
-      technologyFilter === "All" || innovation.technology === technologyFilter;
+    const matchesTechnology = 
+      selectedTechnology === "all" || innovation.technology === selectedTechnology;
 
     return matchesSearch && matchesCategory && matchesRegion && matchesTechnology;
   });
 
-  const handleClearFilters = () => {
+  const clearFilters = () => {
     setSearchQuery("");
-    setCategoryFilter("All");
-    setRegionFilter("All");
-    setTechnologyFilter("All");
-  };
-
-  const handleInnovationClick = (id: number) => {
-    navigate(`/innovations/${id}`);
+    setSelectedCategory("all");
+    setSelectedRegion("all");
+    setSelectedTechnology("all");
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       <Navigation />
 
-      <main className="flex-1">
-        {/* Page Header */}
-        <section className="bg-muted py-12">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Discover Education Innovations
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Browse curated solutions from leading EdTech companies
-            </p>
-          </div>
-        </section>
+      <section className="py-12 md:py-16 px-4 md:px-6 mt-[72px]">
+        <div className="container mx-auto max-w-7xl">
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-foreground animate-fade-in">All Innovations</h1>
 
-        {/* Search & Filters */}
-        <section className="bg-background py-8 border-b">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col gap-4">
-              {/* Search Bar */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search innovations..."
-                  className="pl-10"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
+          {/* Search and Filters */}
+          <div className="mb-6 md:mb-8 space-y-4">
+            {/* Search Bar */}
+            <Input
+              type="text"
+              placeholder="Search innovations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full"
+              aria-label="Search innovations"
+            />
 
-              {/* Filters */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All">All Categories</SelectItem>
-                    <SelectItem value="AI">AI</SelectItem>
-                    <SelectItem value="VR">VR</SelectItem>
-                    <SelectItem value="Assessment">Assessment</SelectItem>
-                    <SelectItem value="Management">Management</SelectItem>
-                    <SelectItem value="Content Creation">Content Creation</SelectItem>
-                  </SelectContent>
-                </Select>
+            {/* Filters */}
+            <div className="flex flex-col md:flex-row md:flex-wrap gap-4">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full md:w-[200px]">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="AI">AI</SelectItem>
+                  <SelectItem value="VR">VR</SelectItem>
+                  <SelectItem value="Assessment">Assessment</SelectItem>
+                  <SelectItem value="Management">Management</SelectItem>
+                  <SelectItem value="Content Creation">Content Creation</SelectItem>
+                </SelectContent>
+              </Select>
 
-                <Select value={regionFilter} onValueChange={setRegionFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Region" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All">All Regions</SelectItem>
-                    <SelectItem value="National">National</SelectItem>
-                    <SelectItem value="International">International</SelectItem>
-                  </SelectContent>
-                </Select>
+              <Select value={selectedRegion} onValueChange={setSelectedRegion}>
+                <SelectTrigger className="w-full md:w-[200px]">
+                  <SelectValue placeholder="Region" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Regions</SelectItem>
+                  <SelectItem value="National">National</SelectItem>
+                  <SelectItem value="International">International</SelectItem>
+                </SelectContent>
+              </Select>
 
-                <Select value={technologyFilter} onValueChange={setTechnologyFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Technology" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All">All Technologies</SelectItem>
-                    <SelectItem value="Software">Software</SelectItem>
-                    <SelectItem value="Hardware">Hardware</SelectItem>
-                    <SelectItem value="Platform">Platform</SelectItem>
-                  </SelectContent>
-                </Select>
+              <Select value={selectedTechnology} onValueChange={setSelectedTechnology}>
+                <SelectTrigger className="w-full md:w-[200px]">
+                  <SelectValue placeholder="Technology" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Technologies</SelectItem>
+                  <SelectItem value="Software">Software</SelectItem>
+                  <SelectItem value="Hardware">Hardware</SelectItem>
+                  <SelectItem value="Platform">Platform</SelectItem>
+                </SelectContent>
+              </Select>
 
-                <Button variant="outline" onClick={handleClearFilters}>
-                  Clear Filters
-                </Button>
-              </div>
+              <Button
+                variant="outline"
+                onClick={clearFilters}
+                className="w-full md:w-auto md:ml-auto hover:scale-105 transition-transform"
+              >
+                Clear Filters
+              </Button>
             </div>
           </div>
-        </section>
 
-        {/* Innovation Cards Grid */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            {/* Results Count */}
-            {!isLoading && (
-              <div className="mb-6">
-                <p className="text-muted-foreground">
-                  Showing {filteredInnovations.length} innovation{filteredInnovations.length !== 1 ? 's' : ''}
-                </p>
-              </div>
-            )}
+          {/* Results Count */}
+          <p className="text-sm text-muted-foreground mb-6">
+            Showing {filteredInnovations.length} innovation{filteredInnovations.length !== 1 ? 's' : ''}
+          </p>
 
-            {isLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[...Array(6)].map((_, index) => (
-                  <div key={index} className="bg-card rounded-lg shadow-md overflow-hidden">
-                    <Skeleton className="w-full h-48" />
-                    <div className="p-6">
-                      <Skeleton className="h-6 w-3/4 mb-2" />
-                      <Skeleton className="h-4 w-full mb-2" />
-                      <Skeleton className="h-4 w-full mb-2" />
-                      <Skeleton className="h-4 w-2/3 mb-4" />
-                      <div className="flex gap-2 mb-4">
-                        <Skeleton className="h-6 w-16" />
-                        <Skeleton className="h-6 w-20" />
-                      </div>
-                      <Skeleton className="h-10 w-full" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : filteredInnovations.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-xl text-muted-foreground mb-4">
-                  No innovations found. Try adjusting your filters.
-                </p>
-                <Button onClick={handleClearFilters} variant="outline">
-                  Clear Filters
-                </Button>
-              </div>
-            ) : (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredInnovations.map((innovation) => (
-                    <InnovationCard
-                      key={innovation.id}
-                      name={innovation.name}
-                      description={innovation.description}
-                      categories={innovation.categories}
-                      event={innovation.event}
-                      onClick={() => handleInnovationClick(innovation.id)}
-                    />
-                  ))}
+          {/* Innovation Grid */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {[...Array(6)].map((_, i) => (
+                <Card key={i} className="h-[400px]">
+                  <Skeleton className="h-48 w-full" />
+                  <CardContent className="p-6">
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : filteredInnovations.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {filteredInnovations.map((innovation, index) => (
+                <div 
+                  key={innovation.id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  <InnovationCard
+                    name={innovation.name}
+                    description={innovation.description}
+                    categories={innovation.categories}
+                    event={innovation.event}
+                    onClick={() => navigate(`/innovations/${innovation.id}`)}
+                  />
                 </div>
-
-                {/* Pagination */}
-                <div className="flex justify-center items-center gap-2 mt-12">
-                  <Button variant="outline" size="sm">
-                    Previous
-                  </Button>
-                  <Button variant="default" size="sm">
-                    1
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    2
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    3
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    Next
-                  </Button>
-                </div>
-              </>
-            )}
-          </div>
-        </section>
-      </main>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 animate-fade-in">
+              <p className="text-muted-foreground text-lg mb-4">
+                No innovations found. Try adjusting your filters.
+              </p>
+              <Button variant="outline" onClick={clearFilters} className="hover:scale-105 transition-transform">
+                Clear Filters
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
 
       <Footer />
     </div>

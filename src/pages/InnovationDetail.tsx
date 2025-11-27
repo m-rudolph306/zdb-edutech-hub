@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import InnovationCard from "@/components/InnovationCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ExternalLink, Mail, MapPin, Calendar } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ExternalLink, Mail, Calendar } from "lucide-react";
 import { innovations } from "@/data/innovations";
 
 const InnovationDetail = () => {
@@ -14,28 +15,21 @@ const InnovationDetail = () => {
 
   if (!innovation) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen">
         <Navigation />
-        <main className="flex-1 flex items-center justify-center">
+        <div className="flex items-center justify-center min-h-[calc(100vh-72px)] mt-[72px]">
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-4">Innovation Not Found</h1>
-            <Button onClick={() => navigate("/innovations")}>
-              Back to Innovations
-            </Button>
+            <Button onClick={() => navigate("/innovations")}>Back to Innovations</Button>
           </div>
-        </main>
+        </div>
         <Footer />
       </div>
     );
   }
 
-  // Generate related innovations (same category, excluding current)
   const relatedInnovations = innovations
-    .filter(
-      (item) =>
-        item.id !== innovation.id &&
-        item.categories.some((cat) => innovation.categories.includes(cat))
-    )
+    .filter((item) => item.id !== innovation.id && item.categories.some(cat => innovation.categories.includes(cat)))
     .slice(0, 3);
 
   const categoryColors: Record<string, string> = {
@@ -44,283 +38,198 @@ const InnovationDetail = () => {
     Assessment: "bg-badge-assessment text-white",
     Management: "bg-badge-management text-white",
     "Content Creation": "bg-badge-content text-white",
-    Hardware: "bg-muted text-muted-foreground",
-  };
-
-  // Sample additional data
-  const keyInfo = {
-    targetAudience: innovation.technology === "Software" ? "K-12 Schools, Universities" : innovation.technology === "Hardware" ? "Schools, Training Centers" : "Educational Institutions",
-    foundedYear: 2020 + (innovation.id % 4),
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       <Navigation />
 
-      <main className="flex-1">
-        {/* Back Button */}
-        <section className="bg-muted py-4 border-b">
-          <div className="container mx-auto px-4">
-            <Link
-              to="/innovations"
-              className="inline-flex items-center gap-2 text-primary hover:underline"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Innovations
-            </Link>
-          </div>
-        </section>
+      <section className="py-12 md:py-16 px-4 md:px-6 mt-[72px]">
+        <div className="container mx-auto max-w-7xl">
+          {/* Back Button */}
+          <Link
+            to="/innovations"
+            className="inline-flex items-center gap-2 text-primary hover:underline mb-6 md:mb-8 animate-fade-in"
+          >
+            ← Back to Innovations
+          </Link>
 
-        {/* Innovation Header */}
-        <section className="py-12 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-              {/* Logo */}
-              <div className="md:col-span-4">
-                <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center shadow-lg">
-                  <span className="text-6xl font-bold text-muted-foreground">
-                    {innovation.name.charAt(0)}
-                  </span>
-                </div>
-              </div>
-
-              {/* Info */}
-              <div className="md:col-span-8">
-                <h1 className="text-4xl font-bold mb-4 text-foreground">
-                  {innovation.name}
-                </h1>
-
-                {/* Category Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {innovation.categories.map((category, index) => (
-                    <Badge
-                      key={index}
-                      className={`text-sm ${
-                        categoryColors[category] ||
-                        "bg-muted text-muted-foreground"
-                      }`}
-                    >
-                      {category}
-                    </Badge>
-                  ))}
-                </div>
-
-                <p className="text-lg text-muted-foreground mb-6">
-                  {innovation.description.substring(0, 120)}...
-                </p>
-
-                {/* Action Buttons */}
-                <div className="flex flex-wrap gap-4">
-                  <Button className="gap-2">
-                    <ExternalLink className="w-4 h-4" />
-                    Visit Website
-                  </Button>
-                  <Button variant="outline" className="gap-2">
-                    <Mail className="w-4 h-4" />
-                    Contact Company
-                  </Button>
-                </div>
-              </div>
+          {/* Innovation Header */}
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-16">
+            {/* Logo */}
+            <div className="flex items-center justify-center animate-fade-in bg-muted rounded-lg p-12">
+              <span className="text-6xl font-bold text-muted-foreground">{innovation.name.charAt(0)}</span>
             </div>
-          </div>
-        </section>
 
-        {/* About Section */}
-        <section className="py-12 bg-muted">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Description */}
-              <div className="lg:col-span-2">
-                <h2 className="text-3xl font-bold mb-6">
-                  About {innovation.name}
-                </h2>
-                <div className="space-y-4 text-muted-foreground">
-                  <p>{innovation.description}</p>
-                  <p>
-                    Our mission is to transform education through innovative
-                    technology solutions that empower educators and inspire
-                    learners. We believe in creating accessible, engaging, and
-                    effective learning experiences for all students.
-                  </p>
-                  <p>
-                    With a focus on cutting-edge technology and pedagogical
-                    excellence, we partner with schools and institutions to
-                    deliver measurable improvements in learning outcomes and
-                    student engagement.
-                  </p>
-                </div>
-              </div>
-
-              {/* Key Information Box */}
-              <div className="lg:col-span-1">
-                <div className="bg-card p-6 rounded-lg shadow-md border">
-                  <h3 className="text-xl font-bold mb-4">Key Information</h3>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">
-                        Category
-                      </p>
-                      <p className="text-foreground">
-                        {innovation.categories.join(", ")}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">
-                        Technology Type
-                      </p>
-                      <p className="text-foreground">{innovation.technology}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">
-                        Region
-                      </p>
-                      <p className="text-foreground">{innovation.region}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">
-                        Target Audience
-                      </p>
-                      <p className="text-foreground">{keyInfo.targetAudience}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">
-                        Founded Year
-                      </p>
-                      <p className="text-foreground">{keyInfo.foundedYear}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* The Solution Section */}
-        <section className="py-12 bg-background">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-6">The Solution</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div>
-                <p className="text-muted-foreground mb-6">
-                  {innovation.name} addresses critical challenges in modern
-                  education by providing an innovative platform that combines
-                  advanced technology with proven pedagogical methods.
-                </p>
-                <h3 className="text-xl font-semibold mb-4">Key Features:</h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li className="flex gap-2">
-                    <span className="text-secondary">✓</span>
-                    <span>Intuitive user interface designed for educators</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-secondary">✓</span>
-                    <span>Real-time analytics and reporting</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-secondary">✓</span>
-                    <span>Seamless integration with existing systems</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-secondary">✓</span>
-                    <span>Scalable architecture for growing institutions</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-secondary">✓</span>
-                    <span>Comprehensive training and support</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-muted rounded-lg p-8 flex items-center justify-center">
-                <span className="text-muted-foreground">
-                  Demo Screenshot Placeholder
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Event Participation */}
-        <section className="py-12 bg-muted">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8">
-              Innovation Area Participation
-            </h2>
-            <div className="bg-card p-6 rounded-lg shadow-md border">
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-primary" />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-1">
-                      {innovation.event}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
-                      <MapPin className="w-4 h-4" />
-                      {innovation.event.split(" ")[0]}, Germany
-                    </p>
-                    <p className="text-muted-foreground">
-                      Showcased innovative solutions to education leaders and
-                      decision-makers
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Related Innovations */}
-        {relatedInnovations.length > 0 && (
-          <section className="py-12 bg-background">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8">Similar Innovations</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {relatedInnovations.map((item) => (
-                  <InnovationCard
-                    key={item.id}
-                    name={item.name}
-                    description={item.description}
-                    categories={item.categories}
-                    event={item.event}
-                    onClick={() => navigate(`/innovations/${item.id}`)}
-                  />
+            {/* Info */}
+            <div className="flex flex-col justify-center animate-fade-in animate-delay-100">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">{innovation.name}</h1>
+              
+              {/* Category Tags */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {innovation.categories.map((cat, idx) => (
+                  <Badge key={idx} className={categoryColors[cat] || "bg-muted"}>
+                    {cat}
+                  </Badge>
                 ))}
+                <Badge variant="outline">{innovation.technology}</Badge>
+                <Badge variant="outline">{innovation.region}</Badge>
               </div>
-            </div>
-          </section>
-        )}
 
-        {/* CTA Box */}
-        <section className="py-16 bg-primary/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">
-                Interested in this innovation?
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Connect with {innovation.name} through our Innovation Area
-                platform
+              <p className="text-base md:text-lg text-muted-foreground mb-6">
+                Transforming education through innovative technology solutions
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button size="lg" className="gap-2">
-                  <Mail className="w-4 h-4" />
-                  Contact via Innovation Area
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="gap-2 hover:scale-105 transition-transform">
+                  <ExternalLink size={18} />
+                  Visit Website
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => navigate("/innovations")}
-                >
-                  View All Innovations
+                <Button size="lg" variant="outline" className="gap-2 hover:scale-105 transition-transform">
+                  <Mail size={18} />
+                  Contact Company
                 </Button>
               </div>
             </div>
           </div>
-        </section>
-      </main>
+
+          {/* About Section */}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
+            {/* Description */}
+            <div className="md:col-span-2 animate-fade-in">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-foreground">About {innovation.name}</h2>
+              <div className="prose prose-base md:prose-lg max-w-none text-muted-foreground space-y-4">
+                <p>{innovation.description}</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+              </div>
+            </div>
+
+            {/* Key Information Box */}
+            <Card className="animate-fade-in animate-delay-100">
+              <CardHeader>
+                <CardTitle className="text-xl">Key Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <p className="text-sm font-semibold text-muted-foreground">Category</p>
+                  <p className="text-foreground">{innovation.categories.join(", ")}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-muted-foreground">Technology Type</p>
+                  <p className="text-foreground">{innovation.technology}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-muted-foreground">Region</p>
+                  <p className="text-foreground">{innovation.region}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-muted-foreground">Target Audience</p>
+                  <p className="text-foreground">K-12 Schools, Teachers</p>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-muted-foreground">Founded</p>
+                  <p className="text-foreground">2020</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* The Solution Section */}
+          <div className="mb-12 md:mb-16 animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-foreground">The Solution</h2>
+            <div className="bg-muted/30 rounded-lg p-6 md:p-8">
+              <p className="text-base md:text-lg text-muted-foreground mb-6">
+                Our platform addresses the challenge of engaging students in remote learning environments by providing interactive, 
+                AI-powered tools that adapt to each student's learning pace and style.
+              </p>
+              <h3 className="text-lg md:text-xl font-semibold mb-4 text-foreground">Key Features:</h3>
+              <ul className="space-y-3 text-sm md:text-base text-muted-foreground">
+                <li className="flex items-start gap-3">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Personalized learning paths powered by AI algorithms</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Real-time collaboration tools for group projects</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Comprehensive analytics dashboard for teachers</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Integration with existing Learning Management Systems</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Event Participation */}
+          <div className="mb-12 md:mb-16 animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-foreground">Innovation Area Participation</h2>
+            <div className="space-y-4 md:space-y-6">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-4 md:p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Calendar className="text-primary" size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">{innovation.event}</h3>
+                      <p className="text-sm md:text-base text-muted-foreground">March 15-17, 2025 • Magdeburg, Germany</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Related Innovations */}
+          <div className="mb-12 md:mb-16 animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-foreground">Similar Innovations</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {relatedInnovations.map((related, index) => (
+                <div 
+                  key={related.id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <InnovationCard
+                    name={related.name}
+                    description={related.description}
+                    categories={related.categories}
+                    event={related.event}
+                    onClick={() => navigate(`/innovations/${related.id}`)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <Card className="bg-primary/5 border-primary/20 animate-fade-in">
+            <CardContent className="p-6 md:p-8 text-center">
+              <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Interested in this innovation?</h2>
+              <p className="text-sm md:text-base text-muted-foreground mb-6">
+                Connect with {innovation.name} and learn how they can help transform your educational environment.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" className="hover:scale-105 transition-transform">Contact via Innovation Area</Button>
+                <Button size="lg" variant="outline" asChild className="hover:scale-105 transition-transform">
+                  <Link to="/innovations">View All Innovations</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       <Footer />
     </div>
