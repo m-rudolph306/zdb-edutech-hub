@@ -29,19 +29,27 @@ const InnovationCard = ({
     <div 
       className="bg-card rounded-lg shadow-md hover:shadow-hover hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer"
       onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
     >
       {/* Image */}
       <div className="w-full h-48 bg-muted flex items-center justify-center">
         {imageUrl ? (
-          <img src={imageUrl} alt={name} className="w-full h-full object-cover" />
+          <img src={imageUrl} alt={`${name} logo`} className="w-full h-full object-cover" />
         ) : (
           <div className="text-muted-foreground text-sm">Image Placeholder</div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="text-xl font-bold mb-2 text-card-foreground">{name}</h3>
+      <div className="p-4 md:p-6 flex flex-col flex-1">
+        <h3 className="text-lg md:text-xl font-bold mb-2 text-card-foreground">{name}</h3>
         <p className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-1">
           {description}
         </p>
@@ -68,7 +76,7 @@ const InnovationCard = ({
         {/* Button */}
         <Button 
           variant="outline" 
-          className="w-full mt-auto"
+          className="w-full mt-auto hover:scale-105 transition-transform"
           onClick={(e) => {
             e.stopPropagation();
             onClick?.();
