@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import LoginModal from "@/components/LoginModal";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   CheckCircle2,
   Target,
@@ -20,6 +22,8 @@ import {
 } from "lucide-react";
 
 const HowToApply = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const selectionCriteria = [
@@ -122,7 +126,11 @@ const HowToApply = () => {
   ];
 
   const handleStartApplication = () => {
-    setIsLoginOpen(true);
+    if (isAuthenticated) {
+      navigate("/apply/select-event");
+    } else {
+      setIsLoginOpen(true);
+    }
   };
 
   return (

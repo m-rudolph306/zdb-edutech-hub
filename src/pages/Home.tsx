@@ -1,13 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import InnovationCard from "@/components/InnovationCard";
 import EventCard from "@/components/EventCard";
+import LoginModal from "@/components/LoginModal";
 import { innovations } from "@/data/innovations";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const featuredInnovations = innovations.slice(0, 6);
   const upcomingEvents = [
     { id: 1, title: "Innovation Area Magdeburg 2025" },
@@ -36,8 +41,19 @@ const Home = () => {
             <Button size="lg" asChild className="px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all">
               <Link to="/innovations">Browse Innovations</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="px-8 py-4 rounded-lg hover:bg-primary/10 hover:scale-105 transition-all">
-              <Link to="/how-to-apply">Apply as Startup</Link>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              onClick={() => {
+                if (isAuthenticated) {
+                  navigate("/apply/select-event");
+                } else {
+                  setIsLoginOpen(true);
+                }
+              }}
+              className="px-8 py-4 rounded-lg hover:bg-primary/10 hover:scale-105 transition-all"
+            >
+              Apply as Startup
             </Button>
           </div>
         </div>
@@ -161,6 +177,7 @@ const Home = () => {
       </section>
 
       <Footer />
+      <LoginModal open={isLoginOpen} onOpenChange={setIsLoginOpen} />
     </div>
   );
 };
