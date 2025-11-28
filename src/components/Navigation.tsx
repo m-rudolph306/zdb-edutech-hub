@@ -59,13 +59,13 @@ const Navigation = () => {
               Events
             </Link>
             <Link
-              to="/how-to-apply"
+              to="/apply"
               className={`text-sm font-medium transition-all duration-300 relative
                 after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 
                 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right 
                 after:transition-transform after:duration-300 hover:after:scale-x-100 
                 hover:after:origin-bottom-left
-                ${isActive("/how-to-apply") ? "text-primary after:scale-x-100" : "text-foreground"}`}
+                ${isActive("/apply") ? "text-primary after:scale-x-100" : "text-foreground"}`}
             >
               How to Apply
             </Link>
@@ -113,10 +113,10 @@ const Navigation = () => {
                 Events
               </Link>
               <Link
-                to="/how-to-apply"
+                to="/apply"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
-                  ${isActive("/how-to-apply") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
+                  ${isActive("/apply") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
               >
                 How to Apply
               </Link>
