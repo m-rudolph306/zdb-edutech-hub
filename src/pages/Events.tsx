@@ -1,91 +1,147 @@
+import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import EventCard from "@/components/EventCard";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, MapPin, ArrowRight } from "lucide-react";
+
+interface Event {
+  id: string;
+  name: string;
+  date: string;
+  location: string;
+  status: string;
+  statusVariant: "default" | "secondary" | "destructive";
+  description: string;
+}
 
 const Events = () => {
-  const upcomingEvents = [
+  const upcomingEvents: Event[] = [
     {
-      id: 1,
-      name: "EdTech Innovation Summit",
-      date: "March 15, 2025",
-      location: "Magdeburg",
-      description:
-        "Join leading educators and innovators to explore the latest trends in educational technology. Network with industry leaders and discover groundbreaking solutions.",
-    },
-    {
-      id: 2,
-      name: "Digital Learning Conference",
-      date: "April 22, 2025",
+      id: "erfurt-2025",
+      name: "Erfurt Innovation Area 2025",
+      date: "August 28, 2025",
       location: "Erfurt",
-      description:
-        "A comprehensive conference focused on implementing digital solutions in educational institutions. Learn from case studies and best practices.",
+      status: "Applications Open",
+      statusVariant: "secondary",
+      description: "Join us in Erfurt for the Innovation Area event, where education innovators showcase cutting-edge solutions for digital learning, assessment tools, and classroom technology. Network with educators and explore the future of education.",
     },
     {
-      id: 3,
-      name: "Future of Education Forum",
-      date: "May 10, 2025",
-      location: "Berlin",
-      description:
-        "An interactive forum bringing together policy-makers, educators, and technology providers to discuss the future landscape of education in Germany.",
+      id: "essen-2025",
+      name: "Essen Innovation Area 2025",
+      date: "October 1, 2025",
+      location: "Essen",
+      status: "Applications Open",
+      statusVariant: "secondary",
+      description: "The Essen Innovation Area brings together forward-thinking companies and educational institutions. Discover innovative teaching methods, AI-powered learning platforms, and collaborative tools transforming modern education.",
     },
     {
-      id: 4,
-      name: "AI in Education Workshop",
-      date: "June 5, 2025",
-      location: "Hamburg",
-      description:
-        "Hands-on workshop exploring practical applications of artificial intelligence in teaching and learning. Suitable for educators and tech enthusiasts.",
-    },
-    {
-      id: 5,
-      name: "VR Learning Experience Day",
-      date: "July 18, 2025",
-      location: "Munich",
-      description:
-        "Experience the latest virtual reality learning environments firsthand. Try cutting-edge VR educational tools and discuss implementation strategies.",
-    },
-    {
-      id: 6,
-      name: "EdTech Startup Showcase",
-      date: "August 25, 2025",
-      location: "Frankfurt",
-      description:
-        "Watch innovative startups pitch their solutions to educators and investors. Discover emerging technologies and networking opportunities.",
+      id: "rostock-2025",
+      name: "Rostock Innovation Area 2025",
+      date: "November 4, 2025",
+      location: "Rostock",
+      status: "Applications Closing Soon",
+      statusVariant: "destructive",
+      description: "Don't miss the Rostock Innovation Area! This event highlights breakthrough technologies in VR learning, adaptive assessment systems, and content management solutions. Apply now before spaces fill up.",
     },
   ];
 
+  const scrollToEvent = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       <Navigation />
 
-      <main className="flex-1">
-        {/* Page Header */}
-        <section className="bg-muted py-12">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Upcoming Events</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Connect with innovators and educators at our upcoming events across Germany
-            </p>
-          </div>
-        </section>
+      <section className="py-12 md:py-16 px-4 md:px-6 mt-[72px]">
+        <div className="container mx-auto max-w-4xl">
+          {/* Page Title */}
+          <h1 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-foreground animate-fade-in">
+            Upcoming Innovation Area Events
+          </h1>
 
-        {/* Events Grid */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {upcomingEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  name={event.name}
-                  date={event.date}
-                  location={event.location}
-                  description={event.description}
-                />
-              ))}
-            </div>
+          {/* Events List */}
+          <div className="space-y-6 mb-12">
+            {upcomingEvents.map((event, index) => (
+              <Card
+                key={event.id}
+                id={event.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <CardContent className="p-6 md:p-8">
+                  {/* Event Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+                    <div className="space-y-2 flex-1">
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4" />
+                          <span className="font-semibold">{event.date}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          <span>{event.location}</span>
+                        </div>
+                      </div>
+                      <h2 className="text-xl md:text-2xl font-bold text-foreground">
+                        {event.name}
+                      </h2>
+                    </div>
+                    <Badge
+                      variant={event.statusVariant}
+                      className="text-xs font-semibold px-3 py-1 whitespace-nowrap"
+                    >
+                      {event.status}
+                    </Badge>
+                  </div>
+
+                  {/* Event Description */}
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    {event.description}
+                  </p>
+
+                  {/* Learn More Button */}
+                  <Button
+                    variant="outline"
+                    onClick={() => scrollToEvent(event.id)}
+                    className="group hover:scale-105 transition-transform"
+                  >
+                    Learn More
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </section>
-      </main>
+
+          {/* Bottom CTA */}
+          <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 animate-fade-in">
+            <CardContent className="p-8 md:p-12 text-center">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
+                Want to participate?
+              </h2>
+              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                Showcase your innovation at our upcoming events and connect with educators, 
+                institutions, and decision-makers across Germany.
+              </p>
+              <Link to="/how-to-apply">
+                <Button
+                  size="lg"
+                  className="bg-secondary hover:bg-secondary/90 text-secondary-foreground hover:scale-105 transition-transform"
+                >
+                  Apply Now
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       <Footer />
     </div>
