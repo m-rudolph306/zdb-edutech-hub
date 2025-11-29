@@ -11,6 +11,8 @@ import Events from "./pages/Events";
 import HowToApply from "./pages/HowToApply";
 import SelectEvent from "./pages/SelectEvent";
 import ApplicationForm from "./pages/ApplicationForm";
+import ApplicationConfirmation from "./pages/ApplicationConfirmation";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ const App = () => (
             <Route path="/apply" element={<HowToApply />} />
             <Route path="/apply/select-event" element={<SelectEvent />} />
             <Route path="/apply/form" element={<ApplicationForm />} />
+            <Route path="/apply/confirmation" element={<ApplicationConfirmation />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
