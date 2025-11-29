@@ -10,6 +10,7 @@ import InnovationDetail from "./pages/InnovationDetail";
 import Events from "./pages/Events";
 import HowToApply from "./pages/HowToApply";
 import SelectEvent from "./pages/SelectEvent";
+import ApplicationForm from "./pages/ApplicationForm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/events" element={<Events />} />
             <Route path="/apply" element={<HowToApply />} />
             <Route path="/apply/select-event" element={<SelectEvent />} />
+            <Route path="/apply/form" element={<ApplicationForm />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
