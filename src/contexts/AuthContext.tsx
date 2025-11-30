@@ -35,11 +35,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
     setUser(newUser);
     localStorage.setItem("user", JSON.stringify(newUser));
+    
+    // Store login data for applications
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const existingUserIndex = users.findIndex((u: User) => u.email === email);
+    if (existingUserIndex === -1) {
+      users.push(newUser);
+      localStorage.setItem("users", JSON.stringify(users));
+    }
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
+    sessionStorage.removeItem("redirectAfterLogin");
   };
 
   const signup = async (email: string, password: string, companyName: string): Promise<boolean> => {

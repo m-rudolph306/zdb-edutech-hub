@@ -54,7 +54,7 @@ type FormData = z.infer<typeof formSchema>;
 const ApplicationForm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [charCounts, setCharCounts] = useState({
     tagline: 0,
@@ -74,12 +74,6 @@ const ApplicationForm = () => {
     rostock: "Rostock 2025",
   };
   const eventName = eventNames[eventParam] || "Erfurt 2025";
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -158,10 +152,6 @@ const ApplicationForm = () => {
     setIsSubmitting(false);
     navigate(`/apply/confirmation?id=${applicationId}`);
   };
-
-  if (!isAuthenticated) {
-    return null;
-  }
 
   const targetAudienceOptions = [
     "K-12 Schools",
