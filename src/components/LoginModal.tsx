@@ -18,12 +18,24 @@ import { useAuth } from "@/contexts/AuthContext";
 interface LoginModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  redirectPath?: string;
 }
 
-const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
+const LoginModal = ({ open, onOpenChange, redirectPath }: LoginModalProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { login, signup } = useAuth();
+  
+  const getRedirectPath = () => {
+    // Check for stored redirect path from protected route
+    const storedRedirect = sessionStorage.getItem("redirectAfterLogin");
+    if (storedRedirect) {
+      sessionStorage.removeItem("redirectAfterLogin");
+      return storedRedirect;
+    }
+    // Use provided redirect path or default to dashboard
+    return redirectPath || "/dashboard";
+  };
   
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -55,7 +67,7 @@ const LoginModal = ({ open, onOpenChange }: LoginModalProps) => {
     });
     
     onOpenChange(false);
-    navigate("/apply/select-event");
+    navigate(getRedirectPath());
   };
 
   const handleSignup = async (e: React.FormEvent) => {

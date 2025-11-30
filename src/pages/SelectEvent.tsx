@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Clock } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 
 interface Event {
   id: number;
@@ -20,13 +18,6 @@ interface Event {
 
 const SelectEvent = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
 
   const events: Event[] = [
     {
@@ -74,10 +65,6 @@ const SelectEvent = () => {
   const handleApply = (eventId: number) => {
     navigate(`/apply/form?event=${eventId}`);
   };
-
-  if (!isAuthenticated) {
-    return null;
-  }
 
   return (
     <div className="min-h-screen">

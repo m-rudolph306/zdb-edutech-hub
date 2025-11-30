@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -11,8 +11,18 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated } = useAuth();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  
+  // Open login modal if redirected from protected route
+  useEffect(() => {
+    if (location.state?.openLogin) {
+      setIsLoginOpen(true);
+      // Clear the state
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
   const featuredInnovations = innovations.slice(0, 6);
   const upcomingEvents = [
     { id: 1, title: "Innovation Area Magdeburg 2025" },
@@ -177,7 +187,11 @@ const Home = () => {
       </section>
 
       <Footer />
-      <LoginModal open={isLoginOpen} onOpenChange={setIsLoginOpen} />
+      <LoginModal 
+        open={isLoginOpen} 
+        onOpenChange={setIsLoginOpen}
+        redirectPath="/apply/select-event"
+      />
     </div>
   );
 };

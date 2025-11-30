@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
-import { FileText, Calendar, TrendingUp, User, Settings, ExternalLink } from "lucide-react";
+import { FileText, Calendar, TrendingUp, User, ExternalLink } from "lucide-react";
 
 interface Application {
   id: string;
@@ -18,14 +18,8 @@ interface Application {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const [applications, setApplications] = useState<Application[]>([]);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     // Load all applications from localStorage
@@ -48,10 +42,6 @@ const Dashboard = () => {
     }
     setApplications(loadedApplications);
   }, []);
-
-  if (!isAuthenticated) {
-    return null;
-  }
 
   const upcomingEvents = [
     {
