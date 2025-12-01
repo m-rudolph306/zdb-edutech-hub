@@ -8,25 +8,26 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 36% 98%;
-    --foreground: 200 20% 20%;
+    /* ZDB Corporate Identity Colors */
+    --background: 210 36% 98%; /* #F7FAFC */
+    --foreground: 210 29% 14%; /* #1A202C - Text Dark */
 
     --card: 0 0% 100%;
-    --card-foreground: 200 20% 20%;
+    --card-foreground: 210 29% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 20% 20%;
+    --popover-foreground: 210 29% 14%;
 
-    --primary: 200 48% 33%;
+    --primary: 200 48% 33%; /* #2C5F7C - Deep Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 49% 51%;
+    --secondary: 142 49% 51%; /* #48BB78 - Green */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 95%;
-    --muted-foreground: 200 10% 45%;
+    --muted: 210 36% 96%;
+    --muted-foreground: 214 13% 51%; /* #718096 - Text Medium */
 
-    --accent: 38 92% 50%;
+    --accent: 38 92% 50%; /* #F59E0B - Amber */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -39,76 +40,69 @@ All colors MUST be HSL.
     --radius: 0.75rem;
     
     /* Custom design tokens */
-    --hero-gradient-start: 200 45% 96%;
+    --hero-gradient-start: 210 36% 98%;
     --hero-gradient-end: 0 0% 100%;
     
-    --shadow-sm: 0 1px 2px 0 hsl(200 20% 20% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(200 20% 20% / 0.1), 0 2px 4px -2px hsl(200 20% 20% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(200 20% 20% / 0.1), 0 4px 6px -4px hsl(200 20% 20% / 0.1);
-    --shadow-hover: 0 20px 25px -5px hsl(200 20% 20% / 0.15), 0 8px 10px -6px hsl(200 20% 20% / 0.1);
+    --shadow-sm: 0 1px 2px 0 hsl(210 29% 14% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(210 29% 14% / 0.1), 0 2px 4px -2px hsl(210 29% 14% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(210 29% 14% / 0.1), 0 4px 6px -4px hsl(210 29% 14% / 0.1);
+    --shadow-hover: 0 20px 25px -5px hsl(210 29% 14% / 0.15), 0 8px 10px -6px hsl(210 29% 14% / 0.1);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Category badge colors */
-    --badge-ai: 217 91% 60%;
-    --badge-vr: 258 90% 66%;
-    --badge-assessment: 38 92% 50%;
-    --badge-management: 142 71% 45%;
-    --badge-content: 280 65% 60%;
+    /* Category badge colors - using ZDB palette */
+    --badge-ai: 200 48% 33%; /* Primary Blue */
+    --badge-vr: 258 90% 66%; /* Purple */
+    --badge-assessment: 38 92% 50%; /* Accent Amber */
+    --badge-management: 142 49% 51%; /* Secondary Green */
+    --badge-content: 280 65% 60%; /* Purple variant */
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 210 36% 98%;
+    --sidebar-foreground: 210 29% 14%;
+    --sidebar-primary: 200 48% 33%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 36% 96%;
+    --sidebar-accent-foreground: 210 29% 14%;
+    --sidebar-border: 214 20% 88%;
+    --sidebar-ring: 200 48% 33%;
   }
 
   .dark {
-    --background: 200 30% 8%;
-    --foreground: 210 40% 98%;
+    --background: 210 29% 10%;
+    --foreground: 210 36% 98%;
 
-    --card: 200 25% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 29% 14%;
+    --card-foreground: 210 36% 98%;
 
-    --popover: 200 25% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 29% 14%;
+    --popover-foreground: 210 36% 98%;
 
-    --primary: 200 48% 45%;
+    --primary: 200 48% 45%; /* Lighter primary for dark mode */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 49% 45%;
+    --secondary: 142 49% 55%; /* Lighter secondary for dark mode */
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 200 20% 18%;
-    --muted-foreground: 200 10% 65%;
+    --muted: 210 29% 18%;
+    --muted-foreground: 214 13% 65%;
 
-    --accent: 38 92% 55%;
+    --accent: 38 92% 55%; /* Lighter accent for dark mode */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 40%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 20% 20%;
-    --input: 200 20% 20%;
+    --border: 210 29% 20%;
+    --input: 210 29% 20%;
     --ring: 200 48% 45%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 210 29% 10%;
+    --sidebar-foreground: 210 36% 98%;
+    --sidebar-primary: 200 48% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 210 29% 18%;
+    --sidebar-accent-foreground: 210 36% 98%;
+    --sidebar-border: 210 29% 20%;
+    --sidebar-ring: 200 48% 45%;
   }
 }
 
@@ -125,10 +119,45 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    @apply font-heading font-bold tracking-tight;
+  }
+  
+  h1 {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 36px;
+    line-height: 1.3;
+  }
+  
+  h3 {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+  
+  h4 {
+    font-size: 20px;
+    line-height: 1.4;
+  }
+  
+  h5 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  h6 {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  small, .text-small {
+    font-size: 14px;
   }
 
   /* Focus states for accessibility */
