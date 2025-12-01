@@ -15,6 +15,17 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      fontSize: {
+        h1: ['48px', { lineHeight: '1.2', fontWeight: '700' }],
+        h2: ['36px', { lineHeight: '1.3', fontWeight: '700' }],
+        h3: ['24px', { lineHeight: '1.4', fontWeight: '700' }],
+        h4: ['20px', { lineHeight: '1.4', fontWeight: '700' }],
+        h5: ['18px', { lineHeight: '1.5', fontWeight: '700' }],
+        h6: ['16px', { lineHeight: '1.5', fontWeight: '700' }],
+        body: ['16px', { lineHeight: '1.6', fontWeight: '400' }],
+        small: ['14px', { lineHeight: '1.5', fontWeight: '400' }],
       },
       colors: {
         border: "hsl(var(--border))",
