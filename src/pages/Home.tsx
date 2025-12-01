@@ -42,14 +42,14 @@ const Home = () => {
       >
         <div className="container mx-auto max-w-4xl animate-fade-in">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-12 text-foreground">
-            Discover Digital Innovations in Education
+            Shaping the Future of Digital Education in Germany
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-12">
-            Explore cutting-edge solutions transforming learning experiences across Germany and beyond
+            As an independent think tank, we connect policy vision with innovative solutions
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild className="px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all">
-              <Link to="/innovations">Browse Innovations</Link>
+              <Link to="/policy">Explore Our Vision</Link>
             </Button>
             <Button 
               size="lg" 
@@ -63,47 +63,70 @@ const Home = () => {
               }}
               className="px-8 py-4 rounded-lg hover:bg-primary/10 hover:scale-105 transition-all"
             >
-              Apply as Startup
+              Join the Innovation Area
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Innovation Area Explanation */}
-      <section className="py-12 md:py-16 px-4 md:px-6 bg-background">
-        <div className="container mx-auto max-w-6xl">
+      {/* Three Pillars */}
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-background">
+        <div className="container mx-auto max-w-7xl">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground animate-fade-in">
-            What is the Innovation Area?
+            Our Three Pillars
           </h2>
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-            <div className="text-center animate-fade-in">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🎯</span>
+          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+            <div className="flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card hover:shadow-lg transition-shadow animate-fade-in">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                <span className="text-4xl">📄</span>
               </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3 text-foreground">For Decision Makers</h3>
-              <p className="text-sm md:text-base text-muted-foreground">
-                Discover proven solutions that address real educational challenges and see innovations in action
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Policy & Vision</h3>
+              <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
+                We develop strategic papers and frameworks that guide Germany's education system into the future
               </p>
+              <Button variant="outline" asChild className="hover:scale-105 transition-transform">
+                <Link to="/policy">Read Our Position Papers</Link>
+              </Button>
             </div>
-            <div className="text-center animate-fade-in animate-delay-100">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">👩‍🏫</span>
+
+            <div className="flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card hover:shadow-lg transition-shadow animate-fade-in animate-delay-100">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                <span className="text-4xl">🤝</span>
               </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3 text-foreground">For Educators</h3>
-              <p className="text-sm md:text-base text-muted-foreground">
-                Explore tools that can enhance your teaching and engage directly with innovators
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Curated Connections</h3>
+              <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
+                We bring together education innovators and policy-makers in moderated, curated settings - creating meaningful dialogue beyond transactions
               </p>
+              <Button variant="outline" asChild className="hover:scale-105 transition-transform">
+                <Link to="/events">See Our Events</Link>
+              </Button>
             </div>
-            <div className="text-center animate-fade-in animate-delay-200">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">💡</span>
+
+            <div className="flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card hover:shadow-lg transition-shadow animate-fade-in animate-delay-200">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                <span className="text-4xl">💻</span>
               </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3 text-foreground">For Innovators</h3>
-              <p className="text-sm md:text-base text-muted-foreground">
-                Present your solutions to key stakeholders and connect with potential partners
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">The Digital Hub</h3>
+              <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
+                We provide the digital space where all stakeholders can register, stay informed, and discover education innovations
               </p>
+              <Button variant="outline" asChild className="hover:scale-105 transition-transform">
+                <Link to="/innovations">Explore Innovations</Link>
+              </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* About ZDB */}
+      <section className="py-12 md:py-16 px-4 md:px-6 bg-muted/30">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground animate-fade-in">
+            What is ZDB?
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground animate-fade-in">
+            ZDB is an independent, non-profit think tank actively shaping the future of digital education in Germany. Through policy development, curated events, and our digital platform, we create the space where vision meets innovation.
+          </p>
         </div>
       </section>
 
