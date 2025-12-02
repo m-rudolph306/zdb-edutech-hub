@@ -64,16 +64,21 @@ const ApplicationForm = () => {
     whatToAchieve: 0,
   });
 
-  const eventParam = searchParams.get("event") || "erfurt";
-  const eventNames: Record<string, string> = {
-    "1": "Erfurt 2025",
-    "2": "Essen 2025",
-    "3": "Rostock 2025",
-    erfurt: "Erfurt 2025",
-    essen: "Essen 2025",
-    rostock: "Rostock 2025",
+  const eventParam = searchParams.get("event") || "mainz-2026";
+  
+  const eventData: Record<string, { name: string; round: 1 | 2; events: string[] }> = {
+    "mainz-2026": { name: "Mainz 2026", round: 1, events: ["Mainz", "Magdeburg", "Berlin"] },
+    "magdeburg-2026": { name: "Magdeburg 2026", round: 1, events: ["Mainz", "Magdeburg", "Berlin"] },
+    "berlin-2026": { name: "Berlin 2026", round: 1, events: ["Mainz", "Magdeburg", "Berlin"] },
+    "erfurt-2026": { name: "Erfurt 2026", round: 2, events: ["Erfurt", "Essen", "Rostock"] },
+    "essen-2026": { name: "Essen 2026", round: 2, events: ["Erfurt", "Essen", "Rostock"] },
+    "rostock-2026": { name: "Rostock 2026", round: 2, events: ["Erfurt", "Essen", "Rostock"] },
   };
-  const eventName = eventNames[eventParam] || "Erfurt 2025";
+  
+  const currentEventData = eventData[eventParam] || { name: "Mainz 2026", round: 1, events: ["Mainz", "Magdeburg", "Berlin"] };
+  const eventName = currentEventData.name;
+  const applicationRound = currentEventData.round;
+  const roundEvents = currentEventData.events.join(", ");
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -134,7 +139,7 @@ const ApplicationForm = () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Generate application ID
-    const applicationId = `IA-2025-${Math.floor(Math.random() * 900) + 100}`;
+    const applicationId = `IA-2026-${Math.floor(Math.random() * 900) + 100}`;
     
     // Save to localStorage
     const applicationData = {
@@ -176,12 +181,19 @@ const ApplicationForm = () => {
             Back to Event Selection
           </Button>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 text-foreground animate-fade-in">
+          <h1 className="text-h1 font-heading mb-2 text-foreground animate-fade-in">
             Application for Innovation Area {eventName}
           </h1>
-          <p className="text-lg text-muted-foreground mb-8 animate-fade-in animate-delay-100">
-            Complete this form to apply for the Innovation Area event. All fields marked with <span className="text-red-500">*</span> are required.
-          </p>
+          <div className="mb-8">
+            <p className="text-body text-muted-foreground mb-4 animate-fade-in animate-delay-100">
+              Complete this form to apply for the Innovation Area event. All fields marked with <span className="text-red-500">*</span> are required.
+            </p>
+            <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+              <p className="text-small text-foreground">
+                <strong>Application Round {applicationRound}</strong> — This application is for Round {applicationRound} events: {roundEvents}
+              </p>
+            </div>
+          </div>
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
