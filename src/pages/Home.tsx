@@ -118,6 +118,25 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Roadshow Section */}
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-gradient-to-br from-primary/5 to-secondary/5">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground animate-fade-in">
+            Bring the Innovation Area to Your Event
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground mb-8 animate-fade-in animate-delay-100">
+            Host a curated showcase of education innovations at your conference or municipality
+          </p>
+          <Button 
+            size="lg" 
+            asChild 
+            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-4 rounded-lg hover:scale-105 transition-all animate-fade-in animate-delay-200"
+          >
+            <Link to="/roadshow">Request a Roadshow</Link>
+          </Button>
+        </div>
+      </section>
+
       {/* About ZDB */}
       <section className="py-12 md:py-16 px-4 md:px-6 bg-muted/30">
         <div className="container mx-auto max-w-4xl text-center">

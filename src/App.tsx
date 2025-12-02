@@ -14,6 +14,7 @@ import SelectEvent from "./pages/SelectEvent";
 import ApplicationForm from "./pages/ApplicationForm";
 import ApplicationConfirmation from "./pages/ApplicationConfirmation";
 import Dashboard from "./pages/Dashboard";
+import Roadshow from "./pages/Roadshow";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/innovations" element={<Innovations />} />
             <Route path="/innovations/:id" element={<InnovationDetail />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/roadshow" element={<Roadshow />} />
             <Route path="/apply" element={<HowToApply />} />
             <Route path="/apply/select-event" element={
               <ProtectedRoute>
