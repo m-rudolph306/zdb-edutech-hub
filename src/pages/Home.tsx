@@ -297,23 +297,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Sponsors Section */}
-      <section className="py-8 px-4 md:px-6 bg-muted/20 border-t border-border">
-        <div className="container mx-auto max-w-4xl">
-          <p className="text-sm text-muted-foreground text-center mb-4">
-            Proudly supported by
-          </p>
-          <div className="flex items-center justify-center gap-8 flex-wrap">
-            <div className="bg-muted rounded-lg px-6 py-3 flex items-center justify-center">
-              <span className="text-foreground font-bold">CANCOM</span>
-            </div>
-            <div className="bg-muted rounded-lg px-5 py-2.5 flex items-center justify-center">
-              <span className="text-foreground font-semibold text-sm">Inventorio</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <Footer />
       <LoginModal 
         open={isLoginOpen} 
