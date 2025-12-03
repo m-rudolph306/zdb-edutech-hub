@@ -358,6 +358,11 @@ const Events = () => {
             </div>
           )}
 
+          {/* Sponsor Acknowledgment */}
+          <p className="text-center text-small text-muted-foreground mb-12 animate-fade-in">
+            The 2026 Innovation Area roadmap is financially secured thanks to our sponsors: <span className="font-semibold">Cancom</span> and <span className="font-semibold">Inventorio</span>
+          </p>
+
           {/* Bottom CTA */}
           <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 animate-fade-in">
             <CardContent className="p-8 md:p-12 text-center">
