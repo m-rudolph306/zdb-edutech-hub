@@ -45,7 +45,7 @@ const Home = () => {
             Shaping the Future of Digital Education in Germany
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-12">
-            As an independent think tank, we connect policy vision with innovative solutions
+            As an independent think tank, we bring policy vision and innovative solutions together through curated dialogue
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild className="px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all">
@@ -213,7 +213,7 @@ const Home = () => {
             What is ZDB?
           </h2>
           <p className="text-base md:text-lg text-muted-foreground animate-fade-in">
-            ZDB is an independent, non-profit think tank actively shaping the future of digital education in Germany. Through policy development, curated events, and our digital platform, we create the space where vision meets innovation.
+            ZDB is an independent, non-profit think tank actively shaping the future of digital education in Germany. Through policy development, curated events, and our digital hub, we create the space where vision meets innovation.
           </p>
         </div>
       </section>

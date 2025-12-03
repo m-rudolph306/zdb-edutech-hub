@@ -89,9 +89,9 @@ const HowToApply = () => {
   const benefits = [
     {
       icon: Network,
-      title: "Network Access",
+      title: "Strategic Networking",
       description:
-        "Connect with educators, decision-makers, and policy-makers across Germany's educational institutions.",
+        "Engage with educators, decision-makers, and policy-makers through curated, moderated settings across Germany.",
     },
     {
       icon: Calendar,
@@ -103,13 +103,13 @@ const HowToApply = () => {
       icon: Lightbulb,
       title: "Visibility & Exposure",
       description:
-        "Featured placement on our platform with detailed company profile and solution showcase reaching thousands of educators.",
+        "Featured placement on our digital hub with detailed company profile and solution showcase reaching thousands of educators.",
     },
     {
       icon: MessageSquare,
       title: "Direct Lead Generation",
       description:
-        "Interested institutions can contact you directly through the platform, creating qualified sales opportunities.",
+        "Interested institutions can discover and engage with you directly through our digital hub, creating qualified opportunities.",
     },
     {
       icon: Shield,
@@ -165,9 +165,8 @@ const HowToApply = () => {
           </h2>
           <div className="space-y-6 text-muted-foreground leading-relaxed">
             <p className="text-lg">
-              Innovation Area is Germany's premier platform connecting cutting-edge
-              educational technology companies with schools, universities, and
-              educational institutions. We curate a carefully selected showcase of
+              Innovation Area is Germany's premier digital hub where vision meets innovation.
+              As part of ZDB's think tank mission, we curate a carefully selected showcase of
               innovative solutions that are transforming teaching, learning, and
               educational administration across the country.
             </p>
@@ -310,8 +309,8 @@ const HowToApply = () => {
             Ready to Transform Education?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join Innovation Area today and connect with Germany's educational
-            institutions. Applications are reviewed on a rolling basis.
+            Join Innovation Area today and engage with Germany's educational
+            institutions through curated events and strategic networking. Applications are reviewed on a rolling basis.
           </p>
           <Button
             size="lg"

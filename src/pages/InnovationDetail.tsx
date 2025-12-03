@@ -146,7 +146,7 @@ const InnovationDetail = () => {
             <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-foreground">The Solution</h2>
             <div className="bg-muted/30 rounded-lg p-6 md:p-8">
               <p className="text-base md:text-lg text-muted-foreground mb-6">
-                Our platform addresses the challenge of engaging students in remote learning environments by providing interactive, 
+                Our solution addresses the challenge of engaging students in remote learning environments by providing interactive, 
                 AI-powered tools that adapt to each student's learning pace and style.
               </p>
               <h3 className="text-lg md:text-xl font-semibold mb-4 text-foreground">Key Features:</h3>
@@ -218,7 +218,7 @@ const InnovationDetail = () => {
             <CardContent className="p-6 md:p-8 text-center">
               <h2 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Interested in this innovation?</h2>
               <p className="text-sm md:text-base text-muted-foreground mb-6">
-                Connect with {innovation.name} and learn how they can help transform your educational environment.
+                Discover how {innovation.name} can help transform your educational environment.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="hover:scale-105 transition-transform">Contact via Innovation Area</Button>
