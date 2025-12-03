@@ -51,7 +51,7 @@ const Events = () => {
       venue: "Bildung Digital Messe Magdeburg",
       status: "open",
       statusLabel: "Applications Open",
-      description: "Present your educational technology at Magdeburg's Innovation Area. Connect with educators and institutions across central Germany. Part of Round 1 applications.",
+      description: "Present your educational technology at Magdeburg's Innovation Area. Engage with educators and institutions across central Germany. Part of Round 1 applications.",
       startupsCount: 8,
       deadline: "January 31, 2026",
     },
@@ -144,7 +144,7 @@ const Events = () => {
               Innovation Area Events
             </h1>
             <p className="text-body text-muted-foreground max-w-2xl">
-              Join us at upcoming Innovation Area events across Germany to connect with education innovators and policy-makers.
+              Join us at upcoming Innovation Area events across Germany where education innovators and policy-makers come together in curated, moderated settings.
             </p>
           </div>
 
@@ -365,8 +365,8 @@ const Events = () => {
                 Want to participate?
               </h2>
               <p className="text-body text-muted-foreground mb-6 max-w-2xl mx-auto">
-                Showcase your innovation at our upcoming events and connect with educators, 
-                institutions, and decision-makers across Germany.
+                Showcase your innovation at our upcoming events and engage with educators, 
+                institutions, and decision-makers across Germany through moderated dialogue.
               </p>
               <Link to="/how-to-apply">
                 <Button

@@ -41,7 +41,7 @@ const SelectEvent = () => {
       venue: "Bildung Digital Messe Magdeburg",
       status: "open",
       deadline: "January 31, 2026",
-      description: "Present your educational technology at Magdeburg's Innovation Area. Connect with educators and institutions across central Germany.",
+      description: "Present your educational technology at Magdeburg's Innovation Area. Engage with educators and institutions across central Germany.",
       round: 1,
     },
     {

@@ -212,7 +212,7 @@ const Roadshow = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-4 text-foreground">Policy Impact</h3>
                 <p className="text-muted-foreground">
-                  Connect your stakeholders with vetted education solutions backed by research
+                  Bring your stakeholders together with vetted education solutions backed by research
                 </p>
               </CardContent>
             </Card>

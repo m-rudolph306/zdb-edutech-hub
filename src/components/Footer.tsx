@@ -9,9 +9,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">About ZDB Innovation Area</h3>
             <p className="text-sm text-gray-300 leading-relaxed">
-              The ZDB Innovation Area is a platform dedicated to showcasing and
-              promoting cutting-edge educational technology solutions across Germany.
-              We connect innovators with decision-makers to transform digital education.
+              ZDB is an independent think tank shaping the future of digital education in Germany.
+              Through curated events and moderated dialogue, we bring innovators and policy-makers together
+              to transform education.
             </p>
           </div>
 
