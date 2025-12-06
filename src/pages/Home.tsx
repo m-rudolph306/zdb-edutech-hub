@@ -3,10 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import InnovationCard from "@/components/InnovationCard";
-import EventCard from "@/components/EventCard";
 import LoginModal from "@/components/LoginModal";
-import { innovations } from "@/data/innovations";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Home = () => {
@@ -23,11 +20,6 @@ const Home = () => {
       window.history.replaceState({}, document.title);
     }
   }, [location]);
-  const featuredInnovations = innovations.slice(0, 6);
-  const upcomingEvents = [
-    { id: 1, title: "Innovation Area Magdeburg 2025" },
-    { id: 2, title: "Innovation Area Erfurt 2025" }
-  ];
 
   return (
     <div className="min-h-screen">
@@ -218,84 +210,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Featured Innovations */}
-      <section className="py-12 md:py-20 px-4 md:px-6 bg-muted/30">
-        <div className="container mx-auto max-w-7xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground animate-fade-in">
-            Featured Innovations
-          </h2>
-          {featuredInnovations.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                {featuredInnovations.map((innovation, index) => (
-                  <div 
-                    key={innovation.id} 
-                    className="animate-fade-in"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <InnovationCard
-                      name={innovation.name}
-                      description={innovation.description}
-                      categories={innovation.categories}
-                      event={innovation.event}
-                      onClick={() => navigate(`/innovations/${innovation.id}`)}
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="text-center mt-8 md:mt-12">
-                <Button asChild size="lg" variant="outline" className="hover:scale-105 transition-transform">
-                  <Link to="/innovations">View All Innovations</Link>
-                </Button>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">Featured innovations coming soon</p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Upcoming Events */}
-      <section className="py-12 md:py-16 px-4 md:px-6 bg-background">
-        <div className="container mx-auto max-w-7xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground animate-fade-in">
-            Upcoming Events
-          </h2>
-          {upcomingEvents.length > 0 ? (
-            <>
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-                <div className="animate-fade-in">
-                  <EventCard
-                    name="Innovation Area Magdeburg 2025"
-                    date="March 15-17, 2025"
-                    location="Magdeburg, Germany"
-                    description="Join us at didacta 2025 to explore the latest educational innovations and connect with leading startups."
-                  />
-                </div>
-                <div className="animate-fade-in animate-delay-100">
-                  <EventCard
-                    name="Innovation Area Erfurt 2025"
-                    date="June 8-10, 2025"
-                    location="Erfurt, Germany"
-                    description="Discover digital solutions at the Education Innovation Summit."
-                  />
-                </div>
-              </div>
-              <div className="text-center mt-8 md:mt-12">
-                <Button asChild size="lg" variant="outline" className="hover:scale-105 transition-transform">
-                  <Link to="/events">View All Events</Link>
-                </Button>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">No upcoming events scheduled</p>
-            </div>
-          )}
-        </div>
-      </section>
 
       <Footer />
       <LoginModal 
