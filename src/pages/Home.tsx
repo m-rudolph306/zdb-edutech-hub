@@ -199,15 +199,41 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About ZDB */}
-      <section className="py-12 md:py-16 px-4 md:px-6 bg-muted/30">
+      {/* Call to Action */}
+      <section className="py-16 md:py-20 px-4 md:px-6 bg-primary">
         <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground animate-fade-in">
-            What is ZDB?
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary-foreground animate-fade-in">
+            Ready to Explore?
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground animate-fade-in">
-            ZDB is an independent, non-profit think tank actively shaping the future of digital education in Germany. Through policy development, curated events, and our digital hub, we create the space where vision meets innovation.
+          <p className="text-base md:text-lg text-primary-foreground/80 mb-8 animate-fade-in">
+            Discover our events, browse innovations, or learn how to become part of the Innovation Area
           </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
+            <Button 
+              size="lg" 
+              variant="secondary" 
+              asChild 
+              className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
+            >
+              <Link to="/events">View Events</Link>
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              asChild 
+              className="px-8 py-4 rounded-lg border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:scale-105 transition-all"
+            >
+              <Link to="/innovations">Browse Innovations</Link>
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              asChild 
+              className="px-8 py-4 rounded-lg border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:scale-105 transition-all"
+            >
+              <Link to="/apply">How to Apply</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
