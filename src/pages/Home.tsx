@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoginModal from "@/components/LoginModal";
 import { useAuth } from "@/contexts/AuthContext";
+import { BookOpen, Users, Monitor } from "lucide-react";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const Home = () => {
           <div className="grid md:grid-cols-3 gap-8 md:gap-10">
             <div className="flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card hover:shadow-lg transition-shadow animate-fade-in">
               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                <span className="text-4xl">📄</span>
+                <BookOpen className="w-10 h-10 text-primary" />
               </div>
               <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Policy & Vision</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
@@ -83,7 +84,7 @@ const Home = () => {
 
             <div className="flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card hover:shadow-lg transition-shadow animate-fade-in animate-delay-100">
               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                <span className="text-4xl">🤝</span>
+                <Users className="w-10 h-10 text-primary" />
               </div>
               <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Curated Connections</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
@@ -96,7 +97,7 @@ const Home = () => {
 
             <div className="flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card hover:shadow-lg transition-shadow animate-fade-in animate-delay-200">
               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                <span className="text-4xl">💻</span>
+                <Monitor className="w-10 h-10 text-primary" />
               </div>
               <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">The Digital Hub</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
