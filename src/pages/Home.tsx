@@ -113,89 +113,42 @@ const Home = () => {
 
       {/* Roadshow Section */}
       <section className="py-16 md:py-20 px-4 md:px-6 bg-[hsl(200,70%,95%)]">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
-            {/* Left Column - 60% */}
-            <div className="lg:col-span-3 order-2 lg:order-1">
-              <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-2 block animate-fade-in">
-                Innovation Area On Demand
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground animate-fade-in">
-                Bring the Innovation Area to Your Event
-              </h2>
-              <p className="text-base md:text-lg text-muted-foreground mb-6 animate-fade-in animate-delay-100">
-                Cities, municipalities, and conferences can book our curated innovation showcase as a complete package
-              </p>
-              
-              <ul className="space-y-3 mb-8 animate-fade-in animate-delay-100">
-                <li className="flex items-start gap-3">
-                  <span className="text-secondary mt-1">✓</span>
-                  <span className="text-muted-foreground">Curated selection of 5-6 education innovators</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-secondary mt-1">✓</span>
-                  <span className="text-muted-foreground">Professional setup and moderation</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-secondary mt-1">✓</span>
-                  <span className="text-muted-foreground">Customized to your focus areas</span>
-                </li>
-              </ul>
-              
-              <Button 
-                size="lg" 
-                asChild 
-                className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-4 rounded-lg hover:scale-105 transition-all animate-fade-in animate-delay-200"
-              >
-                <Link to="/roadshow">Request a Roadshow</Link>
-              </Button>
-            </div>
-            
-            {/* Right Column - 40% with visual flow */}
-            <div className="lg:col-span-2 order-1 lg:order-2 animate-fade-in">
-              <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-border/50">
-                <div className="flex flex-col items-center gap-4">
-                  {/* Visual Flow: City → ZDB → Innovation → Event */}
-                  <div className="flex items-center justify-center gap-2 md:gap-4 flex-wrap">
-                    <div className="flex flex-col items-center">
-                      <div className="w-14 h-14 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                        <span className="text-2xl md:text-3xl">🏛️</span>
-                      </div>
-                      <span className="text-xs mt-2 text-muted-foreground font-medium">Your Event</span>
-                    </div>
-                    
-                    <div className="text-primary text-xl md:text-2xl">→</div>
-                    
-                    <div className="flex flex-col items-center">
-                      <div className="w-14 h-14 md:w-16 md:h-16 bg-primary rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">ZDB</span>
-                      </div>
-                      <span className="text-xs mt-2 text-muted-foreground font-medium">We Curate</span>
-                    </div>
-                    
-                    <div className="text-primary text-xl md:text-2xl">→</div>
-                    
-                    <div className="flex flex-col items-center">
-                      <div className="w-14 h-14 md:w-16 md:h-16 bg-secondary/20 rounded-full flex items-center justify-center">
-                        <span className="text-2xl md:text-3xl">💡</span>
-                      </div>
-                      <span className="text-xs mt-2 text-muted-foreground font-medium">Innovators</span>
-                    </div>
-                  </div>
-                  
-                  <div className="text-primary text-2xl mt-2">↓</div>
-                  
-                  <div className="flex flex-col items-center">
-                    <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-secondary/20 to-primary/20 rounded-full flex items-center justify-center border-2 border-secondary/30">
-                      <span className="text-3xl md:text-4xl">🎯</span>
-                    </div>
-                    <span className="text-sm mt-3 text-foreground font-semibold">Innovation Showcase</span>
-                    <span className="text-xs text-muted-foreground">at Your Event</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="container mx-auto max-w-4xl text-center">
+          <p className="text-lg md:text-xl font-semibold text-primary mb-4 animate-fade-in">
+            From inquiry to showcase in 2-3 weeks—we handle everything.
+          </p>
+          <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-2 block animate-fade-in">
+            Innovation Area On Demand
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground animate-fade-in">
+            Bring the Innovation Area to Your Event
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground mb-6 animate-fade-in animate-delay-100">
+            Cities, municipalities, and conferences can book our curated innovation showcase as a complete package
+          </p>
+          
+          <ul className="space-y-3 mb-8 animate-fade-in animate-delay-100 text-left max-w-md mx-auto">
+            <li className="flex items-start gap-3">
+              <span className="text-secondary mt-1">✓</span>
+              <span className="text-muted-foreground">Curated selection of 5-6 education innovators</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-secondary mt-1">✓</span>
+              <span className="text-muted-foreground">Professional setup and moderation</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-secondary mt-1">✓</span>
+              <span className="text-muted-foreground">Customized to your focus areas</span>
+            </li>
+          </ul>
+          
+          <Button 
+            size="lg" 
+            asChild 
+            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-4 rounded-lg hover:scale-105 transition-all animate-fade-in animate-delay-200"
+          >
+            <Link to="/roadshow">Request a Roadshow</Link>
+          </Button>
         </div>
       </section>
 
@@ -219,17 +172,17 @@ const Home = () => {
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
+              variant="secondary" 
               asChild 
-              className="px-8 py-4 rounded-lg border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:scale-105 transition-all"
+              className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
             >
               <Link to="/innovations">Browse Innovations</Link>
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
+              variant="secondary" 
               asChild 
-              className="px-8 py-4 rounded-lg border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:scale-105 transition-all"
+              className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
             >
               <Link to="/apply">How to Apply</Link>
             </Button>
