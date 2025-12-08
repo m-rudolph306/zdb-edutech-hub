@@ -30,7 +30,7 @@ const Home = () => {
 
       {/* Hero Section */}
       <section
-        className="relative min-h-[400px] md:min-h-[500px] flex items-center justify-center text-center px-4 md:px-6 py-12 md:py-20 mt-[72px]"
+        className="relative min-h-[400px] md:min-h-[500px] flex items-center justify-center text-center px-4 md:px-6 py-12 md:py-20 mt-[100px]"
         style={{
           background: "linear-gradient(to bottom, hsl(200, 45%, 96%), hsl(0, 0%, 100%))",
         }}

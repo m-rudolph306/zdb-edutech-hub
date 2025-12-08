@@ -8,11 +8,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu, X, User, FileText, Settings, LogOut, LayoutDashboard } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { Menu, X, User, FileText, Settings, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
 import LoginModal from "./LoginModal";
 import LanguageToggle from "./LanguageToggle";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { cn } from "@/lib/utils";
 
 const Navigation = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -39,12 +48,41 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const topBarLinks = [
+    { label: t("nav.topbar.press"), href: "/press" },
+    { label: t("nav.topbar.statutes"), href: "/statutes" },
+    { label: t("nav.topbar.donate"), href: "/donate" },
+    { label: t("nav.topbar.contact"), href: "/contact" },
+  ];
+
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      {/* Top Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-muted/80 backdrop-blur-sm border-b border-border/50">
+        <div className="container mx-auto px-4 md:px-6 h-9 flex items-center justify-end gap-1">
+          {topBarLinks.map((link, index) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className={cn(
+                "text-xs font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-1",
+                index < topBarLinks.length - 1 && "border-r border-border/50"
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="ml-2">
+            <LanguageToggle />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <nav className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled ? "bg-background shadow-md" : "bg-background/95 backdrop-blur-sm"
       }`}>
-        <div className="container mx-auto px-4 md:px-6 h-[72px] flex items-center justify-between">
+        <div className="container mx-auto px-4 md:px-6 h-[64px] flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 md:gap-3 hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs md:text-sm">
@@ -53,118 +91,185 @@ const Navigation = () => {
             <span className="font-bold text-base md:text-xl text-foreground">Innovation Area</span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-6">
-            <Link
-              to="/innovations"
-              className={`text-sm font-medium transition-all duration-300 relative
-                after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 
-                after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right 
-                after:transition-transform after:duration-300 hover:after:scale-x-100 
-                hover:after:origin-bottom-left
-                ${isActive("/innovations") ? "text-primary after:scale-x-100" : "text-foreground"}`}
-            >
-              {t("nav.innovations")}
-            </Link>
-            <Link
-              to="/events"
-              className={`text-sm font-medium transition-all duration-300 relative
-                after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 
-                after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right 
-                after:transition-transform after:duration-300 hover:after:scale-x-100 
-                hover:after:origin-bottom-left
-                ${isActive("/events") ? "text-primary after:scale-x-100" : "text-foreground"}`}
-            >
-              {t("nav.events")}
-            </Link>
-            <Link
-              to="/roadshow"
-              className={`text-sm font-medium transition-all duration-300 relative
-                after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 
-                after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right 
-                after:transition-transform after:duration-300 hover:after:scale-x-100 
-                hover:after:origin-bottom-left
-                ${isActive("/roadshow") ? "text-primary after:scale-x-100" : "text-foreground"}`}
-            >
-              {t("nav.roadshow")}
-            </Link>
-            <Link
-              to="/apply"
-              className={`text-sm font-medium transition-all duration-300 relative
-                after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 
-                after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right 
-                after:transition-transform after:duration-300 hover:after:scale-x-100 
-                hover:after:origin-bottom-left
-                ${isActive("/apply") ? "text-primary after:scale-x-100" : "text-foreground"}`}
-            >
-              {t("nav.howToApply")}
-            </Link>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-2">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {/* Policy */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
+                    {t("nav.policy")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="w-[220px] p-2 bg-background">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/policy"
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{t("nav.policy.readPapers")}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
-            {isAuthenticated ? (
-              <>
-                <Link
-                  to="/dashboard"
-                  className={`text-sm font-medium transition-all duration-300 relative
-                    after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 
-                    after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right 
-                    after:transition-transform after:duration-300 hover:after:scale-x-100 
-                    hover:after:origin-bottom-left
-                    ${isActive("/dashboard") ? "text-primary after:scale-x-100" : "text-foreground"}`}
-                >
-                  {t("nav.dashboard")}
-                </Link>
+                {/* Events */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
+                    {t("nav.events")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="w-[220px] p-2 bg-background">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/events"
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{t("nav.events.upcoming")}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/apply"
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{t("nav.events.apply")}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
-                {/* User Dropdown Menu */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-secondary text-secondary hover:bg-secondary/10 transition-colors focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <User className="h-4 w-4 mr-2" />
-                      {user?.companyName}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 bg-background">
-                    <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                      <LayoutDashboard className="mr-2 h-4 w-4" />
-                      {t("nav.myDashboard")}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                      <FileText className="mr-2 h-4 w-4" />
-                      {t("nav.myApplications")}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/profile")}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      {t("nav.profileSettings")}
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      {t("nav.logout")}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) : (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsLoginOpen(true)}
-                className="border-secondary text-secondary hover:bg-secondary/10 transition-colors focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                {t("nav.login")}
-              </Button>
-            )}
-            
-            <LanguageToggle />
+                {/* Digital Hub */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
+                    {t("nav.digitalHub")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="w-[220px] p-2 bg-background">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/innovations"
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{t("nav.digitalHub.about")}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/apply"
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{t("nav.digitalHub.apply")}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                {/* Roadshow */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
+                    {t("nav.roadshow")}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="w-[220px] p-2 bg-background">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/roadshow"
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{t("nav.roadshow.request")}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            {/* Auth Section */}
+            <div className="flex items-center gap-2 ml-4">
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    className={`text-sm font-medium px-3 py-2 rounded-md transition-colors hover:bg-accent
+                      ${isActive("/dashboard") ? "text-primary bg-primary/10" : "text-foreground"}`}
+                  >
+                    {t("nav.dashboard")}
+                  </Link>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-secondary text-secondary hover:bg-secondary/10 transition-colors"
+                      >
+                        <User className="h-4 w-4 mr-2" />
+                        {user?.companyName}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56 bg-background">
+                      <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        {t("nav.myDashboard")}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                        <FileText className="mr-2 h-4 w-4" />
+                        {t("nav.myApplications")}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate("/profile")}>
+                        <Settings className="mr-2 h-4 w-4" />
+                        {t("nav.profileSettings")}
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleLogout}>
+                        <LogOut className="mr-2 h-4 w-4" />
+                        {t("nav.logout")}
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsLoginOpen(true)}
+                    className="text-sm font-medium"
+                  >
+                    {t("nav.login")}
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={() => setIsLoginOpen(true)}
+                    className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+                  >
+                    {t("nav.register")}
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 hover:bg-accent rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-ring"
+            className="lg:hidden p-2 hover:bg-accent rounded-md transition-colors"
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
@@ -174,62 +279,96 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-background border-t border-border animate-fade-in">
-            <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              <div className="flex justify-center pb-2">
+          <div className="lg:hidden bg-background border-t border-border animate-fade-in max-h-[calc(100vh-73px)] overflow-y-auto">
+            <div className="container mx-auto px-4 py-4 flex flex-col gap-2">
+              {/* Top bar links for mobile */}
+              <div className="flex flex-wrap gap-2 pb-3 border-b border-border mb-2">
+                {topBarLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-xs font-medium text-muted-foreground hover:text-foreground px-2 py-1"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
                 <LanguageToggle />
               </div>
-              <Link
-                to="/innovations"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
-                  ${isActive("/innovations") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
-              >
-                {t("nav.innovations")}
-              </Link>
-              <Link
-                to="/events"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
-                  ${isActive("/events") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
-              >
-                {t("nav.events")}
-              </Link>
-              <Link
-                to="/roadshow"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
-                  ${isActive("/roadshow") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
-              >
-                {t("nav.roadshow")}
-              </Link>
-              <Link
-                to="/apply"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
-                  ${isActive("/apply") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
-              >
-                {t("nav.howToApply")}
-              </Link>
 
-              {isAuthenticated ? (
-                <>
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
-                      ${isActive("/dashboard") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
-                  >
-                    {t("nav.dashboard")}
-                  </Link>
-                  <div className="border-t border-border pt-4 space-y-2">
-                    <div className="px-4 py-2 text-sm font-semibold text-muted-foreground">
+              {/* Policy */}
+              <div className="space-y-1">
+                <div className="text-sm font-semibold text-foreground px-3 py-2">{t("nav.policy")}</div>
+                <Link
+                  to="/policy"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
+                >
+                  {t("nav.policy.readPapers")}
+                </Link>
+              </div>
+
+              {/* Events */}
+              <div className="space-y-1">
+                <div className="text-sm font-semibold text-foreground px-3 py-2">{t("nav.events")}</div>
+                <Link
+                  to="/events"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
+                >
+                  {t("nav.events.upcoming")}
+                </Link>
+                <Link
+                  to="/apply"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
+                >
+                  {t("nav.events.apply")}
+                </Link>
+              </div>
+
+              {/* Digital Hub */}
+              <div className="space-y-1">
+                <div className="text-sm font-semibold text-foreground px-3 py-2">{t("nav.digitalHub")}</div>
+                <Link
+                  to="/innovations"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
+                >
+                  {t("nav.digitalHub.about")}
+                </Link>
+                <Link
+                  to="/apply"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
+                >
+                  {t("nav.digitalHub.apply")}
+                </Link>
+              </div>
+
+              {/* Roadshow */}
+              <div className="space-y-1">
+                <div className="text-sm font-semibold text-foreground px-3 py-2">{t("nav.roadshow")}</div>
+                <Link
+                  to="/roadshow"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
+                >
+                  {t("nav.roadshow.request")}
+                </Link>
+              </div>
+
+              {/* Auth Section */}
+              <div className="border-t border-border pt-4 mt-2">
+                {isAuthenticated ? (
+                  <div className="space-y-2">
+                    <div className="px-3 py-2 text-sm font-semibold text-muted-foreground">
                       {user?.companyName}
                     </div>
                     <Link
                       to="/dashboard"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center text-sm font-medium py-2 px-4 rounded-md transition-colors text-foreground hover:bg-accent"
+                      className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent"
                     >
                       <LayoutDashboard className="mr-2 h-4 w-4" />
                       {t("nav.myDashboard")}
@@ -237,33 +376,43 @@ const Navigation = () => {
                     <Link
                       to="/profile"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center text-sm font-medium py-2 px-4 rounded-md transition-colors text-foreground hover:bg-accent"
+                      className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent"
                     >
                       <Settings className="mr-2 h-4 w-4" />
                       {t("nav.profileSettings")}
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center text-sm font-medium py-2 px-4 rounded-md transition-colors text-foreground hover:bg-accent w-full text-left"
+                      className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent w-full text-left"
                     >
                       <LogOut className="mr-2 h-4 w-4" />
                       {t("nav.logout")}
                     </button>
                   </div>
-                </>
-              ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    setIsLoginOpen(true);
-                  }}
-                  className="border-secondary text-secondary hover:bg-secondary/10 transition-colors w-full"
-                >
-                  {t("nav.login")}
-                </Button>
-              )}
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsLoginOpen(true);
+                      }}
+                      className="w-full"
+                    >
+                      {t("nav.login")}
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsLoginOpen(true);
+                      }}
+                      className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+                    >
+                      {t("nav.register")}
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

@@ -13,13 +13,26 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 // Translations
 const translations: Record<Language, Record<string, string>> = {
   de: {
-    // Navigation
-    "nav.innovations": "Innovationen",
+    // Top Bar Navigation
+    "nav.topbar.press": "Presse",
+    "nav.topbar.statutes": "Satzung",
+    "nav.topbar.donate": "Spenden",
+    "nav.topbar.contact": "Kontakt",
+    
+    // Main Navigation
+    "nav.policy": "Policy",
+    "nav.policy.readPapers": "Positionspapiere lesen",
     "nav.events": "Veranstaltungen",
+    "nav.events.upcoming": "Kommende Events",
+    "nav.events.apply": "Jetzt bewerben",
+    "nav.digitalHub": "Digital Hub",
+    "nav.digitalHub.about": "Über den Hub",
+    "nav.digitalHub.apply": "Jetzt bewerben",
     "nav.roadshow": "Roadshow",
-    "nav.howToApply": "So bewerben",
-    "nav.dashboard": "Dashboard",
+    "nav.roadshow.request": "Roadshow anfragen",
     "nav.login": "Anmelden",
+    "nav.register": "Registrieren",
+    "nav.dashboard": "Dashboard",
     "nav.myDashboard": "Mein Dashboard",
     "nav.myApplications": "Meine Bewerbungen",
     "nav.profileSettings": "Profileinstellungen",
@@ -67,13 +80,26 @@ const translations: Record<Language, Record<string, string>> = {
     "footer.rights": "Alle Rechte vorbehalten.",
   },
   en: {
-    // Navigation
-    "nav.innovations": "Innovations",
+    // Top Bar Navigation
+    "nav.topbar.press": "Press",
+    "nav.topbar.statutes": "Statutes",
+    "nav.topbar.donate": "Donate",
+    "nav.topbar.contact": "Contact",
+    
+    // Main Navigation
+    "nav.policy": "Policy",
+    "nav.policy.readPapers": "Read Position Papers",
     "nav.events": "Events",
+    "nav.events.upcoming": "Upcoming Events",
+    "nav.events.apply": "Apply Now",
+    "nav.digitalHub": "Digital Hub",
+    "nav.digitalHub.about": "About Hub",
+    "nav.digitalHub.apply": "Apply Now",
     "nav.roadshow": "Roadshow",
-    "nav.howToApply": "How to Apply",
-    "nav.dashboard": "Dashboard",
+    "nav.roadshow.request": "Request a Roadshow",
     "nav.login": "Login",
+    "nav.register": "Register",
+    "nav.dashboard": "Dashboard",
     "nav.myDashboard": "My Dashboard",
     "nav.myApplications": "My Applications",
     "nav.profileSettings": "Profile Settings",
