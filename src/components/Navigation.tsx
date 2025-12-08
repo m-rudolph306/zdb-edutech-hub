@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu, X, User, FileText, Settings, LogOut, LayoutDashboard } from "lucide-react";
 import LoginModal from "./LoginModal";
+import LanguageToggle from "./LanguageToggle";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navigation = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -19,6 +21,7 @@ const Navigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
+  const { t } = useLanguage();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -51,7 +54,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             <Link
               to="/innovations"
               className={`text-sm font-medium transition-all duration-300 relative
@@ -61,7 +64,7 @@ const Navigation = () => {
                 hover:after:origin-bottom-left
                 ${isActive("/innovations") ? "text-primary after:scale-x-100" : "text-foreground"}`}
             >
-              Innovations
+              {t("nav.innovations")}
             </Link>
             <Link
               to="/events"
@@ -72,7 +75,7 @@ const Navigation = () => {
                 hover:after:origin-bottom-left
                 ${isActive("/events") ? "text-primary after:scale-x-100" : "text-foreground"}`}
             >
-              Events
+              {t("nav.events")}
             </Link>
             <Link
               to="/roadshow"
@@ -83,7 +86,7 @@ const Navigation = () => {
                 hover:after:origin-bottom-left
                 ${isActive("/roadshow") ? "text-primary after:scale-x-100" : "text-foreground"}`}
             >
-              Roadshow
+              {t("nav.roadshow")}
             </Link>
             <Link
               to="/apply"
@@ -94,7 +97,7 @@ const Navigation = () => {
                 hover:after:origin-bottom-left
                 ${isActive("/apply") ? "text-primary after:scale-x-100" : "text-foreground"}`}
             >
-              How to Apply
+              {t("nav.howToApply")}
             </Link>
 
             {isAuthenticated ? (
@@ -108,7 +111,7 @@ const Navigation = () => {
                     hover:after:origin-bottom-left
                     ${isActive("/dashboard") ? "text-primary after:scale-x-100" : "text-foreground"}`}
                 >
-                  Dashboard
+                  {t("nav.dashboard")}
                 </Link>
 
                 {/* User Dropdown Menu */}
@@ -126,20 +129,20 @@ const Navigation = () => {
                   <DropdownMenuContent align="end" className="w-56 bg-background">
                     <DropdownMenuItem onClick={() => navigate("/dashboard")}>
                       <LayoutDashboard className="mr-2 h-4 w-4" />
-                      My Dashboard
+                      {t("nav.myDashboard")}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate("/dashboard")}>
                       <FileText className="mr-2 h-4 w-4" />
-                      My Applications
+                      {t("nav.myApplications")}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => navigate("/profile")}>
                       <Settings className="mr-2 h-4 w-4" />
-                      Profile Settings
+                      {t("nav.profileSettings")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout}>
                       <LogOut className="mr-2 h-4 w-4" />
-                      Logout
+                      {t("nav.logout")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -151,9 +154,11 @@ const Navigation = () => {
                 onClick={() => setIsLoginOpen(true)}
                 className="border-secondary text-secondary hover:bg-secondary/10 transition-colors focus-visible:ring-2 focus-visible:ring-ring"
               >
-                Login
+                {t("nav.login")}
               </Button>
             )}
+            
+            <LanguageToggle />
           </div>
 
           {/* Mobile Menu Button */}
@@ -171,13 +176,16 @@ const Navigation = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden bg-background border-t border-border animate-fade-in">
             <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+              <div className="flex justify-center pb-2">
+                <LanguageToggle />
+              </div>
               <Link
                 to="/innovations"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
                   ${isActive("/innovations") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
               >
-                Innovations
+                {t("nav.innovations")}
               </Link>
               <Link
                 to="/events"
@@ -185,7 +193,7 @@ const Navigation = () => {
                 className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
                   ${isActive("/events") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
               >
-                Events
+                {t("nav.events")}
               </Link>
               <Link
                 to="/roadshow"
@@ -193,7 +201,7 @@ const Navigation = () => {
                 className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
                   ${isActive("/roadshow") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
               >
-                Roadshow
+                {t("nav.roadshow")}
               </Link>
               <Link
                 to="/apply"
@@ -201,7 +209,7 @@ const Navigation = () => {
                 className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
                   ${isActive("/apply") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
               >
-                How to Apply
+                {t("nav.howToApply")}
               </Link>
 
               {isAuthenticated ? (
@@ -212,7 +220,7 @@ const Navigation = () => {
                     className={`text-sm font-medium py-2 px-4 rounded-md transition-colors
                       ${isActive("/dashboard") ? "bg-primary/10 text-primary" : "text-foreground hover:bg-accent"}`}
                   >
-                    Dashboard
+                    {t("nav.dashboard")}
                   </Link>
                   <div className="border-t border-border pt-4 space-y-2">
                     <div className="px-4 py-2 text-sm font-semibold text-muted-foreground">
@@ -224,7 +232,7 @@ const Navigation = () => {
                       className="flex items-center text-sm font-medium py-2 px-4 rounded-md transition-colors text-foreground hover:bg-accent"
                     >
                       <LayoutDashboard className="mr-2 h-4 w-4" />
-                      My Dashboard
+                      {t("nav.myDashboard")}
                     </Link>
                     <Link
                       to="/profile"
@@ -232,14 +240,14 @@ const Navigation = () => {
                       className="flex items-center text-sm font-medium py-2 px-4 rounded-md transition-colors text-foreground hover:bg-accent"
                     >
                       <Settings className="mr-2 h-4 w-4" />
-                      Profile Settings
+                      {t("nav.profileSettings")}
                     </Link>
                     <button
                       onClick={handleLogout}
                       className="flex items-center text-sm font-medium py-2 px-4 rounded-md transition-colors text-foreground hover:bg-accent w-full text-left"
                     >
                       <LogOut className="mr-2 h-4 w-4" />
-                      Logout
+                      {t("nav.logout")}
                     </button>
                   </div>
                 </>
@@ -253,7 +261,7 @@ const Navigation = () => {
                   }}
                   className="border-secondary text-secondary hover:bg-secondary/10 transition-colors w-full"
                 >
-                  Login
+                  {t("nav.login")}
                 </Button>
               )}
             </div>

@@ -5,12 +5,14 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoginModal from "@/components/LoginModal";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { BookOpen, Users, Monitor } from "lucide-react";
 
 const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated } = useAuth();
+  const { t } = useLanguage();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   
   // Open login modal if redirected from protected route
@@ -35,14 +37,14 @@ const Home = () => {
       >
         <div className="container mx-auto max-w-4xl animate-fade-in">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-12 text-foreground">
-            Shaping the Future of Digital Education in Germany
+            {t("home.hero.title")}
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-12">
-            As an independent think tank, we bring policy vision and innovative solutions together through curated dialogue
+            {t("home.hero.subtitle")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild className="px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all">
-              <Link to="/policy">Explore Our Vision</Link>
+              <Link to="/policy">{t("home.hero.exploreVision")}</Link>
             </Button>
             <Button 
               size="lg" 
@@ -56,7 +58,7 @@ const Home = () => {
               }}
               className="px-8 py-4 rounded-lg hover:bg-primary/10 hover:scale-105 transition-all"
             >
-              Join the Innovation Area
+              {t("home.hero.joinInnovation")}
             </Button>
           </div>
         </div>
@@ -66,19 +68,19 @@ const Home = () => {
       <section className="py-12 md:py-20 px-4 md:px-6 bg-background">
         <div className="container mx-auto max-w-7xl">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground animate-fade-in">
-            Our Three Pillars
+            {t("home.pillars.title")}
           </h2>
           <div className="grid md:grid-cols-3 gap-8 md:gap-10">
             <div className="flex flex-col items-center text-center p-6 rounded-lg border border-border bg-card hover:shadow-lg transition-shadow animate-fade-in">
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
                 <BookOpen className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Policy & Vision</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">{t("home.pillars.policy.title")}</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
-                We develop strategic papers and frameworks that guide Germany's education system into the future
+                {t("home.pillars.policy.description")}
               </p>
               <Button variant="outline" asChild className="hover:scale-105 transition-transform">
-                <Link to="/policy">Read Our Position Papers</Link>
+                <Link to="/policy">{t("home.pillars.policy.button")}</Link>
               </Button>
             </div>
 
@@ -86,12 +88,12 @@ const Home = () => {
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
                 <Users className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">Curated Connections</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">{t("home.pillars.connections.title")}</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
-                We bring together education innovators and policy-makers in moderated, curated settings - creating meaningful dialogue beyond transactions
+                {t("home.pillars.connections.description")}
               </p>
               <Button variant="outline" asChild className="hover:scale-105 transition-transform">
-                <Link to="/events">See Our Events</Link>
+                <Link to="/events">{t("home.pillars.connections.button")}</Link>
               </Button>
             </div>
 
@@ -99,12 +101,12 @@ const Home = () => {
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
                 <Monitor className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">The Digital Hub</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">{t("home.pillars.hub.title")}</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
-                We provide the digital space where all stakeholders can register, stay informed, and discover education innovations
+                {t("home.pillars.hub.description")}
               </p>
               <Button variant="outline" asChild className="hover:scale-105 transition-transform">
-                <Link to="/innovations">Explore Innovations</Link>
+                <Link to="/innovations">{t("home.pillars.hub.button")}</Link>
               </Button>
             </div>
           </div>
@@ -115,30 +117,30 @@ const Home = () => {
       <section className="py-16 md:py-20 px-4 md:px-6 bg-[hsl(200,70%,95%)]">
         <div className="container mx-auto max-w-4xl text-center">
           <p className="text-lg md:text-xl font-semibold text-primary mb-4 animate-fade-in">
-            From inquiry to showcase in 2-3 weeks—we handle everything.
+            {t("home.roadshow.valueProposition")}
           </p>
           <span className="text-primary font-semibold text-sm uppercase tracking-wider mb-2 block animate-fade-in">
-            Innovation Area On Demand
+            {t("home.roadshow.label")}
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-foreground animate-fade-in">
-            Bring the Innovation Area to Your Event
+            {t("home.roadshow.title")}
           </h2>
           <p className="text-base md:text-lg text-muted-foreground mb-6 animate-fade-in animate-delay-100">
-            Cities, municipalities, and conferences can book our curated innovation showcase as a complete package
+            {t("home.roadshow.description")}
           </p>
           
           <ul className="space-y-3 mb-8 animate-fade-in animate-delay-100 text-left max-w-md mx-auto">
             <li className="flex items-start gap-3">
               <span className="text-secondary mt-1">✓</span>
-              <span className="text-muted-foreground">Curated selection of 5-6 education innovators</span>
+              <span className="text-muted-foreground">{t("home.roadshow.benefit1")}</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-secondary mt-1">✓</span>
-              <span className="text-muted-foreground">Professional setup and moderation</span>
+              <span className="text-muted-foreground">{t("home.roadshow.benefit2")}</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-secondary mt-1">✓</span>
-              <span className="text-muted-foreground">Customized to your focus areas</span>
+              <span className="text-muted-foreground">{t("home.roadshow.benefit3")}</span>
             </li>
           </ul>
           
@@ -147,7 +149,7 @@ const Home = () => {
             asChild 
             className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-4 rounded-lg hover:scale-105 transition-all animate-fade-in animate-delay-200"
           >
-            <Link to="/roadshow">Request a Roadshow</Link>
+            <Link to="/roadshow">{t("home.roadshow.button")}</Link>
           </Button>
         </div>
       </section>
@@ -156,10 +158,10 @@ const Home = () => {
       <section className="py-16 md:py-20 px-4 md:px-6 bg-primary">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary-foreground animate-fade-in">
-            Ready to Explore?
+            {t("home.cta.title")}
           </h2>
           <p className="text-base md:text-lg text-primary-foreground/80 mb-8 animate-fade-in">
-            Discover our events, browse innovations, or learn how to become part of the Innovation Area
+            {t("home.cta.description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
             <Button 
@@ -168,7 +170,7 @@ const Home = () => {
               asChild 
               className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
             >
-              <Link to="/events">View Events</Link>
+              <Link to="/events">{t("home.cta.viewEvents")}</Link>
             </Button>
             <Button 
               size="lg" 
@@ -176,7 +178,7 @@ const Home = () => {
               asChild 
               className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
             >
-              <Link to="/innovations">Browse Innovations</Link>
+              <Link to="/innovations">{t("home.cta.browseInnovations")}</Link>
             </Button>
             <Button 
               size="lg" 
@@ -184,7 +186,7 @@ const Home = () => {
               asChild 
               className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
             >
-              <Link to="/apply">How to Apply</Link>
+              <Link to="/apply">{t("home.cta.howToApply")}</Link>
             </Button>
           </div>
         </div>

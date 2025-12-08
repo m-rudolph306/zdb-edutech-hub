@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+  
   return (
     <footer className="bg-[#1A202C] text-white mt-20">
       <div className="container mx-auto px-4 py-12">
@@ -9,29 +12,27 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">About ZDB Innovation Area</h3>
             <p className="text-sm text-gray-300 leading-relaxed">
-              ZDB is an independent think tank shaping the future of digital education in Germany.
-              Through curated events and moderated dialogue, we bring innovators and policy-makers together
-              to transform education.
+              {t("footer.description")}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">{t("footer.quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/innovations" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Innovations
+                  {t("nav.innovations")}
                 </Link>
               </li>
               <li>
                 <Link to="/events" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  Events
+                  {t("nav.events")}
                 </Link>
               </li>
               <li>
-                <Link to="/how-to-apply" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  How to Apply
+                <Link to="/apply" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  {t("nav.howToApply")}
                 </Link>
               </li>
             </ul>
@@ -39,7 +40,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
+            <h3 className="text-lg font-semibold mb-4">{t("footer.contact")}</h3>
             <p className="text-sm text-gray-300">
               Email:{" "}
               <a
@@ -78,7 +79,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-sm text-gray-400">
-            © {new Date().getFullYear()} ZDB Innovation Area. All rights reserved.
+            © {new Date().getFullYear()} ZDB Innovation Area. {t("footer.rights")}
           </p>
         </div>
       </div>
