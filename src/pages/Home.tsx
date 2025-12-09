@@ -97,12 +97,12 @@ const Home = () => {
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
                 <Users className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">{t("home.pillars.connections.title")}</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">{t("home.pillars.events.title")}</h3>
               <p className="text-sm md:text-base text-muted-foreground mb-6 flex-grow">
-                {t("home.pillars.connections.description")}
+                {t("home.pillars.events.description")}
               </p>
               <Button variant="outline" asChild className="hover:scale-105 transition-transform">
-                <Link to="/events">{t("home.pillars.connections.button")}</Link>
+                <Link to="/events">{t("home.pillars.events.button")}</Link>
               </Button>
             </div>
 
