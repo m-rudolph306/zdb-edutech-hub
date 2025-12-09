@@ -47,15 +47,15 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Home - Three Pillars
     "home.pillars.title": "Unsere drei Säulen",
-    "home.pillars.policy.title": "Politik & Vision",
-    "home.pillars.policy.description": "Wir entwickeln strategische Papiere und Rahmenwerke, die das deutsche Bildungssystem in die Zukunft führen",
+    "home.pillars.policy.title": "Policy Papers & Vision",
+    "home.pillars.policy.description": "Positionspapiere, die unser Bildungssystem in die Zukunft führen",
     "home.pillars.policy.button": "Positionspapiere lesen",
-    "home.pillars.connections.title": "Kuratierte Verbindungen",
-    "home.pillars.connections.description": "Wir bringen Bildungsinnovatoren und politische Entscheidungsträger in moderierten, kuratierten Umgebungen zusammen",
-    "home.pillars.connections.button": "Unsere Veranstaltungen",
-    "home.pillars.hub.title": "Der digitale Hub",
+    "home.pillars.events.title": "Events & Roadshows",
+    "home.pillars.events.description": "Wir bringen Bildungsinnovatoren und politische Entscheidungsträger in moderierten, kuratierten Umgebungen zusammen",
+    "home.pillars.events.button": "Events ansehen",
+    "home.pillars.hub.title": "Digital Hub",
     "home.pillars.hub.description": "Wir bieten den digitalen Raum, in dem sich alle Beteiligten registrieren, informieren und Bildungsinnovationen entdecken können",
-    "home.pillars.hub.button": "Innovationen entdecken",
+    "home.pillars.hub.button": "Zum Hub",
     
     // Home - Roadshow
     "home.roadshow.valueProposition": "Von der Anfrage zur Präsentation in 2-3 Wochen – wir kümmern uns um alles.",
@@ -115,15 +115,15 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Home - Three Pillars
     "home.pillars.title": "Our Three Pillars",
-    "home.pillars.policy.title": "Policy & Vision",
-    "home.pillars.policy.description": "We develop strategic papers and frameworks that guide Germany's education system into the future",
-    "home.pillars.policy.button": "Read Our Position Papers",
-    "home.pillars.connections.title": "Curated Connections",
-    "home.pillars.connections.description": "We bring together education innovators and policy-makers in moderated, curated settings - creating meaningful dialogue beyond transactions",
-    "home.pillars.connections.button": "See Our Events",
-    "home.pillars.hub.title": "The Digital Hub",
+    "home.pillars.policy.title": "Policy Papers & Vision",
+    "home.pillars.policy.description": "Position papers that guide our education system into the future",
+    "home.pillars.policy.button": "Read Position Papers",
+    "home.pillars.events.title": "Events & Roadshows",
+    "home.pillars.events.description": "We bring together education innovators and policy-makers in moderated, curated settings",
+    "home.pillars.events.button": "View Events",
+    "home.pillars.hub.title": "Digital Hub",
     "home.pillars.hub.description": "We provide the digital space where all stakeholders can register, stay informed, and discover education innovations",
-    "home.pillars.hub.button": "Explore Innovations",
+    "home.pillars.hub.button": "Go to Hub",
     
     // Home - Roadshow
     "home.roadshow.valueProposition": "From inquiry to showcase in 2-3 weeks—we handle everything.",
