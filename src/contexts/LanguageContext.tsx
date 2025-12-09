@@ -39,8 +39,9 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Abmelden",
     
     // Home - Hero
-    "home.hero.title": "Die Zukunft der digitalen Bildung in Deutschland gestalten",
-    "home.hero.subtitle": "Als unabhängiger Think Tank bringen wir politische Visionen und innovative Lösungen durch kuratierte Dialoge zusammen",
+    "home.hero.slogan": "Für eine chancengerechte, nachhaltige und zukunftsfähige Bildung für alle",
+    "home.hero.coreStatement": "Wir verbinden Politik und Innovation",
+    "home.hero.thinkTankDescription": "Als unabhängiger Think Tank bringen wir politische Vision und innovative Lösungen durch gezielten Dialog zusammen",
     "home.hero.exploreVision": "Unsere Vision entdecken",
     "home.hero.joinInnovation": "Innovation Area beitreten",
     
@@ -106,11 +107,12 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.logout": "Logout",
     
     // Home - Hero
-    "home.hero.title": "Shaping the Future of Digital Education in Germany",
-    "home.hero.subtitle": "As an independent think tank, we bring policy vision and innovative solutions together through curated dialogue",
+    "home.hero.slogan": "For equitable, sustainable, and future-ready education for all",
+    "home.hero.coreStatement": "We Connect Politics and Innovation",
+    "home.hero.thinkTankDescription": "As an independent think tank, we bring policy vision and innovative solutions together through targeted dialogue",
     "home.hero.exploreVision": "Explore Our Vision",
     "home.hero.joinInnovation": "Join the Innovation Area",
-    
+
     // Home - Three Pillars
     "home.pillars.title": "Our Three Pillars",
     "home.pillars.policy.title": "Policy & Vision",

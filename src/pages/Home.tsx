@@ -30,18 +30,27 @@ const Home = () => {
 
       {/* Hero Section */}
       <section
-        className="relative min-h-[400px] md:min-h-[500px] flex items-center justify-center text-center px-4 md:px-6 py-12 md:py-20 mt-[100px]"
+        className="relative min-h-[450px] md:min-h-[550px] flex items-center justify-center text-center px-4 md:px-6 py-16 md:py-24 mt-[100px]"
         style={{
           background: "linear-gradient(to bottom, hsl(200, 45%, 96%), hsl(0, 0%, 100%))",
         }}
       >
         <div className="container mx-auto max-w-4xl animate-fade-in">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-12 text-foreground">
-            {t("home.hero.title")}
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-12">
-            {t("home.hero.subtitle")}
+          {/* Main slogan */}
+          <p className="text-lg sm:text-xl md:text-2xl text-primary font-medium mb-4 md:mb-6">
+            {t("home.hero.slogan")}
           </p>
+          
+          {/* Core statement - most prominent */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-foreground">
+            {t("home.hero.coreStatement")}
+          </h1>
+          
+          {/* Think tank description - larger and prominent */}
+          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed">
+            {t("home.hero.thinkTankDescription")}
+          </p>
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild className="px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all">
               <Link to="/policy">{t("home.hero.exploreVision")}</Link>
