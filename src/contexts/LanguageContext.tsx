@@ -67,6 +67,12 @@ const translations: Record<Language, Record<string, string>> = {
     "home.roadshow.benefit3": "Auf Ihre Schwerpunkte zugeschnitten",
     "home.roadshow.button": "Roadshow anfragen",
     
+    // Home - Logo Sections
+    "home.logos.ministries.title": "Für wen wir arbeiten",
+    "home.logos.partners.title": "Unsere Partner und Verbände",
+    "home.logos.supporters.title": "Unsere Unterstützer",
+    "home.logos.supporters.subtitle": "Wir sind öffentlich und spendenfinanziert. Wir bedanken uns bei zahlreichen Unterstützern, vielen Einzelspendern und insbesondere bei unseren institutionellen Förderern:",
+    
     // Home - CTA
     "home.cta.title": "Bereit zum Entdecken?",
     "home.cta.description": "Entdecken Sie unsere Veranstaltungen, durchstöbern Sie Innovationen oder erfahren Sie, wie Sie Teil der Innovation Area werden",
@@ -134,6 +140,12 @@ const translations: Record<Language, Record<string, string>> = {
     "home.roadshow.benefit2": "Professional setup and moderation",
     "home.roadshow.benefit3": "Customized to your focus areas",
     "home.roadshow.button": "Request a Roadshow",
+    
+    // Home - Logo Sections
+    "home.logos.ministries.title": "Who We Work For",
+    "home.logos.partners.title": "Our Partners and Associations",
+    "home.logos.supporters.title": "Our Supporters",
+    "home.logos.supporters.subtitle": "We are publicly and donation-funded. We thank our many supporters, individual donors, and especially our institutional sponsors:",
     
     // Home - CTA
     "home.cta.title": "Ready to Explore?",

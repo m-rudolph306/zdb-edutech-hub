@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import LoginModal from "@/components/LoginModal";
+import LogoSection from "@/components/LogoSection";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { BookOpen, Users, Monitor } from "lucide-react";
+import { ministryLogos, partnerLogos, supporterLogos } from "@/data/logos";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -162,6 +164,51 @@ const Home = () => {
           </Button>
         </div>
       </section>
+
+      {/* Section 1: Ministries */}
+      <LogoSection
+        title={t("home.logos.ministries.title")}
+        logos={ministryLogos}
+        variant="grid"
+      />
+
+      {/* Section 2: Partners */}
+      <section className="py-12 md:py-16 px-4 md:px-6 bg-muted/30">
+        <div className="container mx-auto max-w-7xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-10 text-foreground animate-fade-in">
+            {t("home.logos.partners.title")}
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-8 animate-fade-in">
+            {partnerLogos.map((logo) => (
+              <div
+                key={logo.id}
+                className="flex items-center justify-center p-4 md:p-6 bg-card border border-border rounded-lg hover:shadow-md transition-shadow"
+                title={logo.name}
+              >
+                {logo.imageUrl ? (
+                  <img
+                    src={logo.imageUrl}
+                    alt={logo.name}
+                    className="h-14 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all"
+                  />
+                ) : (
+                  <span className="text-sm md:text-base text-muted-foreground text-center font-medium">
+                    {logo.name}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3: Supporters */}
+      <LogoSection
+        title={t("home.logos.supporters.title")}
+        subtitle={t("home.logos.supporters.subtitle")}
+        logos={supporterLogos}
+        variant="small"
+      />
 
       {/* Call to Action */}
       <section className="py-16 md:py-20 px-4 md:px-6 bg-primary">
