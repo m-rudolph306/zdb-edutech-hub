@@ -40,7 +40,7 @@ export const partnerLogos: Logo[] = [
 
 // Sponsors and supporters
 export const supporterLogos: Logo[] = [
-  { id: "kckom", name: "KC kom" },
-  { id: "inventorium", name: "Inventorium" },
+  { id: "cancom", name: "CANCOM" },
+  { id: "inventorio", name: "Inventorio" },
   // Add more sponsors as needed
 ];
