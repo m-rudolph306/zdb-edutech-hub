@@ -178,26 +178,6 @@ const Navigation = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* Roadshow */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
-                    {t("nav.roadshow")}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="w-[220px] p-2 bg-background">
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/roadshow"
-                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            <div className="text-sm font-medium leading-none">{t("nav.roadshow.request")}</div>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
 
@@ -245,23 +225,12 @@ const Navigation = () => {
                   </DropdownMenu>
                 </>
               ) : (
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setIsLoginOpen(true)}
-                    className="text-sm font-medium"
-                  >
-                    {t("nav.login")}
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={() => setIsLoginOpen(true)}
-                    className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
-                  >
-                    {t("nav.register")}
-                  </Button>
-                </div>
+                <Button
+                  size="sm"
+                  onClick={() => setIsLoginOpen(true)}
+                >
+                  {t("nav.login")}
+                </Button>
               )}
             </div>
           </div>
@@ -346,17 +315,6 @@ const Navigation = () => {
                 </Link>
               </div>
 
-              {/* Roadshow */}
-              <div className="space-y-1">
-                <div className="text-sm font-semibold text-foreground px-3 py-2">{t("nav.roadshow")}</div>
-                <Link
-                  to="/roadshow"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
-                >
-                  {t("nav.roadshow.request")}
-                </Link>
-              </div>
 
               {/* Auth Section */}
               <div className="border-t border-border pt-4 mt-2">
@@ -390,27 +348,15 @@ const Navigation = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setIsMobileMenuOpen(false);
-                        setIsLoginOpen(true);
-                      }}
-                      className="w-full"
-                    >
-                      {t("nav.login")}
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        setIsMobileMenuOpen(false);
-                        setIsLoginOpen(true);
-                      }}
-                      className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground"
-                    >
-                      {t("nav.register")}
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setIsLoginOpen(true);
+                    }}
+                    className="w-full"
+                  >
+                    {t("nav.login")}
+                  </Button>
                 )}
               </div>
             </div>
