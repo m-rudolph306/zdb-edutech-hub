@@ -74,12 +74,12 @@ const translations: Record<Language, Record<string, string>> = {
     "home.logos.supporters.subtitle": "Wir sind öffentlich und spendenfinanziert. Wir bedanken uns bei zahlreichen Unterstützern, vielen Einzelspendern und insbesondere bei unseren institutionellen Förderern:",
     
     // Partners Section
-    "partners.statesTitle": "Für wen wir arbeiten",
+    "partners.statesTitle": "Unsere Adressaten",
     "partners.statesSubtitle": "Wir arbeiten mit allen 16 Bundesländern und dem BMBF zusammen, um digitale Bildung voranzutreiben",
-    "partners.partnersTitle": "Unsere Partner und Verbände",
-    "partners.sponsorsTitle": "Unsere Unterstützer",
-    "partners.sponsorsSubtitle": "Wir sind öffentlich und spendenfinanziert. Wir bedanken uns bei zahlreichen Unterstützern, vielen Einzelspendern und insbesondere bei unseren institutionellen Förderern:",
-    "partners.mainSponsor": "Hauptsponsor",
+    "partners.partnersTitle": "Verbände und Partner",
+    "partners.cta.title": "Werden Sie Teil unserer Mission",
+    "partners.cta.description": "Gemeinsam gestalten wir die Zukunft der digitalen Bildung in Deutschland",
+    "partners.cta.button": "Jetzt bewerben",
     
     // Home - CTA
     "home.cta.title": "Bereit zum Entdecken?",
@@ -156,12 +156,12 @@ const translations: Record<Language, Record<string, string>> = {
     "home.logos.supporters.subtitle": "We are publicly and donation-funded. We thank our many supporters, individual donors, and especially our institutional sponsors:",
     
     // Partners Section
-    "partners.statesTitle": "Who We Work With",
+    "partners.statesTitle": "Our Addressees",
     "partners.statesSubtitle": "We collaborate with all 16 federal states and the BMBF to advance digital education",
-    "partners.partnersTitle": "Our Partners and Associations",
-    "partners.sponsorsTitle": "Our Supporters",
-    "partners.sponsorsSubtitle": "We are publicly and donation-funded. We thank numerous supporters, many individual donors, and especially our institutional sponsors:",
-    "partners.mainSponsor": "Main Sponsor",
+    "partners.partnersTitle": "Associations & Partners",
+    "partners.cta.title": "Become Part of Our Mission",
+    "partners.cta.description": "Together we shape the future of digital education in Germany",
+    "partners.cta.button": "Apply Now",
     
     // Home - CTA
     "home.cta.title": "Ready to Explore?",
