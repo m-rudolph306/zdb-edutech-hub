@@ -37,20 +37,22 @@ const Home = () => {
         }}
       >
         <div className="container mx-auto max-w-4xl animate-fade-in">
-          {/* Main slogan */}
-          <p className="text-lg sm:text-xl md:text-2xl text-primary font-medium mb-4 md:mb-6">
+          {/* Main slogan - smaller, above headline */}
+          <p className="text-base sm:text-lg md:text-xl text-primary font-medium mb-3 md:mb-4 tracking-wide">
             {t("home.hero.slogan")}
           </p>
           
           {/* Core statement - most prominent */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-foreground">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 text-foreground leading-tight">
             {t("home.hero.coreStatement")}
           </h1>
           
-          {/* Think tank description - larger and prominent */}
-          <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed">
-            {t("home.hero.thinkTankDescription")}
-          </p>
+          {/* Think tank description - MORE PROMINENT with background highlight */}
+          <div className="bg-primary/10 border-l-4 border-primary rounded-r-lg px-6 py-4 mb-10 md:mb-12 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-foreground font-medium leading-relaxed">
+              {t("home.hero.thinkTankDescription")}
+            </p>
+          </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild className="px-8 py-4 rounded-lg hover:opacity-90 hover:scale-105 transition-all">
