@@ -31,16 +31,11 @@ export const ministryLogos: Logo[] = [
 
 // Education associations and partners
 export const partnerLogos: Logo[] = [
-  { id: "didacta", name: "Didacta Verband" },
+  { id: "didacta", name: "Didaktikerverband" },
+  { id: "startup", name: "Startup Verband" },
+  { id: "kmk", name: "Kultusministerkonferenz" },
+  { id: "inventorio", name: "Inventorio" },
   { id: "bfb", name: "Bündnis für Bildung" },
   { id: "fbd", name: "Forum Bildung Digitalisierung" },
-  { id: "startup", name: "Startup Verband" },
-  // Add more partners after exploration talks
-];
-
-// Sponsors and supporters
-export const supporterLogos: Logo[] = [
-  { id: "cancom", name: "CANCOM" },
-  { id: "inventorio", name: "Inventorio" },
-  // Add more sponsors as needed
+  // Add more partners as exploration talks progress
 ];

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Logo configuration - replace placeholder paths with actual logo imports
@@ -23,15 +25,12 @@ const stateLogos = [
 ];
 
 const partnerLogos = [
-  { name: "Didacta Verband", logo: "/logos/partners/didacta.svg", alt: "Didacta Verband e.V." },
+  { name: "Didaktikerverband", logo: "/logos/partners/didacta.svg", alt: "Didaktikerverband" },
+  { name: "Startup Verband", logo: "/logos/partners/startup-verband.svg", alt: "Bundesverband Deutsche Startups e.V." },
+  { name: "KMK", logo: "/logos/partners/kmk.svg", alt: "Kultusministerkonferenz" },
+  { name: "Inventorio", logo: "/logos/partners/inventorio.svg", alt: "Inventorio" },
   { name: "Bündnis für Bildung", logo: "/logos/partners/buendnis.svg", alt: "Bündnis für Bildung e.V." },
   { name: "Forum Bildung Digitalisierung", logo: "/logos/partners/forum-bildung.svg", alt: "Forum Bildung Digitalisierung" },
-  { name: "Startup Verband", logo: "/logos/partners/startup-verband.svg", alt: "Bundesverband Deutsche Startups e.V." },
-];
-
-const sponsorLogos = [
-  { name: "CANCOM", logo: "/logos/sponsors/cancom.svg", alt: "CANCOM", tier: "main" },
-  { name: "Inventorio", logo: "/logos/sponsors/inventorio.svg", alt: "Inventorio", tier: "sponsor" },
 ];
 
 const PartnersSection = () => {
@@ -40,7 +39,7 @@ const PartnersSection = () => {
   return (
     <div className="bg-background py-16 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
-        {/* State Education Ministries */}
+        {/* State Education Ministries - "Unsere Adressaten" */}
         <section className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
             {t("partners.statesTitle")}
@@ -55,13 +54,11 @@ const PartnersSection = () => {
                 className="bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
               >
                 <div className="relative w-full h-16 flex items-center justify-center">
-                  {/* Temporary placeholder - replace with actual logo */}
                   <img
                     src={state.logo}
                     alt={state.alt}
                     className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity"
                     onError={(e) => {
-                      // Fallback to text if logo not found
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
                       const parent = target.parentElement;
@@ -79,18 +76,18 @@ const PartnersSection = () => {
           </div>
         </section>
 
-        {/* Partners and Associations */}
+        {/* Partners and Associations - "Verbände und Partner" */}
         <section className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
             {t("partners.partnersTitle")}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 max-w-5xl mx-auto">
             {partnerLogos.map((partner) => (
               <div
                 key={partner.name}
                 className="bg-card border border-border rounded-lg p-6 flex items-center justify-center hover:shadow-lg transition-shadow group"
               >
-                <div className="relative w-full h-20 flex items-center justify-center">
+                <div className="relative w-full h-16 flex items-center justify-center">
                   <img
                     src={partner.logo}
                     alt={partner.alt}
@@ -113,69 +110,22 @@ const PartnersSection = () => {
           </div>
         </section>
 
-        {/* Sponsors */}
-        <section>
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            {t("partners.sponsorsTitle")}
+        {/* Call to Action */}
+        <section className="bg-primary rounded-2xl p-8 md:p-12 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary-foreground">
+            {t("partners.cta.title")}
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            {t("partners.sponsorsSubtitle")}
+          <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+            {t("partners.cta.description")}
           </p>
-          <div className="flex flex-col items-center gap-8">
-            {/* Main Sponsor */}
-            <div className="bg-card border-2 border-primary/20 rounded-lg p-8 w-full max-w-md">
-              <div className="text-xs font-semibold text-primary text-center mb-4">
-                {t("partners.mainSponsor")}
-              </div>
-              <div className="relative w-full h-24 flex items-center justify-center">
-                <img
-                  src={sponsorLogos.find(s => s.tier === "main")?.logo}
-                  alt={sponsorLogos.find(s => s.tier === "main")?.alt}
-                  className="max-w-full max-h-full object-contain"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent && !parent.querySelector('.fallback-text')) {
-                      const fallback = document.createElement('div');
-                      fallback.className = 'fallback-text text-lg text-center font-bold text-muted-foreground';
-                      fallback.textContent = sponsorLogos.find(s => s.tier === "main")?.name || '';
-                      parent.appendChild(fallback);
-                    }
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Regular Sponsors */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
-              {sponsorLogos.filter(s => s.tier === "sponsor").map((sponsor) => (
-                <div
-                  key={sponsor.name}
-                  className="bg-card border border-border rounded-lg p-6 flex items-center justify-center hover:shadow-lg transition-shadow"
-                >
-                  <div className="relative w-full h-16 flex items-center justify-center">
-                    <img
-                      src={sponsor.logo}
-                      alt={sponsor.alt}
-                      className="max-w-full max-h-full object-contain opacity-70 hover:opacity-100 transition-opacity"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const parent = target.parentElement;
-                        if (parent && !parent.querySelector('.fallback-text')) {
-                          const fallback = document.createElement('div');
-                          fallback.className = 'fallback-text text-base text-center font-semibold text-muted-foreground';
-                          fallback.textContent = sponsor.name;
-                          parent.appendChild(fallback);
-                        }
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Button 
+            size="lg" 
+            variant="secondary" 
+            asChild 
+            className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
+          >
+            <Link to="/apply">{t("partners.cta.button")}</Link>
+          </Button>
         </section>
       </div>
     </div>
