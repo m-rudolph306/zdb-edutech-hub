@@ -136,6 +136,16 @@ const Navigation = () => {
                       <li>
                         <NavigationMenuLink asChild>
                           <Link
+                            to="/roadshow"
+                            className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">{t("nav.roadshow.request")}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
                             to="/apply"
                             className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
@@ -286,6 +296,13 @@ const Navigation = () => {
                   className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
                 >
                   {t("nav.events.upcoming")}
+                </Link>
+                <Link
+                  to="/roadshow"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground px-6 py-2"
+                >
+                  {t("nav.roadshow.request")}
                 </Link>
                 <Link
                   to="/apply"
