@@ -6,12 +6,14 @@ interface User {
   companyName: string;
 }
 
+type ApprovalStatus = "pending" | "approved" | "rejected" | "not_found";
+
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, companyName: string) => void;
   logout: () => void;
-  signup: (email: string, password: string, companyName: string) => Promise<boolean>;
+  checkApprovalStatus: (email: string) => ApprovalStatus;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -51,13 +53,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     sessionStorage.removeItem("redirectAfterLogin");
   };
 
-  const signup = async (email: string, password: string, companyName: string): Promise<boolean> => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
+  const checkApprovalStatus = (email: string): ApprovalStatus => {
+    const signupRequests = JSON.parse(localStorage.getItem("signupRequests") || "[]");
+    const request = signupRequests.find((r: any) => r.email === email);
     
-    // For now, just create the user
-    login(email, companyName);
-    return true;
+    if (!request) {
+      return "not_found";
+    }
+    
+    return request.status as ApprovalStatus;
   };
 
   return (
@@ -67,7 +71,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated: !!user,
         login,
         logout,
-        signup,
+        checkApprovalStatus,
       }}
     >
       {children}
