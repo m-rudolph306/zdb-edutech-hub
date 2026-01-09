@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">About ZDB Innovation Area</h3>
+            <h3 className="text-lg font-semibold mb-4">{t("footer.aboutTitle")}</h3>
             <p className="text-sm text-gray-300 leading-relaxed">
               {t("footer.description")}
             </p>
@@ -28,6 +28,11 @@ const Footer = () => {
               <li>
                 <Link to="/events" className="text-sm text-gray-300 hover:text-white transition-colors">
                   {t("nav.events")}
+                </Link>
+              </li>
+              <li>
+                <Link to="/policy" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  {t("footer.policy")}
                 </Link>
               </li>
               <li>
@@ -50,29 +55,6 @@ const Footer = () => {
                 info@zdb-innovation.de
               </a>
             </p>
-          </div>
-        </div>
-
-        {/* Sponsors Section */}
-        <div className="border-t border-gray-700 mt-8 pt-8">
-          <p className="text-sm text-gray-400 text-center mb-6">
-            Innovation Area 2026 is made possible by our sponsors
-          </p>
-          <div className="flex items-center justify-center gap-8 flex-wrap">
-            {/* Cancom - Main Sponsor */}
-            <div className="flex flex-col items-center">
-              <div className="bg-gray-700 rounded-lg px-8 py-4 flex items-center justify-center min-w-[160px]">
-                <span className="text-white font-bold text-lg">CANCOM</span>
-              </div>
-              <span className="text-xs text-gray-500 mt-2">Main Sponsor</span>
-            </div>
-            {/* Inventorio - Sponsor */}
-            <div className="flex flex-col items-center">
-              <div className="bg-gray-700 rounded-lg px-6 py-3 flex items-center justify-center min-w-[140px]">
-                <span className="text-white font-semibold">Inventorio</span>
-              </div>
-              <span className="text-xs text-gray-500 mt-2">Sponsor</span>
-            </div>
           </div>
         </div>
 

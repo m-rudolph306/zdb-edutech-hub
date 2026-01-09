@@ -127,10 +127,16 @@ const translations: Record<Language, Record<string, string>> = {
     "events.sponsorAcknowledgment": "Die Innovation Area Roadmap 2026 ist finanziell gesichert durch unsere Sponsoren: Cancom und Inventorio",
     
     // Footer
+    "footer.aboutTitle": "Über ZDB Innovation Area",
     "footer.description": "Gestaltung der Zukunft der digitalen Bildung in Deutschland durch strategische Vision und kuratierte Verbindungen.",
     "footer.quickLinks": "Schnelllinks",
     "footer.contact": "Kontakt",
     "footer.rights": "Alle Rechte vorbehalten.",
+    "footer.policy": "Policy",
+    
+    // Nav (used in Footer)
+    "nav.innovations": "Innovationen",
+    "nav.howToApply": "So bewerben",
   },
   en: {
     // Top Bar Navigation
@@ -247,10 +253,16 @@ const translations: Record<Language, Record<string, string>> = {
     "events.sponsorAcknowledgment": "The 2026 Innovation Area roadmap is financially secured thanks to our sponsors: Cancom and Inventorio",
     
     // Footer
+    "footer.aboutTitle": "About ZDB Innovation Area",
     "footer.description": "Shaping the future of digital education in Germany through strategic vision and curated connections.",
     "footer.quickLinks": "Quick Links",
     "footer.contact": "Contact",
     "footer.rights": "All rights reserved.",
+    "footer.policy": "Policy",
+    
+    // Nav (used in Footer)
+    "nav.innovations": "Innovations",
+    "nav.howToApply": "How to Apply",
   },
 };
 
