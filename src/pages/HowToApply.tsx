@@ -47,9 +47,9 @@ const HowToApply = () => {
     },
     {
       icon: TrendingUp,
-      title: "Nachgewiesene Erfolge",
+      title: "Entwicklungsstand",
       description:
-        "Belegen Sie erfolgreiche Implementierungen in Bildungseinrichtungen oder dokumentierte Pilotprojekt-Ergebnisse.",
+        "Sowohl etablierte Lösungen mit nachgewiesener Wirkung als auch vielversprechende neue Ideen, die Validierung suchen, sind willkommen.",
     },
     {
       icon: Users,
