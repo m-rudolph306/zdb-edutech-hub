@@ -10,10 +10,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import SignupRequestModal from "./SignupRequestModal";
+import { Clock } from "lucide-react";
 
 interface LoginModalProps {
   open: boolean;
@@ -24,234 +24,166 @@ interface LoginModalProps {
 const LoginModal = ({ open, onOpenChange, redirectPath }: LoginModalProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { login, signup } = useAuth();
+  const { login, checkApprovalStatus } = useAuth();
+  
+  const [showSignupRequest, setShowSignupRequest] = useState(false);
   
   const getRedirectPath = () => {
-    // Check for stored redirect path from protected route
     const storedRedirect = sessionStorage.getItem("redirectAfterLogin");
     if (storedRedirect) {
       sessionStorage.removeItem("redirectAfterLogin");
       return storedRedirect;
     }
-    // Use provided redirect path or default to dashboard
     return redirectPath || "/dashboard";
   };
   
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  
-  const [signupEmail, setSignupEmail] = useState("");
-  const [signupPassword, setSignupPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [agreeTerms, setAgreeTerms] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!loginEmail || !loginPassword) {
       toast({
-        title: "Error",
-        description: "Please fill in all fields",
+        title: "Fehler",
+        description: "Bitte füllen Sie alle Felder aus",
         variant: "destructive",
       });
       return;
     }
 
-    // Simulate login
-    login(loginEmail, companyName || "User Company");
+    // Check if user has an approved signup request
+    const approvalStatus = checkApprovalStatus(loginEmail);
     
-    toast({
-      title: "Success",
-      description: "Logged in successfully",
-    });
+    if (approvalStatus === "pending") {
+      toast({
+        title: "Registrierung ausstehend",
+        description: "Ihre Registrierungsanfrage wird noch geprüft. Bitte warten Sie auf die Genehmigung.",
+        variant: "destructive",
+      });
+      return;
+    }
     
-    onOpenChange(false);
-    navigate(getRedirectPath());
-  };
-
-  const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
+    if (approvalStatus === "rejected") {
+      toast({
+        title: "Zugang abgelehnt",
+        description: "Ihre Registrierungsanfrage wurde leider abgelehnt. Bei Fragen kontaktieren Sie uns.",
+        variant: "destructive",
+      });
+      return;
+    }
     
-    // Validation
-    if (!signupEmail || !signupPassword || !confirmPassword || !companyName) {
+    if (approvalStatus === "not_found") {
       toast({
-        title: "Error",
-        description: "Please fill in all required fields",
+        title: "Konto nicht gefunden",
+        description: "Bitte stellen Sie zuerst eine Registrierungsanfrage.",
         variant: "destructive",
       });
       return;
     }
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(signupEmail)) {
-      toast({
-        title: "Error",
-        description: "Please enter a valid email address",
-        variant: "destructive",
-      });
-      return;
-    }
+    // Get approved user data
+    const signupRequests = JSON.parse(localStorage.getItem("signupRequests") || "[]");
+    const approvedRequest = signupRequests.find(
+      (r: any) => r.email === loginEmail && r.status === "approved"
+    );
 
-    // Password validation
-    if (signupPassword.length < 8) {
+    if (approvedRequest) {
+      login(loginEmail, approvedRequest.companyName);
+      
       toast({
-        title: "Error",
-        description: "Password must be at least 8 characters long",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (signupPassword !== confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!agreeTerms) {
-      toast({
-        title: "Error",
-        description: "You must agree to the terms and privacy policy",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Perform signup
-    const success = await signup(signupEmail, signupPassword, companyName);
-    
-    if (success) {
-      toast({
-        title: "Success",
-        description: "Account created successfully!",
+        title: "Erfolgreich angemeldet",
+        description: "Willkommen zurück!",
       });
       
       onOpenChange(false);
-      navigate("/apply/select-event");
+      navigate(getRedirectPath());
     }
   };
 
+  const handleOpenSignupRequest = () => {
+    onOpenChange(false);
+    setShowSignupRequest(true);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Welcome to ZDB Innovation Area</DialogTitle>
-          <DialogDescription>
-            Login to your account or create a new one to get started.
-          </DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Anmelden</DialogTitle>
+            <DialogDescription>
+              Melden Sie sich mit Ihrem genehmigten Konto an, um auf die Innovation Area zuzugreifen.
+            </DialogDescription>
+          </DialogHeader>
 
-        <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
-          </TabsList>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="login-email">E-Mail</Label>
+              <Input
+                id="login-email"
+                type="email"
+                placeholder="ihre@email.de"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="login-password">Passwort</Label>
+              <Input
+                id="login-password"
+                type="password"
+                placeholder="••••••••"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                required
+              />
+            </div>
+            <Button type="submit" className="w-full">
+              Anmelden
+            </Button>
+          </form>
 
-          <TabsContent value="login">
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="login-email">Email</Label>
-                <Input
-                  id="login-email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="login-password">Password</Label>
-                <Input
-                  id="login-password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
-            </form>
-          </TabsContent>
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Noch kein Konto?
+              </span>
+            </div>
+          </div>
 
-          <TabsContent value="signup">
-            <form onSubmit={handleSignup} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="signup-email">Email *</Label>
-                <Input
-                  id="signup-email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={signupEmail}
-                  onChange={(e) => setSignupEmail(e.target.value)}
-                  required
-                />
+          <div className="bg-muted/50 rounded-lg p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <Clock className="h-5 w-5 text-secondary mt-0.5" />
+              <div>
+                <p className="text-sm font-medium">Zwei-Stufen-Registrierung</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Neue Nutzer müssen zuerst eine Registrierungsanfrage stellen. Nach Prüfung und Genehmigung erhalten Sie Zugang.
+                </p>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="signup-password">Password *</Label>
-                <Input
-                  id="signup-password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={signupPassword}
-                  onChange={(e) => setSignupPassword(e.target.value)}
-                  required
-                  minLength={8}
-                />
-                <p className="text-xs text-muted-foreground">Minimum 8 characters</p>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm Password *</Label>
-                <Input
-                  id="confirm-password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="company-name">Company Name *</Label>
-                <Input
-                  id="company-name"
-                  type="text"
-                  placeholder="Your Company"
-                  value={companyName}
-                  onChange={(e) => setCompanyName(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="flex items-start space-x-2">
-                <Checkbox
-                  id="terms"
-                  checked={agreeTerms}
-                  onCheckedChange={(checked) => setAgreeTerms(checked as boolean)}
-                  required
-                />
-                <label
-                  htmlFor="terms"
-                  className="text-sm text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  I agree to the terms and privacy policy *
-                </label>
-              </div>
-              <Button type="submit" className="w-full bg-secondary hover:bg-secondary/90">
-                Create Account
-              </Button>
-            </form>
-          </TabsContent>
-        </Tabs>
-      </DialogContent>
-    </Dialog>
+            </div>
+          </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={handleOpenSignupRequest}
+          >
+            Registrierungsanfrage stellen
+          </Button>
+        </DialogContent>
+      </Dialog>
+
+      <SignupRequestModal
+        open={showSignupRequest}
+        onOpenChange={setShowSignupRequest}
+      />
+    </>
   );
 };
 
