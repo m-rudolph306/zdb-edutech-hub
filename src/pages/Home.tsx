@@ -169,43 +169,6 @@ const Home = () => {
       {/* Partners, States, and Sponsors Section */}
       <PartnersSection />
 
-      {/* Call to Action */}
-      <section className="py-16 md:py-20 px-4 md:px-6 bg-primary">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-primary-foreground animate-fade-in">
-            {t("home.cta.title")}
-          </h2>
-          <p className="text-base md:text-lg text-primary-foreground/80 mb-8 animate-fade-in">
-            {t("home.cta.description")}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-            <Button 
-              size="lg" 
-              variant="secondary" 
-              asChild 
-              className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
-            >
-              <Link to="/events">{t("home.cta.viewEvents")}</Link>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="secondary" 
-              asChild 
-              className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
-            >
-              <Link to="/innovations">{t("home.cta.browseInnovations")}</Link>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="secondary" 
-              asChild 
-              className="px-8 py-4 rounded-lg hover:scale-105 transition-all"
-            >
-              <Link to="/apply">{t("home.cta.howToApply")}</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
 
 
       <Footer />
