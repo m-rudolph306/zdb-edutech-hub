@@ -7,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
+import Policy from "./pages/Policy";
 import Innovations from "./pages/Innovations";
 import InnovationDetail from "./pages/InnovationDetail";
 import Events from "./pages/Events";
@@ -30,6 +31,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/policy" element={<Policy />} />
             <Route path="/innovations" element={<Innovations />} />
             <Route path="/innovations/:id" element={<InnovationDetail />} />
             <Route path="/events" element={<Events />} />

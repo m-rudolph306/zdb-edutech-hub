@@ -88,6 +88,21 @@ const translations: Record<Language, Record<string, string>> = {
     "home.cta.browseInnovations": "Innovationen",
     "home.cta.howToApply": "So bewerben",
     
+    // Policy Page
+    "policy.title": "Policy Übersicht",
+    "policy.subtitle": "Unsere Positionspapiere und Medienbeiträge zur Zukunft der digitalen Bildung",
+    "policy.filter.all": "Alle anzeigen",
+    "policy.filter.position": "Positionspapiere",
+    "policy.filter.press": "Presseauftritte",
+    "policy.type.position": "Positionspapier",
+    "policy.type.press": "Presseauftritt",
+    "policy.download": "Herunterladen",
+    "policy.readMore": "Weiterlesen",
+    "policy.noResults": "Keine Einträge gefunden",
+    "policy.cta.title": "Interesse an unserer Arbeit?",
+    "policy.cta.description": "Kontaktieren Sie uns für Medienanfragen, Kooperationen oder weitere Informationen zu unseren Positionen.",
+    "policy.cta.button": "Kontakt aufnehmen",
+    
     // Footer
     "footer.description": "Gestaltung der Zukunft der digitalen Bildung in Deutschland durch strategische Vision und kuratierte Verbindungen.",
     "footer.quickLinks": "Schnelllinks",
@@ -169,6 +184,21 @@ const translations: Record<Language, Record<string, string>> = {
     "home.cta.viewEvents": "View Events",
     "home.cta.browseInnovations": "Browse Innovations",
     "home.cta.howToApply": "How to Apply",
+    
+    // Policy Page
+    "policy.title": "Policy Overview",
+    "policy.subtitle": "Our position papers and media contributions on the future of digital education",
+    "policy.filter.all": "Show All",
+    "policy.filter.position": "Position Papers",
+    "policy.filter.press": "Press Appearances",
+    "policy.type.position": "Position Paper",
+    "policy.type.press": "Press Appearance",
+    "policy.download": "Download",
+    "policy.readMore": "Read More",
+    "policy.noResults": "No entries found",
+    "policy.cta.title": "Interested in Our Work?",
+    "policy.cta.description": "Contact us for media inquiries, collaborations, or more information about our positions.",
+    "policy.cta.button": "Get in Touch",
     
     // Footer
     "footer.description": "Shaping the future of digital education in Germany through strategic vision and curated connections.",
