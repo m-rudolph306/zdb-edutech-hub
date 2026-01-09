@@ -47,17 +47,17 @@ const PartnersSection = () => {
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             {t("partners.statesSubtitle")}
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 md:gap-8">
+          <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
             {stateLogos.map((state) => (
               <div
                 key={state.name}
-                className="bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
+                className="flex-shrink-0 min-w-[150px] bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
               >
-                <div className="relative w-full h-16 flex items-center justify-center">
+                <div className="relative w-full h-20 flex flex-col items-center justify-center gap-2">
                   <img
                     src={state.logo}
                     alt={state.alt}
-                    className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                    className="max-w-full max-h-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
@@ -70,6 +70,7 @@ const PartnersSection = () => {
                       }
                     }}
                   />
+                  <span className="text-xs text-center text-muted-foreground font-medium line-clamp-1">{state.name}</span>
                 </div>
               </div>
             ))}
