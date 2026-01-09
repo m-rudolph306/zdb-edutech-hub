@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Logo configuration - replace placeholder paths with actual logo imports
 const stateLogos = [
@@ -35,6 +37,18 @@ const partnerLogos = [
 
 const PartnersSection = () => {
   const { t } = useLanguage();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <div className="bg-background py-16 md:py-20">
@@ -47,33 +61,68 @@ const PartnersSection = () => {
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             {t("partners.statesSubtitle")}
           </p>
-          <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
-            {stateLogos.map((state) => (
-              <div
-                key={state.name}
-                className="flex-shrink-0 min-w-[150px] bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
-              >
-                <div className="relative w-full h-20 flex flex-col items-center justify-center gap-2">
-                  <img
-                    src={state.logo}
-                    alt={state.alt}
-                    className="max-w-full max-h-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent && !parent.querySelector('.fallback-text')) {
-                        const fallback = document.createElement('div');
-                        fallback.className = 'fallback-text text-xs text-center text-muted-foreground font-medium';
-                        fallback.textContent = state.name;
-                        parent.appendChild(fallback);
-                      }
-                    }}
-                  />
-                  <span className="text-xs text-center text-muted-foreground font-medium line-clamp-1">{state.name}</span>
+          
+          {/* Scrollable container with arrows */}
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {/* Left Arrow */}
+            <button
+              onClick={() => scroll("left")}
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
+                isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="h-6 w-6 text-foreground" />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={() => scroll("right")}
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
+                isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="h-6 w-6 text-foreground" />
+            </button>
+
+            {/* Scrollable row */}
+            <div 
+              ref={scrollContainerRef}
+              className="flex flex-nowrap overflow-x-auto gap-4 pb-4 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent px-8"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              {stateLogos.map((state) => (
+                <div
+                  key={state.name}
+                  className="flex-shrink-0 min-w-[150px] bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
+                >
+                  <div className="relative w-full h-20 flex flex-col items-center justify-center gap-2">
+                    <img
+                      src={state.logo}
+                      alt={state.alt}
+                      className="max-w-full max-h-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent && !parent.querySelector('.fallback-text')) {
+                          const fallback = document.createElement('div');
+                          fallback.className = 'fallback-text text-xs text-center text-muted-foreground font-medium';
+                          fallback.textContent = state.name;
+                          parent.appendChild(fallback);
+                        }
+                      }}
+                    />
+                    <span className="text-xs text-center text-muted-foreground font-medium line-clamp-1">{state.name}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
