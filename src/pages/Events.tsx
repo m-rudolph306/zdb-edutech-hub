@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, ArrowRight, Users, Clock, LayoutGrid, List } from "lucide-react";
+import { Calendar, MapPin, ArrowRight, Users, Clock, Building } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Event {
   id: string;
@@ -14,21 +14,43 @@ interface Event {
   fullDate: string;
   location: string;
   venue: string;
-  status: "open" | "closing-soon" | "closed" | "complete";
+  category: "past" | "open" | "future";
   statusLabel: string;
   description: string;
   startupsCount: number;
-  deadline: string;
+  deadline?: string;
 }
 
-type ViewType = "grid" | "list";
-type FilterType = "all" | "upcoming" | "past" | "applications-open";
-
 const Events = () => {
-  const [viewType, setViewType] = useState<ViewType>("grid");
-  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const { t } = useLanguage();
 
   const events: Event[] = [
+    // Past Events
+    {
+      id: "berlin-2025",
+      name: "Berlin Innovation Area 2025",
+      date: "Nov 15",
+      fullDate: "November 15, 2025",
+      location: "Berlin",
+      venue: "Bildung Digital Messe Berlin",
+      category: "past",
+      statusLabel: t("events.status.completed"),
+      description: "The Berlin Innovation Area brought together leading education innovators and decision-makers.",
+      startupsCount: 8,
+    },
+    {
+      id: "hamburg-2025",
+      name: "Hamburg Innovation Area 2025",
+      date: "Sep 20",
+      fullDate: "September 20, 2025",
+      location: "Hamburg",
+      venue: "Bildung Digital Messe Hamburg",
+      category: "past",
+      statusLabel: t("events.status.completed"),
+      description: "A successful showcase of innovative education solutions in Hamburg.",
+      startupsCount: 6,
+    },
+    // Open Registrations (Round 1)
     {
       id: "mainz-2026",
       name: "Mainz Innovation Area 2026",
@@ -36,9 +58,9 @@ const Events = () => {
       fullDate: "March 19, 2026",
       location: "Mainz",
       venue: "Bildung Digital Messe Mainz",
-      status: "open",
-      statusLabel: "Applications Open",
-      description: "Join us in Mainz for the first Innovation Area event of 2026. Showcase your education innovation to leading educators and decision-makers. Part of Round 1 applications.",
+      category: "open",
+      statusLabel: t("events.status.open"),
+      description: "Join us in Mainz for the first Innovation Area event of 2026. Showcase your education innovation to leading educators and decision-makers.",
       startupsCount: 8,
       deadline: "January 31, 2026",
     },
@@ -49,25 +71,26 @@ const Events = () => {
       fullDate: "April 23, 2026",
       location: "Magdeburg",
       venue: "Bildung Digital Messe Magdeburg",
-      status: "open",
-      statusLabel: "Applications Open",
-      description: "Present your educational technology at Magdeburg's Innovation Area. Engage with educators and institutions across central Germany. Part of Round 1 applications.",
+      category: "open",
+      statusLabel: t("events.status.open"),
+      description: "Present your educational technology at Magdeburg's Innovation Area. Engage with educators and institutions across central Germany.",
       startupsCount: 8,
       deadline: "January 31, 2026",
     },
     {
       id: "berlin-2026",
       name: "Berlin Innovation Area 2026",
-      date: "TBD",
-      fullDate: "Berlin 2026 (Date TBD)",
+      date: "May 7",
+      fullDate: "May 7, 2026",
       location: "Berlin",
       venue: "Bildung Digital Messe Berlin",
-      status: "open",
-      statusLabel: "Applications Open",
-      description: "Experience the Innovation Area in Germany's capital. Showcase your innovation at this premier event. Part of Round 1 applications.",
+      category: "open",
+      statusLabel: t("events.status.open"),
+      description: "Experience the Innovation Area in Germany's capital. Showcase your innovation at this premier event.",
       startupsCount: 8,
       deadline: "January 31, 2026",
     },
+    // Future Events (Round 2)
     {
       id: "erfurt-2026",
       name: "Erfurt Innovation Area 2026",
@@ -75,9 +98,9 @@ const Events = () => {
       fullDate: "August 28, 2026",
       location: "Erfurt",
       venue: "Bildung Digital Messe Erfurt",
-      status: "open",
-      statusLabel: "Applications Open May 1st",
-      description: "Join us in Erfurt for the Innovation Area event, where education innovators showcase cutting-edge solutions for digital learning, assessment tools, and classroom technology. Part of Round 2 applications (Opens May 1st).",
+      category: "future",
+      statusLabel: t("events.status.comingSoon"),
+      description: "Join us in Erfurt for the Innovation Area event. Applications open May 1st.",
       startupsCount: 8,
       deadline: "May 31, 2026",
     },
@@ -88,9 +111,9 @@ const Events = () => {
       fullDate: "October 1, 2026",
       location: "Essen",
       venue: "Bildung Digital Messe Essen",
-      status: "open",
-      statusLabel: "Applications Open May 1st",
-      description: "The Essen Innovation Area brings together forward-thinking companies and educational institutions. Discover innovative teaching methods and collaborative tools. Part of Round 2 applications (Opens May 1st).",
+      category: "future",
+      statusLabel: t("events.status.comingSoon"),
+      description: "The Essen Innovation Area brings together forward-thinking companies and educational institutions. Applications open May 1st.",
       startupsCount: 8,
       deadline: "May 31, 2026",
     },
@@ -101,284 +124,204 @@ const Events = () => {
       fullDate: "November 4, 2026",
       location: "Rostock",
       venue: "Bildung Digital Messe Rostock",
-      status: "open",
-      statusLabel: "Applications Open May 1st",
-      description: "Don't miss the Rostock Innovation Area! This event highlights breakthrough technologies in VR learning, adaptive assessment systems, and content management solutions. Part of Round 2 applications (Opens May 1st).",
+      category: "future",
+      statusLabel: t("events.status.comingSoon"),
+      description: "Don't miss the Rostock Innovation Area! Applications open May 1st.",
       startupsCount: 8,
       deadline: "May 31, 2026",
     },
   ];
 
-  const getStatusBadgeClass = (status: Event["status"]) => {
-    switch (status) {
+  const pastEvents = events.filter((e) => e.category === "past");
+  const openEvents = events.filter((e) => e.category === "open");
+  const futureEvents = events.filter((e) => e.category === "future");
+
+  const getCategoryBadgeClass = (category: Event["category"]) => {
+    switch (category) {
       case "open":
-        return "bg-secondary text-secondary-foreground border-transparent";
-      case "closing-soon":
-        return "bg-accent text-accent-foreground border-transparent";
-      case "closed":
-        return "bg-muted text-muted-foreground border-transparent";
-      case "complete":
-        return "bg-primary text-primary-foreground border-transparent";
+        return "bg-secondary text-secondary-foreground";
+      case "future":
+        return "bg-accent text-accent-foreground";
+      case "past":
+        return "bg-muted text-muted-foreground";
       default:
         return "";
     }
   };
 
-  const filteredEvents = events.filter((event) => {
-    if (activeFilter === "all") return true;
-    if (activeFilter === "applications-open") return event.status === "open" || event.status === "closing-soon";
-    if (activeFilter === "upcoming") return event.status !== "complete";
-    if (activeFilter === "past") return event.status === "complete";
-    return true;
-  });
+  const EventCard = ({ event, index }: { event: Event; index: number }) => (
+    <Card
+      className="overflow-hidden hover:shadow-lg transition-all duration-300 border border-border bg-card animate-fade-in"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <CardContent className="p-6">
+        {/* Date Badge */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg">
+            <Calendar className="h-5 w-5" />
+            <span className="font-heading font-bold text-lg">{event.date}</span>
+          </div>
+          <Badge className={`${getCategoryBadgeClass(event.category)} rounded-full px-3 py-1`}>
+            {event.statusLabel}
+          </Badge>
+        </div>
+
+        {/* Event Name */}
+        <h3 className="text-xl font-heading font-bold mb-2 text-foreground">
+          {event.name}
+        </h3>
+
+        {/* Location & Venue */}
+        <div className="space-y-1 mb-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <MapPin className="h-4 w-4" />
+            <span>{event.location}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Building className="h-4 w-4" />
+            <span>{event.venue}</span>
+          </div>
+        </div>
+
+        {/* Key Info */}
+        <div className="space-y-2 mb-6 pb-4 border-b border-border">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Users className="h-4 w-4 text-primary" />
+            <span>{event.startupsCount} Startups</span>
+          </div>
+          {event.deadline && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4 text-primary" />
+              <span>{t("events.deadline")}: {event.deadline}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-2">
+          {event.category === "open" ? (
+            <>
+              <Link to="/apply" className="flex-1">
+                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+                  {t("events.applyNow")}
+                </Button>
+              </Link>
+              <Button variant="outline" className="flex-1">
+                {t("events.learnMore")}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </>
+          ) : event.category === "past" ? (
+            <Button variant="outline" className="w-full">
+              {t("events.viewRecap")}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          ) : (
+            <Button variant="outline" className="w-full" disabled>
+              {t("events.registrationOpens")} May 1st
+            </Button>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div className="min-h-screen">
       <Navigation />
 
-      <section className="py-12 md:py-16 px-4 md:px-6 mt-[72px]">
+      <section className="py-12 md:py-16 px-4 md:px-6 mt-[110px]">
         <div className="container mx-auto max-w-7xl">
           {/* Page Header */}
-          <div className="mb-8 md:mb-12">
-            <h1 className="text-h1 font-heading mb-4 text-foreground animate-fade-in">
-              Innovation Area Events
+          <div className="mb-12">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-foreground animate-fade-in">
+              {t("events.title")}
             </h1>
-            <p className="text-body text-muted-foreground max-w-2xl">
-              Join us at upcoming Innovation Area events across Germany where education innovators and policy-makers come together in curated, moderated settings.
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              {t("events.subtitle")}
             </p>
           </div>
 
-          {/* Filters & View Toggle */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            {/* Filters */}
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant={activeFilter === "all" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setActiveFilter("all")}
-                className="rounded-full"
-              >
-                All Events
-              </Button>
-              <Button
-                variant={activeFilter === "upcoming" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setActiveFilter("upcoming")}
-                className="rounded-full"
-              >
-                Upcoming
-              </Button>
-              <Button
-                variant={activeFilter === "past" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setActiveFilter("past")}
-                className="rounded-full"
-              >
-                Past
-              </Button>
-              <Button
-                variant={activeFilter === "applications-open" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setActiveFilter("applications-open")}
-                className="rounded-full"
-              >
-                Applications Open
-              </Button>
+          {/* Section 1: Open Registrations */}
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-8 w-1 bg-secondary rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">
+                {t("events.section.open")}
+              </h2>
+              <Badge className="bg-secondary/20 text-secondary border-secondary/30">
+                {t("events.round1")}
+              </Badge>
             </div>
-
-            {/* View Toggle */}
-            <div className="flex gap-1 bg-muted p-1 rounded-lg">
-              <Button
-                variant={viewType === "grid" ? "secondary" : "ghost"}
-                size="sm"
-                onClick={() => setViewType("grid")}
-                className="gap-2"
-              >
-                <LayoutGrid className="h-4 w-4" />
-                Grid
-              </Button>
-              <Button
-                variant={viewType === "list" ? "secondary" : "ghost"}
-                size="sm"
-                onClick={() => setViewType("list")}
-                className="gap-2"
-              >
-                <List className="h-4 w-4" />
-                List
-              </Button>
+            <p className="text-muted-foreground mb-6">
+              {t("events.section.open.description")}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {openEvents.map((event, index) => (
+                <EventCard key={event.id} event={event} index={index} />
+              ))}
             </div>
           </div>
 
-          {/* Grid View */}
-          {viewType === "grid" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              {filteredEvents.map((event, index) => (
-                <Card
-                  key={event.id}
-                  className="overflow-hidden hover:shadow-lg transition-all duration-300 border border-border bg-card animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <CardContent className="p-6">
-                    {/* Date Badge */}
-                    <div className="mb-4">
-                      <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg">
-                        <Calendar className="h-5 w-5" />
-                        <span className="font-heading font-bold text-h5">{event.date}</span>
-                      </div>
-                    </div>
-
-                    {/* Event Name */}
-                    <h3 className="text-h3 font-heading mb-2 text-foreground">
-                      {event.name}
-                    </h3>
-
-                    {/* Location */}
-                    <div className="flex items-center gap-2 text-small text-muted-foreground mb-3">
-                      <MapPin className="h-4 w-4" />
-                      <span>{event.location}</span>
-                    </div>
-
-                    {/* Status Badge */}
-                    <div className="mb-4">
-                      <Badge className={`${getStatusBadgeClass(event.status)} rounded-full px-3 py-1`}>
-                        {event.statusLabel}
-                      </Badge>
-                    </div>
-
-                    {/* Key Info */}
-                    <div className="space-y-2 mb-6 pb-6 border-b border-border">
-                      <div className="flex items-center gap-2 text-small text-muted-foreground">
-                        <Users className="h-4 w-4 text-primary" />
-                        <span>{event.startupsCount} Startups</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-small text-muted-foreground">
-                        <MapPin className="h-4 w-4 text-primary" />
-                        <span>{event.venue}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-small text-muted-foreground">
-                        <Clock className="h-4 w-4 text-primary" />
-                        <span>Deadline: {event.deadline}</span>
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <Link to="/how-to-apply" className="flex-1">
-                        <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
-                          Apply Now
-                        </Button>
-                      </Link>
-                      <Button variant="outline" className="flex-1">
-                        Learn More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+          {/* Section 2: Future Events */}
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-8 w-1 bg-accent rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">
+                {t("events.section.future")}
+              </h2>
+              <Badge className="bg-accent/20 text-accent-foreground border-accent/30">
+                {t("events.round2")}
+              </Badge>
+            </div>
+            <p className="text-muted-foreground mb-6">
+              {t("events.section.future.description")}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {futureEvents.map((event, index) => (
+                <EventCard key={event.id} event={event} index={index} />
               ))}
             </div>
-          )}
+          </div>
 
-          {/* List View */}
-          {viewType === "list" && (
-            <div className="mb-12 overflow-x-auto animate-fade-in">
-              <table className="w-full border-collapse bg-card rounded-lg overflow-hidden shadow-sm">
-                <thead>
-                  <tr className="bg-muted border-b border-border">
-                    <th className="text-left p-4 text-small font-heading text-foreground">Date</th>
-                    <th className="text-left p-4 text-small font-heading text-foreground">Event Name</th>
-                    <th className="text-left p-4 text-small font-heading text-foreground">Location</th>
-                    <th className="text-left p-4 text-small font-heading text-foreground">Status</th>
-                    <th className="text-left p-4 text-small font-heading text-foreground">Startups</th>
-                    <th className="text-left p-4 text-small font-heading text-foreground">Deadline</th>
-                    <th className="text-left p-4 text-small font-heading text-foreground">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredEvents.map((event, index) => (
-                    <tr
-                      key={event.id}
-                      className={`border-b border-border transition-colors hover:bg-muted/50 ${
-                        index % 2 === 0 ? "bg-card" : "bg-muted/20"
-                      }`}
-                    >
-                      <td className="p-4">
-                        <div className="flex items-center gap-2 text-small">
-                          <Calendar className="h-4 w-4 text-primary" />
-                          <span className="font-semibold">{event.fullDate}</span>
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        <span className="font-heading font-semibold text-foreground">{event.name}</span>
-                      </td>
-                      <td className="p-4">
-                        <div className="flex items-center gap-2 text-small text-muted-foreground">
-                          <MapPin className="h-4 w-4" />
-                          <span>{event.location}</span>
-                        </div>
-                      </td>
-                      <td className="p-4">
-                        <Badge className={`${getStatusBadgeClass(event.status)} rounded-full`}>
-                          {event.statusLabel}
-                        </Badge>
-                      </td>
-                      <td className="p-4">
-                        <div className="flex items-center gap-2 text-small text-muted-foreground">
-                          <Users className="h-4 w-4" />
-                          <span>{event.startupsCount}</span>
-                        </div>
-                      </td>
-                      <td className="p-4 text-small text-muted-foreground">{event.deadline}</td>
-                      <td className="p-4">
-                        <div className="flex gap-2">
-                          <Link to="/how-to-apply">
-                            <Button size="sm" className="bg-secondary hover:bg-secondary/90">
-                              Apply
-                            </Button>
-                          </Link>
-                          <Button size="sm" variant="outline">
-                            Details
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {/* Section 3: Past Events */}
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-8 w-1 bg-muted-foreground rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">
+                {t("events.section.past")}
+              </h2>
             </div>
-          )}
-
-          {/* Empty State */}
-          {filteredEvents.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-body mb-4">No events found matching your filters.</p>
-              <Button variant="outline" onClick={() => setActiveFilter("all")}>
-                Clear Filters
-              </Button>
+            <p className="text-muted-foreground mb-6">
+              {t("events.section.past.description")}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {pastEvents.map((event, index) => (
+                <EventCard key={event.id} event={event} index={index} />
+              ))}
             </div>
-          )}
+          </div>
 
           {/* Sponsor Acknowledgment */}
-          <p className="text-center text-small text-muted-foreground mb-12 animate-fade-in">
-            The 2026 Innovation Area roadmap is financially secured thanks to our sponsors: <span className="font-semibold">Cancom</span> and <span className="font-semibold">Inventorio</span>
+          <p className="text-center text-sm text-muted-foreground mb-12 animate-fade-in">
+            {t("events.sponsorAcknowledgment")}
           </p>
 
           {/* Bottom CTA */}
           <Card className="bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20 animate-fade-in">
             <CardContent className="p-8 md:p-12 text-center">
-              <h2 className="text-h2 font-heading mb-4 text-foreground">
-                Want to participate?
+              <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-foreground">
+                {t("events.cta.title")}
               </h2>
-              <p className="text-body text-muted-foreground mb-6 max-w-2xl mx-auto">
-                Showcase your innovation at our upcoming events and engage with educators, 
-                institutions, and decision-makers across Germany through moderated dialogue.
+              <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+                {t("events.cta.description")}
               </p>
-              <Link to="/how-to-apply">
+              <Link to="/apply">
                 <Button
                   size="lg"
                   className="bg-secondary hover:bg-secondary/90 text-secondary-foreground hover:scale-105 transition-transform"
                 >
-                  Apply Now
+                  {t("events.applyNow")}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
