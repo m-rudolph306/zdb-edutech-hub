@@ -35,8 +35,12 @@ const partnerLogos = [
   { name: "Forum Bildung Digitalisierung", logo: "/logos/partners/forum-bildung.svg", alt: "Forum Bildung Digitalisierung" },
 ];
 
-const PartnersSection = () => {
-  const { t } = useLanguage();
+interface ScrollableLogoRowProps {
+  logos: typeof stateLogos;
+  showName?: boolean;
+}
+
+const ScrollableLogoRow = ({ logos, showName = true }: ScrollableLogoRowProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -51,6 +55,76 @@ const PartnersSection = () => {
   };
 
   return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Left Arrow */}
+      <button
+        onClick={() => scroll("left")}
+        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
+          isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        aria-label="Scroll left"
+      >
+        <ChevronLeft className="h-6 w-6 text-foreground" />
+      </button>
+
+      {/* Right Arrow */}
+      <button
+        onClick={() => scroll("right")}
+        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
+          isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        aria-label="Scroll right"
+      >
+        <ChevronRight className="h-6 w-6 text-foreground" />
+      </button>
+
+      {/* Scrollable row */}
+      <div 
+        ref={scrollContainerRef}
+        className="flex flex-nowrap overflow-x-auto gap-4 pb-4 px-8"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {logos.map((item) => (
+          <div
+            key={item.name}
+            className="flex-shrink-0 min-w-[150px] bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
+          >
+            <div className="relative w-full h-20 flex flex-col items-center justify-center gap-2">
+              <img
+                src={item.logo}
+                alt={item.alt}
+                className="max-w-full max-h-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent && !parent.querySelector('.fallback-text')) {
+                    const fallback = document.createElement('div');
+                    fallback.className = 'fallback-text text-xs text-center text-muted-foreground font-medium';
+                    fallback.textContent = item.name;
+                    parent.appendChild(fallback);
+                  }
+                }}
+              />
+              {showName && (
+                <span className="text-xs text-center text-muted-foreground font-medium line-clamp-1">{item.name}</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const PartnersSection = () => {
+  const { t } = useLanguage();
+
+  return (
     <div className="bg-background py-16 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
         {/* State Education Ministries - "Unsere Adressaten" */}
@@ -61,69 +135,7 @@ const PartnersSection = () => {
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             {t("partners.statesSubtitle")}
           </p>
-          
-          {/* Scrollable container with arrows */}
-          <div 
-            className="relative"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Left Arrow */}
-            <button
-              onClick={() => scroll("left")}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
-                isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="h-6 w-6 text-foreground" />
-            </button>
-
-            {/* Right Arrow */}
-            <button
-              onClick={() => scroll("right")}
-              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
-                isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="h-6 w-6 text-foreground" />
-            </button>
-
-            {/* Scrollable row */}
-            <div 
-              ref={scrollContainerRef}
-              className="flex flex-nowrap overflow-x-auto gap-4 pb-4 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent px-8"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              {stateLogos.map((state) => (
-                <div
-                  key={state.name}
-                  className="flex-shrink-0 min-w-[150px] bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
-                >
-                  <div className="relative w-full h-20 flex flex-col items-center justify-center gap-2">
-                    <img
-                      src={state.logo}
-                      alt={state.alt}
-                      className="max-w-full max-h-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const parent = target.parentElement;
-                        if (parent && !parent.querySelector('.fallback-text')) {
-                          const fallback = document.createElement('div');
-                          fallback.className = 'fallback-text text-xs text-center text-muted-foreground font-medium';
-                          fallback.textContent = state.name;
-                          parent.appendChild(fallback);
-                        }
-                      }}
-                    />
-                    <span className="text-xs text-center text-muted-foreground font-medium line-clamp-1">{state.name}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ScrollableLogoRow logos={stateLogos} showName={true} />
         </section>
 
         {/* Partners and Associations - "Verbände und Partner" */}
@@ -131,33 +143,7 @@ const PartnersSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
             {t("partners.partnersTitle")}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 max-w-5xl mx-auto">
-            {partnerLogos.map((partner) => (
-              <div
-                key={partner.name}
-                className="bg-card border border-border rounded-lg p-6 flex items-center justify-center hover:shadow-lg transition-shadow group"
-              >
-                <div className="relative w-full h-16 flex items-center justify-center">
-                  <img
-                    src={partner.logo}
-                    alt={partner.alt}
-                    className="max-w-full max-h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent && !parent.querySelector('.fallback-text')) {
-                        const fallback = document.createElement('div');
-                        fallback.className = 'fallback-text text-sm text-center text-muted-foreground font-medium';
-                        fallback.textContent = partner.name;
-                        parent.appendChild(fallback);
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <ScrollableLogoRow logos={partnerLogos} showName={true} />
         </section>
 
         {/* Call to Action */}
