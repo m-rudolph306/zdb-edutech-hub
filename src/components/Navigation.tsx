@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties, FocusEvent, MouseEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,6 +32,23 @@ const Navigation = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
   const { t } = useLanguage();
+
+  const menuRef = useRef<HTMLElement | null>(null);
+  const [viewportLeft, setViewportLeft] = useState<number | null>(null);
+
+  const handleDesktopTriggerEnter = useCallback(
+    (e: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>) => {
+      const root = menuRef.current;
+      if (!root) return;
+
+      const rootRect = root.getBoundingClientRect();
+      const triggerRect = e.currentTarget.getBoundingClientRect();
+      const center = triggerRect.left + triggerRect.width / 2 - rootRect.left;
+
+      setViewportLeft(center);
+    },
+    [],
+  );
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -93,11 +111,24 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-2">
-            <NavigationMenu>
+            <NavigationMenu
+              ref={menuRef as any}
+              style={
+                viewportLeft != null
+                  ? ({
+                      ["--navigation-menu-viewport-left" as any]: `${viewportLeft}px`,
+                    } as CSSProperties)
+                  : undefined
+              }
+            >
               <NavigationMenuList>
                 {/* Policy */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
+                  <NavigationMenuTrigger
+                    onMouseEnter={handleDesktopTriggerEnter}
+                    onFocus={handleDesktopTriggerEnter}
+                    className="text-sm font-medium bg-transparent hover:bg-accent"
+                  >
                     {t("nav.policy")}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -118,7 +149,11 @@ const Navigation = () => {
 
                 {/* Events */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
+                  <NavigationMenuTrigger
+                    onMouseEnter={handleDesktopTriggerEnter}
+                    onFocus={handleDesktopTriggerEnter}
+                    className="text-sm font-medium bg-transparent hover:bg-accent"
+                  >
                     {t("nav.events")}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -159,7 +194,11 @@ const Navigation = () => {
 
                 {/* Digital Hub */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-accent">
+                  <NavigationMenuTrigger
+                    onMouseEnter={handleDesktopTriggerEnter}
+                    onFocus={handleDesktopTriggerEnter}
+                    className="text-sm font-medium bg-transparent hover:bg-accent"
+                  >
                     {t("nav.digitalHub")}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
