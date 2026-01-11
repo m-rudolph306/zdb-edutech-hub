@@ -14,10 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { innovations } from "@/data/innovations";
+import { innovations, BUNDESLAENDER } from "@/data/innovations";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Innovations = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedRegion, setSelectedRegion] = useState("all");
@@ -60,28 +62,30 @@ const Innovations = () => {
 
       <section className="py-12 md:py-16 px-4 md:px-6 mt-[72px]">
         <div className="container mx-auto max-w-7xl">
-          <h1 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-foreground animate-fade-in">All Innovations</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-foreground animate-fade-in">
+            {t("innovations.title")}
+          </h1>
 
           {/* Search and Filters */}
           <div className="mb-6 md:mb-8 space-y-4">
             {/* Search Bar */}
             <Input
               type="text"
-              placeholder="Search innovations..."
+              placeholder={t("innovations.search")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full"
-              aria-label="Search innovations"
+              aria-label={t("innovations.search")}
             />
 
             {/* Filters */}
             <div className="flex flex-col md:flex-row md:flex-wrap gap-4">
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-full md:w-[200px]">
-                  <SelectValue placeholder="Category" />
+                  <SelectValue placeholder={t("innovations.allCategories")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="all">{t("innovations.allCategories")}</SelectItem>
                   <SelectItem value="AI">AI</SelectItem>
                   <SelectItem value="VR">VR</SelectItem>
                   <SelectItem value="Assessment">Assessment</SelectItem>
@@ -92,21 +96,24 @@ const Innovations = () => {
 
               <Select value={selectedRegion} onValueChange={setSelectedRegion}>
                 <SelectTrigger className="w-full md:w-[200px]">
-                  <SelectValue placeholder="Region" />
+                  <SelectValue placeholder={t("innovations.allRegions")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Regions</SelectItem>
-                  <SelectItem value="National">National</SelectItem>
-                  <SelectItem value="International">International</SelectItem>
+                  <SelectItem value="all">{t("innovations.allRegions")}</SelectItem>
+                  {BUNDESLAENDER.map((bundesland) => (
+                    <SelectItem key={bundesland} value={bundesland}>
+                      {bundesland}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
 
               <Select value={selectedTechnology} onValueChange={setSelectedTechnology}>
                 <SelectTrigger className="w-full md:w-[200px]">
-                  <SelectValue placeholder="Technology" />
+                  <SelectValue placeholder={t("innovations.allTechnologies")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Technologies</SelectItem>
+                  <SelectItem value="all">{t("innovations.allTechnologies")}</SelectItem>
                   <SelectItem value="Software">Software</SelectItem>
                   <SelectItem value="Hardware">Hardware</SelectItem>
                   <SelectItem value="Platform">Platform</SelectItem>
@@ -118,14 +125,14 @@ const Innovations = () => {
                 onClick={clearFilters}
                 className="w-full md:w-auto md:ml-auto hover:scale-105 transition-transform"
               >
-                Clear Filters
+                {t("innovations.clearFilters")}
               </Button>
             </div>
           </div>
 
           {/* Results Count */}
           <p className="text-sm text-muted-foreground mb-6">
-            Showing {filteredInnovations.length} innovation{filteredInnovations.length !== 1 ? 's' : ''}
+            {t("innovations.showing")} {filteredInnovations.length} {filteredInnovations.length !== 1 ? t("innovations.innovations") : t("innovations.innovation")}
           </p>
 
           {/* Innovation Grid */}
@@ -164,10 +171,10 @@ const Innovations = () => {
           ) : (
             <div className="text-center py-12 animate-fade-in">
               <p className="text-muted-foreground text-lg mb-4">
-                No innovations found. Try adjusting your filters.
+                {t("innovations.noResults")}
               </p>
               <Button variant="outline" onClick={clearFilters} className="hover:scale-105 transition-transform">
-                Clear Filters
+                {t("innovations.clearFilters")}
               </Button>
             </div>
           )}
