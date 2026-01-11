@@ -15,9 +15,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon, Users, Award, Briefcase, CheckCircle2, Building2, GraduationCap, TrendingUp } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Roadshow = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [inquiryId, setInquiryId] = useState("");
@@ -54,8 +56,8 @@ const Roadshow = () => {
 
     if (!formData.agreeToContact) {
       toast({
-        title: "Agreement Required",
-        description: "Please agree to be contacted regarding your inquiry",
+        title: t("roadshow.toast.agreementRequired"),
+        description: t("roadshow.toast.agreementDescription"),
         variant: "destructive",
       });
       return;
@@ -63,8 +65,8 @@ const Roadshow = () => {
 
     if (!eventDate) {
       toast({
-        title: "Date Required",
-        description: "Please select an event date",
+        title: t("roadshow.toast.dateRequired"),
+        description: t("roadshow.toast.dateDescription"),
         variant: "destructive",
       });
       return;
@@ -94,13 +96,29 @@ const Roadshow = () => {
     setShowConfirmation(true);
 
     toast({
-      title: "Inquiry Submitted!",
-      description: "We'll contact you within 2-3 business days",
+      title: t("roadshow.toast.submitted"),
+      description: t("roadshow.toast.submittedDescription"),
     });
 
     // Scroll to top to show confirmation
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const focusAreas = [
+    { id: "k12", labelKey: "roadshow.form.focusAreas.k12" },
+    { id: "higher", labelKey: "roadshow.form.focusAreas.higher" },
+    { id: "teacher", labelKey: "roadshow.form.focusAreas.teacher" },
+    { id: "leadership", labelKey: "roadshow.form.focusAreas.leadership" },
+    { id: "tech", labelKey: "roadshow.form.focusAreas.tech" },
+    { id: "other", labelKey: "roadshow.form.focusAreas.other" },
+  ];
+
+  const howItWorks = [
+    { step: 1, titleKey: "roadshow.how.step1.title", descKey: "roadshow.how.step1.description" },
+    { step: 2, titleKey: "roadshow.how.step2.title", descKey: "roadshow.how.step2.description" },
+    { step: 3, titleKey: "roadshow.how.step3.title", descKey: "roadshow.how.step3.description" },
+    { step: 4, titleKey: "roadshow.how.step4.title", descKey: "roadshow.how.step4.description" },
+  ];
 
   if (showConfirmation) {
     return (
@@ -114,21 +132,21 @@ const Roadshow = () => {
               </div>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Thank You for Your Inquiry!
+              {t("roadshow.confirmation.title")}
             </h1>
             <p className="text-lg text-muted-foreground mb-6">
-              We'll review your request and contact you within 2-3 business days
+              {t("roadshow.confirmation.description")}
             </p>
             <div className="bg-muted/50 rounded-lg p-6 mb-8">
-              <p className="text-sm text-muted-foreground mb-2">Your Inquiry ID</p>
+              <p className="text-sm text-muted-foreground mb-2">{t("roadshow.confirmation.inquiryId")}</p>
               <p className="text-2xl font-bold text-primary">{inquiryId}</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={() => navigate("/")} variant="outline">
-                Return to Homepage
+                {t("roadshow.confirmation.returnHome")}
               </Button>
               <Button onClick={() => navigate("/events")} className="bg-secondary hover:bg-secondary/90">
-                View Events
+                {t("roadshow.confirmation.viewEvents")}
               </Button>
             </div>
           </div>
@@ -146,17 +164,17 @@ const Roadshow = () => {
       <section className="py-16 md:py-24 px-4 md:px-6 mt-[72px] bg-gradient-to-br from-primary/10 via-secondary/5 to-background">
         <div className="container mx-auto max-w-4xl text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground animate-fade-in">
-            Innovation Area On Demand
+            {t("roadshow.hero.title")}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-fade-in animate-delay-100">
-            Bring Germany's premier education innovation showcase to your event
+            {t("roadshow.hero.subtitle")}
           </p>
           <Button
             size="lg"
             onClick={() => document.getElementById("inquiry-form")?.scrollIntoView({ behavior: "smooth" })}
             className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-4 rounded-lg hover:scale-105 transition-all animate-fade-in animate-delay-200"
           >
-            Submit Inquiry
+            {t("roadshow.hero.button")}
           </Button>
         </div>
       </section>
@@ -165,11 +183,10 @@ const Roadshow = () => {
       <section className="py-12 md:py-20 px-4 md:px-6 bg-background">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-foreground">
-            What is Roadshow on Demand?
+            {t("roadshow.what.title")}
           </h2>
           <p className="text-base md:text-lg text-muted-foreground text-center max-w-3xl mx-auto">
-            Cities, municipalities, education conferences, and trade fairs can book the Innovation Area as a complete package. 
-            We bring our curated selection of education innovators directly to your event, complete with professional presentation and moderation.
+            {t("roadshow.what.description")}
           </p>
         </div>
       </section>
@@ -178,7 +195,7 @@ const Roadshow = () => {
       <section className="py-12 md:py-20 px-4 md:px-6 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            Why Choose Innovation Area Roadshow?
+            {t("roadshow.why.title")}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="text-center hover:shadow-lg transition-shadow">
@@ -186,9 +203,9 @@ const Roadshow = () => {
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Award className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">Curated Selection</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">{t("roadshow.why.curated.title")}</h3>
                 <p className="text-muted-foreground">
-                  We handpick 5-6 relevant innovators specifically for your audience and event focus
+                  {t("roadshow.why.curated.description")}
                 </p>
               </CardContent>
             </Card>
@@ -198,9 +215,9 @@ const Roadshow = () => {
                 <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle2 className="h-8 w-8 text-secondary" />
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">Professional Execution</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">{t("roadshow.why.professional.title")}</h3>
                 <p className="text-muted-foreground">
-                  Full organization, setup, and moderation included - we handle everything
+                  {t("roadshow.why.professional.description")}
                 </p>
               </CardContent>
             </Card>
@@ -210,9 +227,9 @@ const Roadshow = () => {
                 <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
                   <TrendingUp className="h-8 w-8 text-accent" />
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">Policy Impact</h3>
+                <h3 className="text-xl font-bold mb-4 text-foreground">{t("roadshow.why.impact.title")}</h3>
                 <p className="text-muted-foreground">
-                  Bring your stakeholders together with vetted education solutions backed by research
+                  {t("roadshow.why.impact.description")}
                 </p>
               </CardContent>
             </Card>
@@ -224,15 +241,15 @@ const Roadshow = () => {
       <section className="py-12 md:py-20 px-4 md:px-6 bg-background">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            Who Is This For?
+            {t("roadshow.who.title")}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="pt-8 pb-6">
                 <Building2 className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-foreground">Cities & Municipalities</h3>
+                <h3 className="text-xl font-bold mb-3 text-foreground">{t("roadshow.who.cities.title")}</h3>
                 <p className="text-muted-foreground">
-                  Bring innovation to local education initiatives and policy discussions
+                  {t("roadshow.who.cities.description")}
                 </p>
               </CardContent>
             </Card>
@@ -240,9 +257,9 @@ const Roadshow = () => {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="pt-8 pb-6">
                 <Users className="h-12 w-12 text-secondary mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-foreground">Education Conferences</h3>
+                <h3 className="text-xl font-bold mb-3 text-foreground">{t("roadshow.who.conferences.title")}</h3>
                 <p className="text-muted-foreground">
-                  Enhance your event with curated innovation showcase and expert moderation
+                  {t("roadshow.who.conferences.description")}
                 </p>
               </CardContent>
             </Card>
@@ -250,9 +267,9 @@ const Roadshow = () => {
             <Card className="hover:shadow-lg transition-shadow">
               <CardContent className="pt-8 pb-6">
                 <Briefcase className="h-12 w-12 text-accent mb-4" />
-                <h3 className="text-xl font-bold mb-3 text-foreground">Trade Fairs</h3>
+                <h3 className="text-xl font-bold mb-3 text-foreground">{t("roadshow.who.fairs.title")}</h3>
                 <p className="text-muted-foreground">
-                  Add premium innovation content to your exhibition program
+                  {t("roadshow.who.fairs.description")}
                 </p>
               </CardContent>
             </Card>
@@ -264,22 +281,17 @@ const Roadshow = () => {
       <section className="py-12 md:py-20 px-4 md:px-6 bg-muted/30">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            How It Works
+            {t("roadshow.how.title")}
           </h2>
           <div className="space-y-8">
-            {[
-              { step: 1, title: "Submit Inquiry", description: "Fill out our form with your event details and requirements" },
-              { step: 2, title: "Consultation Call", description: "We'll discuss your goals and audience in a consultation call" },
-              { step: 3, title: "Curation", description: "We handpick and prepare the perfect innovators for your event" },
-              { step: 4, title: "Your Event", description: "Innovation Area comes to life at your venue with full support" },
-            ].map((item, index) => (
+            {howItWorks.map((item, index) => (
               <div key={item.step} className="flex gap-6 items-start animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div className="flex-shrink-0 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg">
                   {item.step}
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.description}</p>
+                  <h3 className="text-xl font-bold mb-2 text-foreground">{t(item.titleKey)}</h3>
+                  <p className="text-muted-foreground">{t(item.descKey)}</p>
                 </div>
               </div>
             ))}
@@ -293,35 +305,35 @@ const Roadshow = () => {
           <Card>
             <CardHeader>
               <CardTitle className="text-3xl font-bold text-center">
-                Request Innovation Area for Your Event
+                {t("roadshow.form.title")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Organization Type */}
                 <div className="space-y-2">
-                  <Label htmlFor="organizationType">Organization Type *</Label>
+                  <Label htmlFor="organizationType">{t("roadshow.form.orgType")} *</Label>
                   <Select
                     value={formData.organizationType}
                     onValueChange={(value) => setFormData({ ...formData, organizationType: value })}
                     required
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select organization type" />
+                      <SelectValue placeholder={t("roadshow.form.orgType.placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="city">City/Municipality</SelectItem>
-                      <SelectItem value="conference">Education Conference</SelectItem>
-                      <SelectItem value="fair">Trade Fair</SelectItem>
-                      <SelectItem value="district">School District</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      <SelectItem value="city">{t("roadshow.form.orgType.city")}</SelectItem>
+                      <SelectItem value="conference">{t("roadshow.form.orgType.conference")}</SelectItem>
+                      <SelectItem value="fair">{t("roadshow.form.orgType.fair")}</SelectItem>
+                      <SelectItem value="district">{t("roadshow.form.orgType.district")}</SelectItem>
+                      <SelectItem value="other">{t("roadshow.form.orgType.other")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 {/* Organization Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="organizationName">Organization Name *</Label>
+                  <Label htmlFor="organizationName">{t("roadshow.form.orgName")} *</Label>
                   <Input
                     id="organizationName"
                     value={formData.organizationName}
@@ -333,7 +345,7 @@ const Roadshow = () => {
                 {/* Contact Information */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="contactName">Contact Person Name *</Label>
+                    <Label htmlFor="contactName">{t("roadshow.form.contactName")} *</Label>
                     <Input
                       id="contactName"
                       value={formData.contactName}
@@ -342,7 +354,7 @@ const Roadshow = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
+                    <Label htmlFor="email">{t("roadshow.form.email")} *</Label>
                     <Input
                       id="email"
                       type="email"
@@ -354,7 +366,7 @@ const Roadshow = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone *</Label>
+                  <Label htmlFor="phone">{t("roadshow.form.phone")} *</Label>
                   <Input
                     id="phone"
                     type="tel"
@@ -366,11 +378,11 @@ const Roadshow = () => {
 
                 {/* Event Details */}
                 <div className="border-t pt-6">
-                  <h3 className="text-xl font-bold mb-4 text-foreground">Event Details</h3>
+                  <h3 className="text-xl font-bold mb-4 text-foreground">{t("roadshow.form.eventDetails")}</h3>
 
                   <div className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="eventName">Event Name *</Label>
+                      <Label htmlFor="eventName">{t("roadshow.form.eventName")} *</Label>
                       <Input
                         id="eventName"
                         value={formData.eventName}
@@ -380,7 +392,7 @@ const Roadshow = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label>Event Date *</Label>
+                      <Label>{t("roadshow.form.eventDate")} *</Label>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -391,7 +403,7 @@ const Roadshow = () => {
                             )}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {eventDate ? format(eventDate, "PPP") : <span>Pick a date</span>}
+                            {eventDate ? format(eventDate, "PPP") : <span>{t("roadshow.form.eventDate.placeholder")}</span>}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
@@ -408,19 +420,19 @@ const Roadshow = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="eventLocation">Event Location *</Label>
+                      <Label htmlFor="eventLocation">{t("roadshow.form.eventLocation")} *</Label>
                       <Input
                         id="eventLocation"
                         value={formData.eventLocation}
                         onChange={(e) => setFormData({ ...formData, eventLocation: e.target.value })}
-                        placeholder="City, Venue"
+                        placeholder={t("roadshow.form.eventLocation.placeholder")}
                         required
                       />
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="expectedAttendees">Expected Attendees</Label>
+                        <Label htmlFor="expectedAttendees">{t("roadshow.form.expectedAttendees")}</Label>
                         <Input
                           id="expectedAttendees"
                           type="number"
@@ -429,20 +441,20 @@ const Roadshow = () => {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="eventType">Event Type *</Label>
+                        <Label htmlFor="eventType">{t("roadshow.form.eventType")} *</Label>
                         <Select
                           value={formData.eventType}
                           onValueChange={(value) => setFormData({ ...formData, eventType: value })}
                           required
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Select event type" />
+                            <SelectValue placeholder={t("roadshow.form.eventType.placeholder")} />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="conference">Conference</SelectItem>
-                            <SelectItem value="fair">Fair</SelectItem>
-                            <SelectItem value="municipal">Municipal Event</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
+                            <SelectItem value="conference">{t("roadshow.form.eventType.conference")}</SelectItem>
+                            <SelectItem value="fair">{t("roadshow.form.eventType.fair")}</SelectItem>
+                            <SelectItem value="municipal">{t("roadshow.form.eventType.municipal")}</SelectItem>
+                            <SelectItem value="other">{t("roadshow.form.eventType.other")}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -452,17 +464,10 @@ const Roadshow = () => {
 
                 {/* Focus Areas */}
                 <div className="border-t pt-6">
-                  <h3 className="text-xl font-bold mb-4 text-foreground">Focus Areas</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Select all that apply</p>
+                  <h3 className="text-xl font-bold mb-4 text-foreground">{t("roadshow.form.focusAreas")}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{t("roadshow.form.focusAreas.hint")}</p>
                   <div className="space-y-3">
-                    {[
-                      { id: "k12", label: "K-12 Education" },
-                      { id: "higher", label: "Higher Education" },
-                      { id: "teacher", label: "Teacher Training" },
-                      { id: "leadership", label: "Educational Leadership" },
-                      { id: "tech", label: "Technology Integration" },
-                      { id: "other", label: "Other" },
-                    ].map((area) => (
+                    {focusAreas.map((area) => (
                       <div key={area.id} className="flex items-center space-x-2">
                         <Checkbox
                           id={area.id}
@@ -470,7 +475,7 @@ const Roadshow = () => {
                           onCheckedChange={(checked) => handleFocusAreaChange(area.id, checked as boolean)}
                         />
                         <label htmlFor={area.id} className="text-sm cursor-pointer">
-                          {area.label}
+                          {t(area.labelKey)}
                         </label>
                       </div>
                     ))}
@@ -479,39 +484,39 @@ const Roadshow = () => {
 
                 {/* Special Requirements */}
                 <div className="space-y-2">
-                  <Label htmlFor="specialRequirements">Special Requirements</Label>
+                  <Label htmlFor="specialRequirements">{t("roadshow.form.specialRequirements")}</Label>
                   <Textarea
                     id="specialRequirements"
                     value={formData.specialRequirements}
                     onChange={(e) => setFormData({ ...formData, specialRequirements: e.target.value })}
-                    placeholder="Tell us about your event and what you're looking for"
+                    placeholder={t("roadshow.form.specialRequirements.placeholder")}
                     rows={4}
                   />
                 </div>
 
                 {/* Budget Range */}
                 <div className="space-y-2">
-                  <Label htmlFor="budgetRange">Budget Range (Optional)</Label>
+                  <Label htmlFor="budgetRange">{t("roadshow.form.budget")}</Label>
                   <Select
                     value={formData.budgetRange}
                     onValueChange={(value) => setFormData({ ...formData, budgetRange: value })}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select budget range" />
+                      <SelectValue placeholder={t("roadshow.form.budget.placeholder")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="under5k">Under €5,000</SelectItem>
-                      <SelectItem value="5k-10k">€5,000 - €10,000</SelectItem>
-                      <SelectItem value="10k-20k">€10,000 - €20,000</SelectItem>
-                      <SelectItem value="over20k">Over €20,000</SelectItem>
-                      <SelectItem value="discuss">To be discussed</SelectItem>
+                      <SelectItem value="under5k">{t("roadshow.form.budget.under5k")}</SelectItem>
+                      <SelectItem value="5k-10k">{t("roadshow.form.budget.5k10k")}</SelectItem>
+                      <SelectItem value="10k-20k">{t("roadshow.form.budget.10k20k")}</SelectItem>
+                      <SelectItem value="over20k">{t("roadshow.form.budget.over20k")}</SelectItem>
+                      <SelectItem value="discuss">{t("roadshow.form.budget.discuss")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 {/* How Did You Hear */}
                 <div className="space-y-2">
-                  <Label htmlFor="howDidYouHear">How did you hear about us? (Optional)</Label>
+                  <Label htmlFor="howDidYouHear">{t("roadshow.form.howDidYouHear")}</Label>
                   <Input
                     id="howDidYouHear"
                     value={formData.howDidYouHear}
@@ -528,7 +533,7 @@ const Roadshow = () => {
                     required
                   />
                   <label htmlFor="agreeToContact" className="text-sm cursor-pointer">
-                    I agree to be contacted by ZDB regarding this inquiry *
+                    {t("roadshow.form.agreeToContact")} *
                   </label>
                 </div>
 
@@ -538,7 +543,7 @@ const Roadshow = () => {
                   className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground py-6 text-lg"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit Inquiry"}
+                  {isSubmitting ? t("roadshow.form.submitting") : t("roadshow.form.submit")}
                 </Button>
               </form>
             </CardContent>
@@ -550,41 +555,41 @@ const Roadshow = () => {
       <section className="py-12 md:py-20 px-4 md:px-6 bg-muted/30">
         <div className="container mx-auto max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            Frequently Asked Questions
+            {t("roadshow.faq.title")}
           </h2>
           <div className="space-y-6">
             <Card>
               <CardContent className="pt-6">
-                <h3 className="text-lg font-bold mb-2 text-foreground">How far in advance should we book?</h3>
+                <h3 className="text-lg font-bold mb-2 text-foreground">{t("roadshow.faq.q1")}</h3>
                 <p className="text-muted-foreground">
-                  We recommend 3-6 months lead time for optimal curation and preparation.
+                  {t("roadshow.faq.a1")}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="pt-6">
-                <h3 className="text-lg font-bold mb-2 text-foreground">Can we choose specific innovators?</h3>
+                <h3 className="text-lg font-bold mb-2 text-foreground">{t("roadshow.faq.q2")}</h3>
                 <p className="text-muted-foreground">
-                  We welcome your input and will curate based on your focus areas and audience needs.
+                  {t("roadshow.faq.a2")}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="pt-6">
-                <h3 className="text-lg font-bold mb-2 text-foreground">What's included in the package?</h3>
+                <h3 className="text-lg font-bold mb-2 text-foreground">{t("roadshow.faq.q3")}</h3>
                 <p className="text-muted-foreground">
-                  Full organization, startup selection, setup, moderation, and teardown - everything you need for a successful showcase.
+                  {t("roadshow.faq.a3")}
                 </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardContent className="pt-6">
-                <h3 className="text-lg font-bold mb-2 text-foreground">Is this available internationally?</h3>
+                <h3 className="text-lg font-bold mb-2 text-foreground">{t("roadshow.faq.q4")}</h3>
                 <p className="text-muted-foreground">
-                  Currently focused on Germany, but we're open to discussions for international events.
+                  {t("roadshow.faq.a4")}
                 </p>
               </CardContent>
             </Card>
