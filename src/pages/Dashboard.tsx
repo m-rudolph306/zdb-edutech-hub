@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
-import { FileText, Calendar, TrendingUp, User, ExternalLink, MapPin } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { FileText, Calendar, TrendingUp, User, ExternalLink } from "lucide-react";
 
 interface Application {
   id: string;
@@ -28,6 +29,7 @@ interface RoadshowInquiry {
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t, language } = useLanguage();
   const [applications, setApplications] = useState<Application[]>([]);
   const [roadshowInquiries, setRoadshowInquiries] = useState<RoadshowInquiry[]>([]);
   const [selectedInquiry, setSelectedInquiry] = useState<RoadshowInquiry | null>(null);
@@ -36,7 +38,7 @@ const Dashboard = () => {
     // Load all applications from localStorage
     const loadedApplications: Application[] = [];
     const loadedInquiries: RoadshowInquiry[] = [];
-    
+
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key?.startsWith("application_IA-")) {
@@ -74,19 +76,19 @@ const Dashboard = () => {
     {
       id: 1,
       name: "Innovation Area Erfurt 2025",
-      date: "August 28, 2025",
+      date: language === "de" ? "28. August 2025" : "August 28, 2025",
       location: "Erfurt, Germany",
     },
     {
       id: 2,
       name: "Innovation Area Essen 2025",
-      date: "October 1, 2025",
+      date: language === "de" ? "1. Oktober 2025" : "October 1, 2025",
       location: "Essen, Germany",
     },
     {
       id: 3,
       name: "Innovation Area Rostock 2025",
-      date: "November 4, 2025",
+      date: language === "de" ? "4. November 2025" : "November 4, 2025",
       location: "Rostock, Germany",
     },
   ];
@@ -94,13 +96,13 @@ const Dashboard = () => {
   const getStatusBadge = (status: Application["status"]) => {
     switch (status) {
       case "submitted":
-        return <Badge variant="secondary">Submitted</Badge>;
+        return <Badge variant="secondary">{t("dashboard.status.submitted")}</Badge>;
       case "under-review":
-        return <Badge className="bg-blue-500 hover:bg-blue-600">Under Review</Badge>;
+        return <Badge className="bg-blue-500 hover:bg-blue-600">{t("dashboard.status.underReview")}</Badge>;
       case "selected":
-        return <Badge className="bg-green-500 hover:bg-green-600">Selected</Badge>;
+        return <Badge className="bg-green-500 hover:bg-green-600">{t("dashboard.status.selected")}</Badge>;
       case "rejected":
-        return <Badge variant="destructive">Not Selected</Badge>;
+        return <Badge variant="destructive">{t("dashboard.status.notSelected")}</Badge>;
       default:
         return null;
     }
@@ -109,15 +111,15 @@ const Dashboard = () => {
   const getRoadshowStatusBadge = (status: RoadshowInquiry["status"]) => {
     switch (status) {
       case "new":
-        return <Badge variant="secondary">New</Badge>;
+        return <Badge variant="secondary">{t("dashboard.roadshow.status.new")}</Badge>;
       case "in-discussion":
-        return <Badge className="bg-blue-500 hover:bg-blue-600">In Discussion</Badge>;
+        return <Badge className="bg-blue-500 hover:bg-blue-600">{t("dashboard.roadshow.status.inDiscussion")}</Badge>;
       case "confirmed":
-        return <Badge className="bg-green-500 hover:bg-green-600">Confirmed</Badge>;
+        return <Badge className="bg-green-500 hover:bg-green-600">{t("dashboard.roadshow.status.confirmed")}</Badge>;
       case "completed":
-        return <Badge className="bg-primary hover:bg-primary/90">Completed</Badge>;
+        return <Badge className="bg-primary hover:bg-primary/90">{t("dashboard.roadshow.status.completed")}</Badge>;
       case "declined":
-        return <Badge variant="destructive">Declined</Badge>;
+        return <Badge variant="destructive">{t("dashboard.roadshow.status.declined")}</Badge>;
       default:
         return null;
     }
@@ -136,6 +138,10 @@ const Dashboard = () => {
     }
   };
 
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString(language === "de" ? "de-DE" : "en-US");
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -143,10 +149,10 @@ const Dashboard = () => {
       <section className="py-16 md:py-24 px-4 md:px-6 mt-[72px] bg-gradient-to-br from-primary/5 via-secondary/5 to-background">
         <div className="container mx-auto max-w-6xl">
           <h1 className="text-4xl md:text-5xl font-bold mb-2 text-foreground animate-fade-in">
-            Welcome back, {user?.companyName}!
+            {t("dashboard.welcome")}, {user?.companyName}!
           </h1>
           <p className="text-lg text-muted-foreground mb-12 animate-fade-in animate-delay-100">
-            Manage your applications and track your Innovation Area journey
+            {t("dashboard.subtitle")}
           </p>
 
           {/* Quick Stats */}
@@ -155,7 +161,7 @@ const Dashboard = () => {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Total Applications</p>
+                    <p className="text-sm text-muted-foreground mb-1">{t("dashboard.stats.totalApplications")}</p>
                     <p className="text-3xl font-bold">{applications.length}</p>
                   </div>
                   <FileText className="h-10 w-10 text-primary" />
@@ -167,7 +173,7 @@ const Dashboard = () => {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Pending Review</p>
+                    <p className="text-sm text-muted-foreground mb-1">{t("dashboard.stats.pendingReview")}</p>
                     <p className="text-3xl font-bold">
                       {applications.filter((app) => app.status === "submitted").length}
                     </p>
@@ -181,7 +187,7 @@ const Dashboard = () => {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Upcoming Events</p>
+                    <p className="text-sm text-muted-foreground mb-1">{t("dashboard.stats.upcomingEvents")}</p>
                     <p className="text-3xl font-bold">{upcomingEvents.length}</p>
                   </div>
                   <Calendar className="h-10 w-10 text-secondary" />
@@ -196,20 +202,20 @@ const Dashboard = () => {
               {/* My Applications */}
               <Card className="animate-fade-in animate-delay-300">
                 <CardHeader>
-                  <CardTitle>My Applications</CardTitle>
+                  <CardTitle>{t("dashboard.myApplications")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {applications.length === 0 ? (
                     <div className="text-center py-12">
                       <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                       <p className="text-muted-foreground mb-6">
-                        You haven't applied to any events yet
+                        {t("dashboard.noApplications")}
                       </p>
                       <Button
                         onClick={() => navigate("/apply")}
                         className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
                       >
-                        Apply Now
+                        {t("dashboard.applyNow")}
                       </Button>
                     </div>
                   ) : (
@@ -222,7 +228,7 @@ const Dashboard = () => {
                                 <h3 className="font-semibold text-lg mb-1">{app.innovationName}</h3>
                                 <p className="text-sm text-muted-foreground mb-2">{app.event}</p>
                                 <p className="text-xs text-muted-foreground">
-                                  Applied: {new Date(app.submittedAt).toLocaleDateString()}
+                                  {t("dashboard.applied")}: {formatDate(app.submittedAt)}
                                 </p>
                               </div>
                               <div className="flex items-center gap-3">
@@ -232,7 +238,7 @@ const Dashboard = () => {
                                   size="sm"
                                   onClick={() => navigate(`/apply/confirmation?id=${app.id}`)}
                                 >
-                                  View Details
+                                  {t("dashboard.viewDetails")}
                                 </Button>
                               </div>
                             </div>
@@ -243,7 +249,7 @@ const Dashboard = () => {
                         onClick={() => navigate("/apply/select-event")}
                         className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground"
                       >
-                        Apply to New Event
+                        {t("dashboard.applyToNewEvent")}
                       </Button>
                     </div>
                   )}
@@ -256,7 +262,7 @@ const Dashboard = () => {
               {/* Quick Actions */}
               <Card className="animate-fade-in animate-delay-400">
                 <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
+                  <CardTitle>{t("dashboard.quickActions")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <Button
@@ -265,7 +271,7 @@ const Dashboard = () => {
                     onClick={() => navigate("/profile")}
                   >
                     <User className="mr-2 h-4 w-4" />
-                    Edit My Profile
+                    {t("dashboard.editProfile")}
                   </Button>
                   <Button
                     variant="outline"
@@ -273,7 +279,7 @@ const Dashboard = () => {
                     onClick={() => navigate("/events")}
                   >
                     <Calendar className="mr-2 h-4 w-4" />
-                    View All Events
+                    {t("dashboard.viewAllEvents")}
                   </Button>
                   <Button
                     variant="outline"
@@ -281,7 +287,7 @@ const Dashboard = () => {
                     onClick={() => navigate("/innovations")}
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
-                    Browse Innovations
+                    {t("dashboard.browseInnovations")}
                   </Button>
                 </CardContent>
               </Card>
@@ -289,7 +295,7 @@ const Dashboard = () => {
               {/* Recommended Events */}
               <Card className="animate-fade-in animate-delay-500">
                 <CardHeader>
-                  <CardTitle>Upcoming Events You Might Like</CardTitle>
+                  <CardTitle>{t("dashboard.recommendedEvents")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {upcomingEvents.slice(0, 2).map((event) => (
@@ -305,7 +311,7 @@ const Dashboard = () => {
                           className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground"
                           onClick={() => navigate("/apply/select-event")}
                         >
-                          Apply
+                          {t("dashboard.apply")}
                         </Button>
                       </CardContent>
                     </Card>
@@ -317,7 +323,7 @@ const Dashboard = () => {
               {roadshowInquiries.length > 0 && (
                 <Card className="animate-fade-in animate-delay-400">
                   <CardHeader>
-                    <CardTitle>Roadshow Inquiries</CardTitle>
+                    <CardTitle>{t("dashboard.roadshowInquiries")}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
@@ -330,10 +336,10 @@ const Dashboard = () => {
                                 <p className="text-sm text-muted-foreground mb-1">{inquiry.organizationName}</p>
                                 <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
                                   <Calendar className="h-3 w-3" />
-                                  <span>Event: {new Date(inquiry.eventDate).toLocaleDateString()}</span>
+                                  <span>{t("dashboard.event")}: {formatDate(inquiry.eventDate)}</span>
                                 </div>
                                 <p className="text-xs text-muted-foreground">
-                                  Submitted: {new Date(inquiry.submittedAt).toLocaleDateString()}
+                                  {t("dashboard.submitted")}: {formatDate(inquiry.submittedAt)}
                                 </p>
                               </div>
                               <div className="flex flex-col gap-3">
@@ -344,7 +350,7 @@ const Dashboard = () => {
                                     size="sm"
                                     onClick={() => setSelectedInquiry(inquiry)}
                                   >
-                                    View Details
+                                    {t("dashboard.viewDetails")}
                                   </Button>
                                 </div>
                                 <div className="flex gap-2">
@@ -355,11 +361,11 @@ const Dashboard = () => {
                                       updateInquiryStatus(inquiry.id, e.target.value as RoadshowInquiry["status"])
                                     }
                                   >
-                                    <option value="new">New</option>
-                                    <option value="in-discussion">In Discussion</option>
-                                    <option value="confirmed">Confirmed</option>
-                                    <option value="completed">Completed</option>
-                                    <option value="declined">Declined</option>
+                                    <option value="new">{t("dashboard.roadshow.status.new")}</option>
+                                    <option value="in-discussion">{t("dashboard.roadshow.status.inDiscussion")}</option>
+                                    <option value="confirmed">{t("dashboard.roadshow.status.confirmed")}</option>
+                                    <option value="completed">{t("dashboard.roadshow.status.completed")}</option>
+                                    <option value="declined">{t("dashboard.roadshow.status.declined")}</option>
                                   </select>
                                 </div>
                               </div>
@@ -378,14 +384,14 @@ const Dashboard = () => {
                                       const fullData = JSON.parse(data);
                                       console.log("Full inquiry data:", fullData);
                                       alert(
-                                        `Full Details:\n\n${Object.entries(fullData)
+                                        `${t("dashboard.fullDetails")}:\n\n${Object.entries(fullData)
                                           .map(([key, value]) => `${key}: ${value}`)
                                           .join("\n")}`
                                       );
                                     }
                                   }}
                                 >
-                                  Export Data
+                                  {t("dashboard.exportData")}
                                 </Button>
                               </div>
                             )}

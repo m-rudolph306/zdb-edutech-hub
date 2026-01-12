@@ -1,0 +1,18 @@
+{
+  "dirty_files": [
+    "/home/rudi/code/zdb-edutech-hub/src/pages/Press.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/Statutes.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/Donate.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/Contact.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/Profile.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/App.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/contexts/LanguageContext.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/Dashboard.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/NotFound.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/contexts/AuthContext.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/components/ProtectedRoute.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/components/SignupRequestModal.tsx"
+  ],
+  "first_dirty_at": "2026-01-12T13:48:29.487634Z",
+  "last_dirty_at": "2026-01-12T14:21:28.173351Z"
+}
