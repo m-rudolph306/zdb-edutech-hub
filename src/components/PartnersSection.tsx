@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Logo configuration - replace placeholder paths with actual logo imports
@@ -26,28 +26,21 @@ const stateLogos = [
   { name: "BMBF", logo: "/logos/states/bmbf.svg", alt: "Bundesministerium für Bildung und Forschung" },
 ];
 
-const partnerLogos = [
-  { name: "Didaktikerverband", logo: "/logos/partners/didacta.svg", alt: "Didaktikerverband" },
-  { name: "Startup Verband", logo: "/logos/partners/startup-verband.svg", alt: "Bundesverband Deutsche Startups e.V." },
-  { name: "KMK", logo: "/logos/partners/kmk.svg", alt: "Kultusministerkonferenz" },
-  { name: "Inventorio", logo: "/logos/partners/inventorio.svg", alt: "Inventorio" },
-  { name: "Bündnis für Bildung", logo: "/logos/partners/buendnis.svg", alt: "Bündnis für Bildung e.V." },
-  { name: "Forum Bildung Digitalisierung", logo: "/logos/partners/forum-bildung.svg", alt: "Forum Bildung Digitalisierung" },
+// Bildungspartner (Education Partners) - matching official website
+const bildungspartner = [
+  { name: "EduAct", logo: "https://zukunft-digitale-bildung.de/wp-content/uploads/2023/06/62d47f65817b056708ca703d_Asset-1@10x-1.png", alt: "EduAct" },
+  { name: "Eduvation", logo: "https://www.eduvation.de/wp-content/uploads/2021/10/eduvation-logo.svg", alt: "Eduvation" },
+  { name: "Education 360°", logo: "https://education360.de/wp-content/uploads/2020/09/education-360-logo.png", alt: "Education 360°" },
 ];
 
-interface ScrollableLogoRowProps {
-  logos: typeof stateLogos;
-  showName?: boolean;
-}
-
-const ScrollableLogoRow = ({ logos, showName = true }: ScrollableLogoRowProps) => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
+const PartnersSection = () => {
+  const { t } = useLanguage();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 300;
-      scrollContainerRef.current.scrollBy({
+    if (scrollRef.current) {
+      const scrollAmount = 250;
+      scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
       });
@@ -55,95 +48,108 @@ const ScrollableLogoRow = ({ logos, showName = true }: ScrollableLogoRowProps) =
   };
 
   return (
-    <div 
-      className="relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Left Arrow */}
-      <button
-        onClick={() => scroll("left")}
-        className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
-          isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        aria-label="Scroll left"
-      >
-        <ChevronLeft className="h-6 w-6 text-foreground" />
-      </button>
-
-      {/* Right Arrow */}
-      <button
-        onClick={() => scroll("right")}
-        className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/80 backdrop-blur-sm border border-border shadow-lg transition-all duration-300 ${
-          isHovered ? "opacity-70 hover:opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        aria-label="Scroll right"
-      >
-        <ChevronRight className="h-6 w-6 text-foreground" />
-      </button>
-
-      {/* Scrollable row */}
-      <div 
-        ref={scrollContainerRef}
-        className="flex flex-nowrap overflow-x-auto gap-4 pb-4 px-8"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {logos.map((item) => (
-          <div
-            key={item.name}
-            className="flex-shrink-0 min-w-[150px] bg-card border border-border rounded-lg p-4 flex items-center justify-center hover:shadow-lg transition-shadow group"
-          >
-            <div className="relative w-full h-20 flex flex-col items-center justify-center gap-2">
-              <img
-                src={item.logo}
-                alt={item.alt}
-                className="max-w-full max-h-14 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const parent = target.parentElement;
-                  if (parent && !parent.querySelector('.fallback-text')) {
-                    const fallback = document.createElement('div');
-                    fallback.className = 'fallback-text text-xs text-center text-muted-foreground font-medium';
-                    fallback.textContent = item.name;
-                    parent.appendChild(fallback);
-                  }
-                }}
-              />
-              {showName && (
-                <span className="text-xs text-center text-muted-foreground font-medium line-clamp-1">{item.name}</span>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const PartnersSection = () => {
-  const { t } = useLanguage();
-
-  return (
     <div className="bg-background py-16 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
         {/* State Education Ministries - "Unsere Adressaten" */}
-        <section className="mb-16">
+        <section className="mb-20">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
             {t("partners.statesTitle")}
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-muted-foreground mb-10 max-w-2xl mx-auto">
             {t("partners.statesSubtitle")}
           </p>
-          <ScrollableLogoRow logos={stateLogos} showName={true} />
+
+          {/* Scrollable container */}
+          <div className="relative group/scroll">
+            {/* Left Arrow */}
+            <button
+              onClick={() => scroll("left")}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/90 border border-border/50 shadow-md opacity-0 group-hover/scroll:opacity-100 hover:bg-muted transition-all duration-300 -translate-x-1/2"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="h-5 w-5 text-muted-foreground" />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={() => scroll("right")}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-background/90 border border-border/50 shadow-md opacity-0 group-hover/scroll:opacity-100 hover:bg-muted transition-all duration-300 translate-x-1/2"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            </button>
+
+            {/* Scrollable row */}
+            <div
+              ref={scrollRef}
+              className="flex gap-8 overflow-x-auto scroll-smooth px-4 py-2"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              {stateLogos.map((state) => (
+                <div
+                  key={state.name}
+                  className="flex-shrink-0 flex flex-col items-center gap-3 group cursor-default"
+                  title={state.alt}
+                >
+                  <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
+                    <img
+                      src={state.logo}
+                      alt={state.alt}
+                      className="max-w-full max-h-full object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent && !parent.querySelector('.fallback-text')) {
+                          const fallback = document.createElement('div');
+                          fallback.className = 'fallback-text text-sm text-center text-muted-foreground font-medium';
+                          fallback.textContent = state.name.slice(0, 3);
+                          parent.appendChild(fallback);
+                        }
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs text-muted-foreground text-center leading-tight w-24 line-clamp-2">
+                    {state.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
-        {/* Partners and Associations - "Verbände und Partner" */}
+        {/* Bildungspartner - Clean centered grid */}
         <section className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
             {t("partners.partnersTitle")}
           </h2>
-          <ScrollableLogoRow logos={partnerLogos} showName={true} />
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20">
+            {bildungspartner.map((partner) => (
+              <div
+                key={partner.name}
+                className="flex flex-col items-center justify-center"
+              >
+                <div className="h-16 md:h-20 flex items-center justify-center">
+                  <img
+                    src={partner.logo}
+                    alt={partner.alt}
+                    className="max-h-full max-w-[180px] md:max-w-[220px] object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent && !parent.querySelector('.fallback-text')) {
+                        const fallback = document.createElement('div');
+                        fallback.className = 'fallback-text text-lg font-medium text-muted-foreground';
+                        fallback.textContent = partner.name;
+                        parent.appendChild(fallback);
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Call to Action */}

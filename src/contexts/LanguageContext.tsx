@@ -79,7 +79,10 @@ const translations: Record<Language, Record<string, string>> = {
     // Partners Section
     "partners.statesTitle": "Unsere Adressaten",
     "partners.statesSubtitle": "Wir arbeiten mit allen 16 Bundesländern und dem BMBF zusammen, um digitale Bildung voranzutreiben",
-    "partners.partnersTitle": "Verbände und Partner",
+    "partners.partnersTitle": "Bildungspartner",
+    "partners.partnersSubtitle": "Unsere strategischen Partner für digitale Bildung",
+    "partners.friendsTitle": "Bildungsfreunde",
+    "partners.supportersTitle": "Offizielle Unterstützer",
     "partners.cta.title": "Werden Sie Teil unserer Mission",
     "partners.cta.description": "Gemeinsam gestalten wir die Zukunft der digitalen Bildung in Deutschland",
     "partners.cta.button": "Jetzt bewerben",
@@ -736,7 +739,10 @@ const translations: Record<Language, Record<string, string>> = {
     // Partners Section
     "partners.statesTitle": "Our Addressees",
     "partners.statesSubtitle": "We collaborate with all 16 federal states and the BMBF to advance digital education",
-    "partners.partnersTitle": "Associations & Partners",
+    "partners.partnersTitle": "Education Partners",
+    "partners.partnersSubtitle": "Our strategic partners for digital education",
+    "partners.friendsTitle": "Education Friends",
+    "partners.supportersTitle": "Official Supporters",
     "partners.cta.title": "Become Part of Our Mission",
     "partners.cta.description": "Together we shape the future of digital education in Germany",
     "partners.cta.button": "Apply Now",
