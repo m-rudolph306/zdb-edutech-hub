@@ -1,73 +1,130 @@
-# Welcome to your Lovable project
+# ZDB Innovation Area
 
-## Project info
+A multi-persona platform for discovering, showcasing, and managing digital education innovations in Germany.
 
-**URL**: https://lovable.dev/projects/8cb8990b-5bf0-4290-9c02-a21acdf23962
+## Overview
 
-## How can I edit this code?
+The ZDB Innovation Area connects educational technology innovators with German state education ministries, politicians, and the public. The platform supports three distinct user roles:
 
-There are several ways of editing your application.
+- **Innovators**: Submit and showcase educational innovations, apply to events
+- **Administrators (ZDB Staff)**: Manage users, applications, events, and roadshow inquiries
+- **Politicians**: Read-only dashboard with innovation ecosystem overview
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8cb8990b-5bf0-4290-9c02-a21acdf23962) and start prompting.
+- Bilingual support (German/English) with complete i18n coverage
+- Role-based access control with protected routes
+- Innovation submission and management workflow
+- Event application system
+- Roadshow inquiry management
+- Admin dashboard with user, application, and event management
+- Responsive design optimized for all devices
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
 
-**Use your preferred IDE**
+- **Framework**: React 18 + TypeScript
+- **Build Tool**: Vite (with SWC)
+- **Styling**: Tailwind CSS + shadcn/ui (30+ Radix UI components)
+- **Routing**: React Router v6
+- **State/Data**: TanStack React Query, React Hook Form + Zod
+- **Storage**: localStorage (MVP - backend-ready architecture)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
 
-Follow these steps:
+- Node.js 18+
+- npm or yarn
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+# Clone the repository
+git clone https://github.com/your-org/zdb-edutech-hub.git
+cd zdb-edutech-hub
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Scripts
 
-**Use GitHub Codespaces**
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run build:dev` | Development build |
+| `npm run lint` | Run ESLint |
+| `npm run preview` | Preview production build |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/       # Shared components
+│   └── ui/          # shadcn/ui primitives
+├── contexts/        # React contexts (Auth, Language)
+├── data/            # Static data and types
+├── hooks/           # Custom React hooks
+├── lib/             # Utilities
+├── pages/           # Route components
+│   ├── admin/       # Admin dashboard pages
+│   └── politician/  # Politician dashboard pages
+└── App.tsx          # Main app with routing
 
-This project is built with:
+public/
+└── logos/           # State and partner logos
+    └── states/      # German federal state ministry logos
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Routes
 
-## How can I deploy this project?
+| Route | Access | Description |
+|-------|--------|-------------|
+| `/` | Public | Landing page |
+| `/innovations` | Public | Innovation listing |
+| `/events` | Public | Events calendar |
+| `/dashboard` | Authenticated | User dashboard |
+| `/dashboard/submit-innovation` | Innovator | Submit new innovation |
+| `/admin/*` | Admin | Admin management dashboard |
+| `/overview` | Politician | Read-only ecosystem overview |
 
-Simply open [Lovable](https://lovable.dev/projects/8cb8990b-5bf0-4290-9c02-a21acdf23962) and click on Share -> Publish.
+## Design System
 
-## Can I connect a custom domain to my Lovable project?
+The platform uses a custom design system with CSS variables:
 
-Yes, you can!
+- **Primary**: Deep Blue (#2C5F7C)
+- **Secondary**: Green (#48BB78)
+- **Accent**: Amber (#F59E0B)
+- **Typography**: Poppins (headings), Inter (body)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Deployment
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The project is configured for deployment on Vercel:
+
+```bash
+npm run build
+# Deploy dist/ folder
+```
+
+## Development Notes
+
+- All user-facing text uses the `t()` function for i18n
+- Role-based routes use `<ProtectedRoute requiredRole="...">` wrapper
+- Data persists in localStorage with keys: `user`, `users`, `signupRequests`, `application_IA-*`, `innovation_INV-*`, `roadshow_RW-*`
+
+## Contributing
+
+1. Create a feature branch
+2. Make changes
+3. Ensure `npm run build` passes
+4. Submit a pull request
+
+## License
+
+Private - All rights reserved

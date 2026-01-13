@@ -1,7 +1,8 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "zdb-innovation-area",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "ZDB Innovation Area - Educational technology platform for digital education innovations in Germany",
   "type": "module",
   "scripts": {
     "dev": "vite",

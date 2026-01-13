@@ -28,8 +28,10 @@
     "/home/rudi/code/zdb-edutech-hub/src/components/LoadingState.tsx",
     "/home/rudi/code/zdb-edutech-hub/src/components/ErrorBoundary.tsx",
     "/home/rudi/code/zdb-edutech-hub/src/pages/ApplicationForm.tsx",
-    "/home/rudi/code/zdb-edutech-hub/src/components/PartnersSection.tsx"
+    "/home/rudi/code/zdb-edutech-hub/src/components/PartnersSection.tsx",
+    "/home/rudi/code/zdb-edutech-hub/.gitignore",
+    "/home/rudi/code/zdb-edutech-hub/package.json"
   ],
   "first_dirty_at": "2026-01-12T13:48:29.487634Z",
-  "last_dirty_at": "2026-01-13T15:29:22.615774Z"
+  "last_dirty_at": "2026-01-13T19:57:42.869294Z"
 }

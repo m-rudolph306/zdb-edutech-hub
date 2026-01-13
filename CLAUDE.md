@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-ZDB Innovation Area - An educational technology platform for discovering and showcasing digital education innovations in Germany. Built with Lovable (changes pushed here sync with the Lovable editor).
+ZDB Innovation Area - A multi-persona educational technology platform for discovering and showcasing digital education innovations in Germany. Supports three user roles: Innovators, Administrators, and Politicians.
 
 ## Commands
 
@@ -28,20 +28,30 @@ npm run preview      # Preview production build
 
 ### Routing Structure (src/App.tsx)
 ```
-/                        → Landing page
-/policy                  → Policy papers
-/innovations             → Innovation listing
-/innovations/:id         → Innovation detail
-/events                  → Events listing
-/roadshow                → Roadshow info
-/apply/*                 → Protected application flow (ProtectedRoute wrapper)
-/dashboard               → Protected user dashboard
+/                              → Landing page
+/policy                        → Policy papers
+/innovations                   → Innovation listing
+/innovations/:id               → Innovation detail
+/events                        → Events listing
+/roadshow                      → Roadshow info
+/press                         → Press/media page
+/statutes                      → Organization statutes
+/donate                        → Donation information
+/contact                       → Contact form
+/apply/*                       → Protected application flow
+/dashboard                     → Protected user dashboard
+/dashboard/submit-innovation   → Innovation submission (innovator only)
+/profile                       → User profile settings
+/admin/*                       → Admin dashboard (admin only)
+/overview                      → Politician dashboard (politician only)
 ```
 
 ### Key Directories
 - `src/pages/` - Route components
+- `src/pages/admin/` - Admin dashboard pages
+- `src/pages/politician/` - Politician dashboard pages
 - `src/components/` - Shared components, with `ui/` containing shadcn-ui primitives
-- `src/contexts/` - AuthContext (localStorage session) and LanguageContext (i18n)
+- `src/contexts/` - AuthContext (role-based auth) and LanguageContext (i18n)
 - `src/data/` - Static data (innovations, logos)
 - `src/hooks/` - Custom hooks (use-toast, use-mobile)
 - `src/lib/utils.ts` - Tailwind class merging utility (`cn()`)
@@ -52,7 +62,12 @@ Custom i18n via LanguageContext - supports German (de) and English (en). Use the
 
 ### Authentication
 
-Simple localStorage-based auth in AuthContext. No backend - user sessions persist in browser storage only.
+Role-based localStorage auth in AuthContext with three roles:
+- `innovator` - Default role, can submit innovations and applications
+- `admin` - Full access to admin dashboard for managing users/applications/events
+- `politician` - Read-only access to ecosystem overview
+
+Use `<ProtectedRoute requiredRole="...">` for role-restricted routes.
 
 ### Design System
 
@@ -67,3 +82,15 @@ Badge category colors configured in `tailwind.config.ts`: AI, VR, Assessment, Ma
 ## Path Alias
 
 `@/*` resolves to `src/*` (configured in tsconfig.json and vite.config.ts).
+
+## Data Storage
+
+localStorage keys:
+- `user` - Current logged-in user
+- `users` - Registered users
+- `signupRequests` - Pending/approved/rejected signup requests
+- `profile_{userId}` - User profile data
+- `application_IA-*` - Event applications
+- `innovation_INV-*` - Submitted innovations
+- `roadshow_RW-*` - Roadshow inquiries
+- `events` - Events data (admin-managed)
