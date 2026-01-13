@@ -23,7 +23,19 @@ import Statutes from "./pages/Statutes";
 import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
+import SubmitInnovation from "./pages/SubmitInnovation";
+import {
+  AdminLayout,
+  AdminDashboard,
+  AdminUsers,
+  AdminApplications,
+  AdminInnovations,
+  AdminEvents,
+  AdminRoadshow,
+} from "./pages/admin";
+import { PoliticianDashboard } from "./pages/politician";
 import NotFound from "./pages/NotFound";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +46,7 @@ const App = () => (
         <TooltipProvider>
         <Toaster />
         <Sonner />
+        <ErrorBoundary>
         <BrowserRouter>
           <ScrollToTop />
           <Routes>
@@ -73,10 +86,35 @@ const App = () => (
                 <Profile />
               </ProtectedRoute>
             } />
+            <Route path="/dashboard/submit-innovation" element={
+              <ProtectedRoute requiredRole="innovator">
+                <SubmitInnovation />
+              </ProtectedRoute>
+            } />
+            {/* Admin Routes */}
+            <Route path="/admin" element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="applications" element={<AdminApplications />} />
+              <Route path="innovations" element={<AdminInnovations />} />
+              <Route path="events" element={<AdminEvents />} />
+              <Route path="roadshow" element={<AdminRoadshow />} />
+            </Route>
+            {/* Politician Routes */}
+            <Route path="/overview" element={
+              <ProtectedRoute requiredRole="politician">
+                <PoliticianDashboard />
+              </ProtectedRoute>
+            } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        </ErrorBoundary>
         </TooltipProvider>
       </AuthProvider>
     </LanguageProvider>

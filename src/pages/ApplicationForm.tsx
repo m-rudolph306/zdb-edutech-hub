@@ -102,8 +102,8 @@ const ApplicationForm = () => {
         const draft = JSON.parse(savedDraft);
         form.reset(draft);
         toast({
-          title: "Draft loaded",
-          description: "Your previous draft has been restored.",
+          title: t("applicationForm.toast.draftLoaded"),
+          description: t("applicationForm.toast.draftLoadedDescription"),
         });
       } catch (e) {
         console.error("Failed to load draft:", e);
@@ -127,8 +127,8 @@ const ApplicationForm = () => {
     const draftKey = `application_draft_${eventParam}`;
     localStorage.setItem(draftKey, JSON.stringify(form.getValues()));
     toast({
-      title: "Draft saved",
-      description: "Your application has been saved locally.",
+      title: t("applicationForm.toast.draftSaved"),
+      description: t("applicationForm.toast.draftSavedDescription"),
     });
   };
 

@@ -17,7 +17,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Menu, X, User, FileText, Settings, LogOut, LayoutDashboard, ChevronDown } from "lucide-react";
+import { Menu, X, User, FileText, Settings, LogOut, LayoutDashboard, ChevronDown, Shield, Eye, Lightbulb, PlusCircle } from "lucide-react";
 import LoginModal from "./LoginModal";
 import LanguageToggle from "./LanguageToggle";
 import { useAuth } from "@/contexts/AuthContext";
@@ -235,11 +235,11 @@ const Navigation = () => {
               {isAuthenticated ? (
                 <>
                   <Link
-                    to="/dashboard"
+                    to={user?.role === "admin" ? "/admin" : user?.role === "politician" ? "/overview" : "/dashboard"}
                     className={`text-sm font-medium px-3 py-2 rounded-md transition-colors hover:bg-accent
-                      ${isActive("/dashboard") ? "text-primary bg-primary/10" : "text-foreground"}`}
+                      ${(isActive("/dashboard") || isActive("/admin") || isActive("/overview")) ? "text-primary bg-primary/10" : "text-foreground"}`}
                   >
-                    {t("nav.dashboard")}
+                    {user?.role === "admin" ? t("nav.adminDashboard") : user?.role === "politician" ? t("nav.overview") : t("nav.dashboard")}
                   </Link>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -253,14 +253,47 @@ const Navigation = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-56 bg-background">
-                      <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        {t("nav.myDashboard")}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                        <FileText className="mr-2 h-4 w-4" />
-                        {t("nav.myApplications")}
-                      </DropdownMenuItem>
+                      {/* Admin-specific menu items */}
+                      {user?.role === "admin" && (
+                        <>
+                          <DropdownMenuItem onClick={() => navigate("/admin")}>
+                            <Shield className="mr-2 h-4 w-4" />
+                            {t("nav.adminDashboard")}
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                        </>
+                      )}
+
+                      {/* Politician-specific menu items */}
+                      {user?.role === "politician" && (
+                        <>
+                          <DropdownMenuItem onClick={() => navigate("/overview")}>
+                            <Eye className="mr-2 h-4 w-4" />
+                            {t("nav.overview")}
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                        </>
+                      )}
+
+                      {/* Innovator/common menu items */}
+                      {(user?.role === "innovator" || !user?.role) && (
+                        <>
+                          <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                            <LayoutDashboard className="mr-2 h-4 w-4" />
+                            {t("nav.myDashboard")}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                            <FileText className="mr-2 h-4 w-4" />
+                            {t("nav.myApplications")}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate("/dashboard/submit-innovation")}>
+                            <PlusCircle className="mr-2 h-4 w-4" />
+                            {t("nav.submitInnovation")}
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                        </>
+                      )}
+
                       <DropdownMenuItem onClick={() => navigate("/profile")}>
                         <Settings className="mr-2 h-4 w-4" />
                         {t("nav.profileSettings")}
@@ -379,14 +412,53 @@ const Navigation = () => {
                     <div className="px-3 py-2 text-sm font-semibold text-muted-foreground">
                       {user?.companyName}
                     </div>
-                    <Link
-                      to="/dashboard"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent"
-                    >
-                      <LayoutDashboard className="mr-2 h-4 w-4" />
-                      {t("nav.myDashboard")}
-                    </Link>
+
+                    {/* Admin mobile menu */}
+                    {user?.role === "admin" && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent"
+                      >
+                        <Shield className="mr-2 h-4 w-4" />
+                        {t("nav.adminDashboard")}
+                      </Link>
+                    )}
+
+                    {/* Politician mobile menu */}
+                    {user?.role === "politician" && (
+                      <Link
+                        to="/overview"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent"
+                      >
+                        <Eye className="mr-2 h-4 w-4" />
+                        {t("nav.overview")}
+                      </Link>
+                    )}
+
+                    {/* Innovator mobile menu */}
+                    {(user?.role === "innovator" || !user?.role) && (
+                      <>
+                        <Link
+                          to="/dashboard"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent"
+                        >
+                          <LayoutDashboard className="mr-2 h-4 w-4" />
+                          {t("nav.myDashboard")}
+                        </Link>
+                        <Link
+                          to="/dashboard/submit-innovation"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center text-sm font-medium py-2 px-3 rounded-md transition-colors text-foreground hover:bg-accent"
+                        >
+                          <PlusCircle className="mr-2 h-4 w-4" />
+                          {t("nav.submitInnovation")}
+                        </Link>
+                      </>
+                    )}
+
                     <Link
                       to="/profile"
                       onClick={() => setIsMobileMenuOpen(false)}

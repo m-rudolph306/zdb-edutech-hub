@@ -7,7 +7,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { FileText, Calendar, TrendingUp, User, ExternalLink } from "lucide-react";
+import { FileText, Calendar, TrendingUp, User, ExternalLink, Lightbulb, Plus } from "lucide-react";
+
+interface UserInnovation {
+  id: string;
+  name: string;
+  description: string;
+  categories: string[];
+  region: string;
+  technology: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: string;
+}
 
 interface Application {
   id: string;
@@ -28,16 +39,18 @@ interface RoadshowInquiry {
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isInnovator } = useAuth();
   const { t, language } = useLanguage();
   const [applications, setApplications] = useState<Application[]>([]);
   const [roadshowInquiries, setRoadshowInquiries] = useState<RoadshowInquiry[]>([]);
+  const [userInnovations, setUserInnovations] = useState<UserInnovation[]>([]);
   const [selectedInquiry, setSelectedInquiry] = useState<RoadshowInquiry | null>(null);
 
   useEffect(() => {
     // Load all applications from localStorage
     const loadedApplications: Application[] = [];
     const loadedInquiries: RoadshowInquiry[] = [];
+    const loadedInnovations: UserInnovation[] = [];
 
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -66,11 +79,30 @@ const Dashboard = () => {
             status: inquiryData.status,
           });
         }
+      } else if (key?.startsWith("innovation_INV-")) {
+        const data = localStorage.getItem(key);
+        if (data) {
+          const innovationData = JSON.parse(data);
+          // Only load innovations submitted by current user
+          if (innovationData.submittedBy === user?.id) {
+            loadedInnovations.push({
+              id: innovationData.id,
+              name: innovationData.name,
+              description: innovationData.description,
+              categories: innovationData.categories,
+              region: innovationData.region,
+              technology: innovationData.technology,
+              status: innovationData.status,
+              createdAt: innovationData.createdAt,
+            });
+          }
+        }
       }
     }
     setApplications(loadedApplications);
     setRoadshowInquiries(loadedInquiries);
-  }, []);
+    setUserInnovations(loadedInnovations);
+  }, [user?.id]);
 
   const upcomingEvents = [
     {
@@ -103,6 +135,19 @@ const Dashboard = () => {
         return <Badge className="bg-green-500 hover:bg-green-600">{t("dashboard.status.selected")}</Badge>;
       case "rejected":
         return <Badge variant="destructive">{t("dashboard.status.notSelected")}</Badge>;
+      default:
+        return null;
+    }
+  };
+
+  const getInnovationStatusBadge = (status: UserInnovation["status"]) => {
+    switch (status) {
+      case "pending":
+        return <Badge variant="secondary">{t("dashboard.innovation.status.pending")}</Badge>;
+      case "approved":
+        return <Badge className="bg-green-500 hover:bg-green-600">{t("dashboard.innovation.status.approved")}</Badge>;
+      case "rejected":
+        return <Badge variant="destructive">{t("dashboard.innovation.status.rejected")}</Badge>;
       default:
         return null;
     }
@@ -255,6 +300,71 @@ const Dashboard = () => {
                   )}
                 </CardContent>
               </Card>
+
+              {/* My Innovations - Innovator Only */}
+              {isInnovator && (
+                <Card className="animate-fade-in animate-delay-350">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle>{t("dashboard.myInnovations")}</CardTitle>
+                      <Button
+                        size="sm"
+                        onClick={() => navigate("/dashboard/submit-innovation")}
+                        className="bg-secondary hover:bg-secondary/90"
+                      >
+                        <Plus className="h-4 w-4 mr-1" />
+                        {t("dashboard.submitInnovation")}
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {userInnovations.length === 0 ? (
+                      <div className="text-center py-12">
+                        <Lightbulb className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                        <p className="text-muted-foreground mb-6">
+                          {t("dashboard.noInnovations")}
+                        </p>
+                        <Button
+                          onClick={() => navigate("/dashboard/submit-innovation")}
+                          className="bg-secondary hover:bg-secondary/90 text-secondary-foreground"
+                        >
+                          {t("dashboard.submitFirstInnovation")}
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {userInnovations.map((innovation) => (
+                          <Card key={innovation.id}>
+                            <CardContent className="pt-6">
+                              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div className="flex-1">
+                                  <h3 className="font-semibold text-lg mb-1">{innovation.name}</h3>
+                                  <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
+                                    {innovation.description}
+                                  </p>
+                                  <div className="flex flex-wrap gap-1 mb-2">
+                                    {innovation.categories.map((cat) => (
+                                      <Badge key={cat} variant="outline" className="text-xs">
+                                        {cat}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                  <p className="text-xs text-muted-foreground">
+                                    {t("dashboard.submitted")}: {formatDate(innovation.createdAt)}
+                                  </p>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  {getInnovationStatusBadge(innovation.status)}
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
             </div>
 
             {/* Sidebar */}
@@ -265,6 +375,16 @@ const Dashboard = () => {
                   <CardTitle>{t("dashboard.quickActions")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
+                  {isInnovator && (
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start"
+                      onClick={() => navigate("/dashboard/submit-innovation")}
+                    >
+                      <Lightbulb className="mr-2 h-4 w-4" />
+                      {t("dashboard.submitInnovation")}
+                    </Button>
+                  )}
                   <Button
                     variant="outline"
                     className="w-full justify-start"

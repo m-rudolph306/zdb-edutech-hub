@@ -58,7 +58,13 @@ const Contact = () => {
                   <CardTitle>{t("contact.info.title")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  <div className="flex items-start gap-4">
+                  <div className="p-3 mb-4 bg-amber-100 border border-amber-300 rounded-lg">
+                    <p className="text-amber-800 text-sm font-medium">
+                      {t("contact.info.placeholder")}
+                    </p>
+                  </div>
+
+                  <div className="flex items-start gap-4 opacity-60">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <MapPin className="h-5 w-5 text-primary" />
                     </div>
@@ -66,33 +72,33 @@ const Contact = () => {
                       <h3 className="font-medium">{t("contact.info.address.label")}</h3>
                       <p className="text-muted-foreground text-sm">
                         ZDB e.V.<br />
-                        Musterstraße 123<br />
-                        10115 Berlin
+                        [Adresse folgt]<br />
+                        [PLZ Stadt]
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 opacity-60">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Mail className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <h3 className="font-medium">{t("contact.info.email.label")}</h3>
-                      <a href="mailto:info@zdb.de" className="text-primary hover:underline text-sm">
-                        info@zdb.de
-                      </a>
+                      <p className="text-muted-foreground text-sm">
+                        [E-Mail folgt]
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 opacity-60">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Phone className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <h3 className="font-medium">{t("contact.info.phone.label")}</h3>
-                      <a href="tel:+4930123456789" className="text-primary hover:underline text-sm">
-                        +49 30 123 456 789
-                      </a>
+                      <p className="text-muted-foreground text-sm">
+                        [Telefon folgt]
+                      </p>
                     </div>
                   </div>
 

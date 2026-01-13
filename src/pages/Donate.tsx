@@ -84,10 +84,15 @@ const Donate = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
+                <div className="p-3 mb-2 bg-amber-100 border border-amber-300 rounded-lg">
+                  <p className="text-amber-800 text-sm font-medium">
+                    {t("donate.bank.placeholder")}
+                  </p>
+                </div>
                 <p className="text-muted-foreground text-sm">{t("donate.bank.description")}</p>
-                <div className="bg-muted p-4 rounded-lg text-sm space-y-1">
-                  <p><strong>IBAN:</strong> DE89 3704 0044 0532 0130 00</p>
-                  <p><strong>BIC:</strong> COBADEFFXXX</p>
+                <div className="bg-muted p-4 rounded-lg text-sm space-y-1 opacity-60">
+                  <p><strong>IBAN:</strong> [IBAN folgt]</p>
+                  <p><strong>BIC:</strong> [BIC folgt]</p>
                   <p><strong>{t("donate.bank.recipient")}:</strong> ZDB e.V.</p>
                   <p><strong>{t("donate.bank.reference")}:</strong> Spende</p>
                 </div>

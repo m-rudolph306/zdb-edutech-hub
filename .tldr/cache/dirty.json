@@ -11,8 +11,24 @@
     "/home/rudi/code/zdb-edutech-hub/src/pages/NotFound.tsx",
     "/home/rudi/code/zdb-edutech-hub/src/contexts/AuthContext.tsx",
     "/home/rudi/code/zdb-edutech-hub/src/components/ProtectedRoute.tsx",
-    "/home/rudi/code/zdb-edutech-hub/src/components/SignupRequestModal.tsx"
+    "/home/rudi/code/zdb-edutech-hub/src/components/SignupRequestModal.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/SubmitInnovation.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/AdminLayout.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/AdminDashboard.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/AdminUsers.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/AdminApplications.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/AdminInnovations.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/AdminEvents.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/AdminRoadshow.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/admin/index.ts",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/politician/PoliticianDashboard.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/components/EventsCalendar.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/politician/index.ts",
+    "/home/rudi/code/zdb-edutech-hub/src/components/Navigation.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/components/LoadingState.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/components/ErrorBoundary.tsx",
+    "/home/rudi/code/zdb-edutech-hub/src/pages/ApplicationForm.tsx"
   ],
   "first_dirty_at": "2026-01-12T13:48:29.487634Z",
-  "last_dirty_at": "2026-01-12T14:21:28.173351Z"
+  "last_dirty_at": "2026-01-13T14:16:43.172571Z"
 }
