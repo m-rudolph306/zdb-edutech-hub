@@ -283,10 +283,10 @@ mkdir -p public/logos/partners
 - Logo upload (localStorage as base64 for MVP)
 
 **Acceptance criteria:**
-- [ ] User can edit their profile information
-- [ ] Changes persist to localStorage
-- [ ] Form validates required fields
-- [ ] Both DE and EN translations
+- [x] User can edit their profile information
+- [x] Changes persist to localStorage
+- [x] Form validates required fields
+- [x] Both DE and EN translations
 
 #### 2.2 Innovation Submission (Innovator-only)
 
@@ -312,10 +312,10 @@ mkdir -p public/logos/partners
 ```
 
 **Acceptance criteria:**
-- [ ] Innovators can submit new innovations
-- [ ] Submission creates pending innovation in localStorage
-- [ ] Innovation appears in user's dashboard
-- [ ] Form has proper validation
+- [x] Innovators can submit new innovations
+- [x] Submission creates pending innovation in localStorage
+- [x] Innovation appears in user's dashboard
+- [x] Form has proper validation
 
 #### 2.3 Enhanced Dashboard for Innovators
 
@@ -326,9 +326,9 @@ mkdir -p public/logos/partners
 - Add profile completion indicator
 
 **Acceptance criteria:**
-- [ ] Dashboard shows user's submitted innovations
-- [ ] Innovation status clearly displayed
-- [ ] Dashboard fully translated DE/EN
+- [x] Dashboard shows user's submitted innovations
+- [x] Innovation status clearly displayed
+- [x] Dashboard fully translated DE/EN
 
 ---
 
@@ -366,9 +366,9 @@ mkdir -p public/logos/partners
 ```
 
 **Acceptance criteria:**
-- [ ] Admin dashboard accessible only to admin role
-- [ ] Overview shows key metrics
-- [ ] Navigation to all admin sub-sections works
+- [x] Admin dashboard accessible only to admin role
+- [x] Overview shows key metrics
+- [x] Navigation to all admin sub-sections works
 
 #### 3.2 User Management (`src/pages/admin/AdminUsers.tsx`)
 
@@ -391,11 +391,11 @@ mkdir -p public/logos/partners
 - User detail modal/drawer
 
 **Acceptance criteria:**
-- [ ] Admin can view all signup requests
-- [ ] Admin can approve/reject requests
-- [ ] Approved users can log in
-- [ ] Filter/search functionality works
-- [ ] Bulk actions for multiple selections
+- [x] Admin can view all signup requests
+- [x] Admin can approve/reject requests
+- [x] Approved users can log in
+- [x] Filter/search functionality works
+- [x] Bulk actions for multiple selections
 
 #### 3.3 Application Management (`src/pages/admin/AdminApplications.tsx`)
 
@@ -417,10 +417,10 @@ mkdir -p public/logos/partners
 - Export to CSV
 
 **Acceptance criteria:**
-- [ ] Admin can view all applications
-- [ ] Admin can change application status
-- [ ] Applicant notified of status change (update in their dashboard)
-- [ ] Export functionality works
+- [x] Admin can view all applications
+- [x] Admin can change application status
+- [x] Applicant notified of status change (update in their dashboard)
+- [x] Export functionality works
 
 #### 3.4 Innovation Management (`src/pages/admin/AdminInnovations.tsx`)
 
@@ -436,10 +436,10 @@ mkdir -p public/logos/partners
 - Set `featured` flag
 
 **Acceptance criteria:**
-- [ ] Admin can review submitted innovations
-- [ ] Admin can approve/reject innovations
-- [ ] Approved innovations appear in public listing
-- [ ] Featured innovations highlighted on homepage
+- [x] Admin can review submitted innovations
+- [x] Admin can approve/reject innovations
+- [x] Approved innovations appear in public listing
+- [x] Featured innovations highlighted on homepage
 
 #### 3.5 Event Management (`src/pages/admin/AdminEvents.tsx`)
 
@@ -470,10 +470,10 @@ interface Event {
 **Currently:** Events are hardcoded in `Events.tsx`. Need to migrate to localStorage.
 
 **Acceptance criteria:**
-- [ ] Admin can create new events
-- [ ] Admin can edit existing events
-- [ ] Admin can see application count per event
-- [ ] Events editable without code changes
+- [x] Admin can create new events
+- [x] Admin can edit existing events
+- [x] Admin can see application count per event
+- [x] Events editable without code changes
 
 #### 3.6 Roadshow Management (`src/pages/admin/AdminRoadshow.tsx`)
 
@@ -490,10 +490,10 @@ interface Event {
 **Note:** Basic functionality already exists in Dashboard.tsx. Enhance and move to dedicated admin page.
 
 **Acceptance criteria:**
-- [ ] Admin can view all roadshow inquiries
-- [ ] Admin can update inquiry status
-- [ ] Full inquiry details visible
-- [ ] Status changes reflected in data
+- [x] Admin can view all roadshow inquiries
+- [x] Admin can update inquiry status
+- [x] Full inquiry details visible
+- [x] Status changes reflected in data
 
 ---
 
@@ -541,10 +541,10 @@ interface Event {
 ```
 
 **Acceptance criteria:**
-- [ ] Politician role can access dashboard
-- [ ] All data is read-only (no edit buttons)
-- [ ] Innovations, events, metrics displayed
-- [ ] Fully translated DE/EN
+- [x] Politician role can access dashboard
+- [x] All data is read-only (no edit buttons)
+- [x] Innovations, events, metrics displayed
+- [x] Fully translated DE/EN
 
 #### 4.2 Events Calendar View
 
@@ -557,10 +557,10 @@ interface Event {
 **Use shadcn Calendar component as base.**
 
 **Acceptance criteria:**
-- [ ] Calendar displays all events
-- [ ] Navigation between months
-- [ ] Event details on click
-- [ ] Responsive design
+- [x] Calendar displays all events
+- [x] Navigation between months
+- [x] Event details on click
+- [x] Responsive design
 
 ---
 
@@ -579,9 +579,9 @@ interface Event {
 - Mobile menu role awareness
 
 **Acceptance criteria:**
-- [ ] Navigation adapts to user role
-- [ ] All menu items link to real pages
-- [ ] Mobile menu works correctly
+- [x] Navigation adapts to user role
+- [x] All menu items link to real pages
+- [x] Mobile menu works correctly
 
 #### 5.2 Consistent Loading States
 
@@ -595,9 +595,9 @@ interface Event {
 - Form submissions
 
 **Acceptance criteria:**
-- [ ] Loading states for async operations
-- [ ] Consistent skeleton patterns
-- [ ] No layout shifts during load
+- [x] Loading states for async operations
+- [x] Consistent skeleton patterns
+- [x] No layout shifts during load
 
 #### 5.3 Error Handling
 
@@ -613,9 +613,9 @@ interface Event {
 - Allow retry/navigation home
 
 **Acceptance criteria:**
-- [ ] 404 page matches site design
-- [ ] Error boundary catches crashes
-- [ ] Users can recover from errors
+- [x] 404 page matches site design
+- [x] Error boundary catches crashes
+- [x] Users can recover from errors
 
 #### 5.4 Success Notifications
 
@@ -625,9 +625,9 @@ interface Event {
 - Use shadcn toast component consistently
 
 **Acceptance criteria:**
-- [ ] All form submissions show feedback
-- [ ] Messages translated
-- [ ] Consistent styling
+- [x] All form submissions show feedback
+- [x] Messages translated
+- [x] Consistent styling
 
 ---
 
